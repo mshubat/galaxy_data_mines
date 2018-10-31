@@ -4,4 +4,4 @@ This project is focused on comparing two popular astronomical datasets: NED and 
 
 ## Project Plan 
 
-[Initial Project Project Proposal](./mshubat_cs4490_thesis_proposal.pdf)
+[Project Proposal](./mshubat_cs4490_thesis_proposal.pdf)
