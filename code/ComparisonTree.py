@@ -1,18 +1,21 @@
 from treelib import Node, Tree
+from TreeBuilder import TreeBuilder
 
 
 class ComparisonTree:
 
     def __init__(self):
-        self.tree = self.buildTree()
+        self.builder = TreeBuilder()
+        self.tree = self.builder.buildTree("simbad_raw.csv")
 
-    def buildTree(self):
+    # def buildTree(self):
         '''
         This function will soon encorporate reading SIMBAD hierarchy from file
         into tree structure. Then it will focus on
         '''
-        tree = Tree()
+        #tree = Tree()
 
+        '''
         # create a node with name & identifier respectively
         tree.create_node("A", "a")  # root node
         tree.create_node("B", "b", parent="a")
@@ -25,8 +28,8 @@ class ComparisonTree:
         tree.create_node("E", "e", parent="b")
         tree.create_node("F", "f", parent="c")
         tree.create_node("G", "g", parent="c")
-
-        return tree
+        '''
+        # return tree
 
     def showTree(self):
         '''
@@ -67,6 +70,9 @@ class ComparisonTree:
         subtree = self.tree.subtree(secNodeId)
 
         return subtree.contains(firstNodeId)
+
+    def test(self, firstNodeId, secNodeId):
+        return areSiblings(firstNodeId, secNodeId)
 
     def shareCommonAncestor(firstNodeId, secNodeId):
         '''

@@ -1,4 +1,7 @@
 from treelib import Node, Tree
+from astropy.table import Table
+import numpy as np
+import string
 
 
 class TreeBuilder:
@@ -8,7 +11,7 @@ class TreeBuilder:
     returns both a tree and the dictionary needed to translate between nodeIDs
     and tags"""
 
-    def buildTree():
+    def buildTree(self, infile):
         new_tree = Tree()
         tree_dict = {}
         dat = Table.read(infile, format='csv')
@@ -16,15 +19,16 @@ class TreeBuilder:
         tag = dat['tag']
         for i, num_id in enumerate(numeric_id):
             #        id_str = num_id.replace(".","")
-            new_tree = add_to_tree(num_id, tag[i], new_tree)
+            new_tree = TreeBuilder.add_to_tree(num_id, tag[i], new_tree)
             tree_dict[tag[i]] = num_id
-        return(new_tree, tree_dict)
+        # new_tree.show()
+        # return(new_tree, tree_dict
+        return new_tree
 
     """add an entry to treelib tree, using ab.cd.ef.gh as identifier
        where the parent of ab.cd.ef.gh is ab.cd.eg.00"""
-
     def add_to_tree(id, tag, tree):
-        parent = get_parent(id)
+        parent = TreeBuilder.get_parent(id)
         if parent == '00.00.00.00':
             tree.create_node(tag, id, parent=tree.root)  # add to root
         elif tree.contains(parent):  # add as child to parent
@@ -35,7 +39,6 @@ class TreeBuilder:
 
     """find the first occurrence of 00 in string,
        replace previous 2 and all following digits with zeros"""
-
     def get_parent(str_id):
         double_zero = str_id.find("00")
         if double_zero == -1:  # not found

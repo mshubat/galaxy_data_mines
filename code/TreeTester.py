@@ -17,6 +17,8 @@ if __name__ == "__main__":
 
     #print(ct.areSiblings("a", "a"))
 
-    print(ct.isOfType("d", "b"))
+    #print(ct.isOfType("d", "b"))
+
+    #print(ct.test("d", "b"))
 
 #classtree.isOfType("f", "c")
