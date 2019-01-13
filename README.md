@@ -1,4 +1,4 @@
-# Galaxy-Data-Mines
+# Galaxy Data Mines
 
 <img src="https://i.pinimg.com/originals/56/85/cd/5685cdbaacb0b043347c34113b206a92.jpg" alt="space"/>
 
