@@ -21,7 +21,7 @@ class TreeBuilder:
             #        id_str = num_id.replace(".","")
             new_tree = TreeBuilder.add_to_tree(num_id, tag[i], new_tree)
             tree_dict[tag[i]] = num_id
-        # new_tree.show()
+        new_tree.show()
         # return(new_tree, tree_dict
         return new_tree
 

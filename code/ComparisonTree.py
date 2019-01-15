@@ -5,17 +5,16 @@ from TreeBuilder import TreeBuilder
 class ComparisonTree:
 
     def __init__(self):
-        self.builder = TreeBuilder()
-        self.tree = self.builder.buildTree("simbad_raw.csv")
+        #self.builder = TreeBuilder()
+        #self.tree = self.builder.buildTree("simbad_raw.csv")
+        self.tree = self.buildTestTree()
 
-    # def buildTree(self):
+    def buildTestTree(self):
         '''
-        This function will soon encorporate reading SIMBAD hierarchy from file
-        into tree structure. Then it will focus on
+        This method builds a simple tree used for testing.
         '''
-        #tree = Tree()
+        tree = Tree()
 
-        '''
         # create a node with name & identifier respectively
         tree.create_node("A", "a")  # root node
         tree.create_node("B", "b", parent="a")
@@ -28,8 +27,8 @@ class ComparisonTree:
         tree.create_node("E", "e", parent="b")
         tree.create_node("F", "f", parent="c")
         tree.create_node("G", "g", parent="c")
-        '''
-        # return tree
+
+        return tree
 
     def showTree(self):
         '''
