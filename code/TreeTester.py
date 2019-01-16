@@ -32,7 +32,16 @@ if __name__ == "__main__":
 
     print("shareCommonAncestor Tests")
     print("-------------------------")
-
+    print("a and b share a common ancestor: {}".format(
+        ct.shareCommonAncestor("a", "b")))
+    print("b and d share a common ancestor: {}".format(
+        ct.shareCommonAncestor("b", "d")))
+    print("a and a share a common ancestor: {}".format(
+        ct.shareCommonAncestor("a", "a")))
+    print("x and y share a common ancestor: {}".format(
+        ct.shareCommonAncestor("x", "y")))
+    print("f and g share a common ancestor: {}".format(
+        ct.shareCommonAncestor("f", "g")))
     #print(ct.areSiblings("a", "a"))
 
     #print(ct.isOfType("d", "b"))

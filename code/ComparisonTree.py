@@ -73,24 +73,30 @@ class ComparisonTree:
     def test(self, firstNodeId, secNodeId):
         return areSiblings(firstNodeId, secNodeId)
 
-    def shareCommonAncestor(firstNodeId, secNodeId):
+    def shareCommonAncestor(self, firstNodeId, secNodeId):
         '''
         This method will return True if the nodes corresponding to the given
         nodeIDs share a common ancestor. Return False othewise.
         '''
-        if (areSiblings(firstNodeId, secNodeId)):
-            # If the nodes are at the top level they are not actually related.
-            # ie. Star and Galaxy.
-            if ((is_root(firstNodeId) or is_root(secNodeId))):
+        if (self.areSiblings(firstNodeId, secNodeId)):
+            # Get the nodes with the nid's passed
+            first_node = self.tree.get_node(firstNodeId)
+            sec_node = self.tree.get_node(secNodeId)
+
+            # If the nodes are at the top level they do not share a common
+            # ancestor. ie. Star and Galaxy.
+            if ((first_node.is_root() or sec_node.is_root())):
                 return False
             else:
                 return True
-        elif (isOfType(firstNodeId, secNodeId) or isOfType(secNodeId, firstNodeId)):
+        elif (self.isOfType(firstNodeId, secNodeId) or self.isOfType(secNodeId, firstNodeId)):
+            if (self.tree.parent(firstNodeId) == None or self.tree.parent(secNodeId) == None):
+                return False
             return True
         else:
             current_node_id = firstNodeId
-            p = parent(current_node_id)
+            p = self.tree.parent(current_node_id)
             while (p):
-                if (isOfType(secNodeId, p.identifier)):
+                if (self.isOfType(secNodeId, p.identifier)):
                     return True
-            return false
+            return False
