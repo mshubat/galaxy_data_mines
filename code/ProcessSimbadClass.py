@@ -1,1 +1,1 @@
-class ProcessSimbadClass:
+class DataStore:

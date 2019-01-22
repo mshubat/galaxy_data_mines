@@ -6,13 +6,49 @@ import string
 
 class TreeBuilder:
 
-    """read SIMBAD class structure and put it into the treelib tree structure
+    def buildTestTree(self):
+        '''
+        This method builds & returns a simple tree used for testing.
+        '''
+        tree = Tree()
 
-    returns both a tree and the dictionary needed to translate between nodeIDs
-    and tags"""
+        # create a node with name & identifier respectively
+        # 0th level
+        tree.create_node("ROOT", "root")  # root node
+
+        # level 1
+        tree.create_node("A", "a", parent="root")
+
+        # level 2
+        tree.create_node("B", "b", parent="a")
+        tree.create_node("C", "c", parent="a")
+        tree.create_node("X", "x", parent="a")
+        tree.create_node("Y", "y", parent="a")
+        tree.create_node("Z", "z", parent="a")
+
+        # level 3
+        tree.create_node("D", "d", parent="b")
+        tree.create_node("E", "e", parent="b")
+        tree.create_node("F", "f", parent="c")
+        tree.create_node("G", "g", parent="c")
+
+        # level 4
+        tree.create_node("H", "h", parent="d")
+        #tree.create_node("I", "i", parent="d")
+
+        return tree
 
     def buildTree(self, infile):
+        '''
+        Read SIMBAD class structure and put it into the treelib tree structure
+
+        Returns both a tree and the dictionary needed to translate between nodeIDs
+        and tags
+        '''
         new_tree = Tree()
+        # create classless root node Since SIMBAD classes
+        # are really separate trees.
+        new_tree.create_node("ROOT", "root")
         tree_dict = {}
         dat = Table.read(infile, format='csv')
         numeric_id = dat['id']
@@ -24,9 +60,11 @@ class TreeBuilder:
         # return(new_tree, tree_dict
         return new_tree
 
-    """add an entry to treelib tree, using ab.cd.ef.gh as identifier
-       where the parent of ab.cd.ef.gh is ab.cd.eg.00"""
     def add_to_tree(id, tag, tree):
+        '''
+        Add an entry to treelib tree, using ab.cd.ef.gh as identifier
+        where the parent of ab.cd.ef.gh is ab.cd.eg.00
+        '''
         parent = TreeBuilder.get_parent(id)
         if parent == '00.00.00.00':
             tree.create_node(tag, id, parent=tree.root)  # add to root
@@ -36,9 +74,11 @@ class TreeBuilder:
             print('create parent first')
         return(tree)
 
-    """find the first occurrence of 00 in string,
-       replace previous 2 and all following digits with zeros"""
     def get_parent(str_id):
+        '''
+        Find the first occurrence of 00 in string,
+        replace previous 2 and all following digits with zeros
+        '''
         double_zero = str_id.find("00")
         if double_zero == -1:  # not found
             parent = str_id[:-3]

@@ -5,41 +5,9 @@ from TreeBuilder import TreeBuilder
 class ComparisonTree:
 
     def __init__(self):
-        #self.builder = TreeBuilder()
+        self.builder = TreeBuilder()
         #self.tree = self.builder.buildTree("simbad_raw.csv")
-        self.tree = self.buildTestTree()
-
-    def buildTestTree(self):
-        '''
-        This method builds a simple tree used for testing.
-        '''
-        tree = Tree()
-
-        # create a node with name & identifier respectively
-        # 0th level
-        tree.create_node("ROOT", "root")  # root node
-
-        # level 1
-        tree.create_node("A", "a", parent="root")
-
-        # level 2
-        tree.create_node("B", "b", parent="a")
-        tree.create_node("C", "c", parent="a")
-        tree.create_node("X", "x", parent="a")
-        tree.create_node("Y", "y", parent="a")
-        tree.create_node("Z", "z", parent="a")
-
-        # level 3
-        tree.create_node("D", "d", parent="b")
-        tree.create_node("E", "e", parent="b")
-        tree.create_node("F", "f", parent="c")
-        tree.create_node("G", "g", parent="c")
-
-        # level 4
-        tree.create_node("H", "h", parent="d")
-        #tree.create_node("I", "i", parent="d")
-
-        return tree
+        self.tree = self.builder.buildTestTree()
 
     def showTree(self):
         '''

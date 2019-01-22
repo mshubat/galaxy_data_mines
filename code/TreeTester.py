@@ -55,48 +55,16 @@ def shareCommonAncestorMethodTest(ct):
 
 if __name__ == "__main__":
 
-    # NED to SIMBAD mapping. If no direct map or one-to-many possibility,
-    # then a tuple with all possibilities is used.
-    '''
-    ned_to_simbad_dict = {
-        "*": "*",
-        "**": "**",
-        "*Ass": "As*",
-        "*Cl": "Cl*",
-        "AbLS": "ALS",
-        "Blue*": (),  # ???
-        "C*": "",
-        "EmLS": ""
-
-    }
-    '''
-    # print(test_dict["name"])
-    # print(test_dict["number"])
-    # print(test_dict["colour"])
-
-    # for key, entry in ned_to_simbad_dict.items():
-    #    print("{}, {}".format(key, entry))
-
     # Create the ComparisonTree and show the tree
 
     ct = ComparisonTree()
     ct.showTree()
 
-    # print(ct.tree.parent("14.00.00.00"))
-
     # Run tests
-    # try:
-    # siblingMethodTest(ct)
-    # parentMethodTest(ct)
-    # isOfTypeMethodTest(ct)
-    # shareCommonAncestorMethodTest(ct)
-    # except exceptions.NodeIDAbsentError:
-    #print(print("Oh no. It looks like that node is not in the tree."))
-
-    # print(ct.areSiblings("a", "a"))
-
-    # print(ct.isOfType("d", "b"))
-
-    # print(ct.test("d", "b"))
-
-    # classtree.isOfType("f", "c")
+    try:
+        siblingMethodTest(ct)
+        parentMethodTest(ct)
+        isOfTypeMethodTest(ct)
+        shareCommonAncestorMethodTest(ct)
+    except exceptions.NodeIDAbsentError:
+        print(print("Oh no. It looks like that node is not in the tree."))
