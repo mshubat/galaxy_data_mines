@@ -18,6 +18,7 @@ class TreeBuilder:
 
         # level 1
         tree.create_node("A", "a", parent="root")
+        tree.create_node("T", "t", parent="root")
 
         # level 2
         tree.create_node("B", "b", parent="a")
@@ -34,7 +35,7 @@ class TreeBuilder:
 
         # level 4
         tree.create_node("H", "h", parent="d")
-        #tree.create_node("I", "i", parent="d")
+        # tree.create_node("I", "i", parent="d")
 
         return tree
 
@@ -57,8 +58,10 @@ class TreeBuilder:
             #        id_str = num_id.replace(".","")
             new_tree = TreeBuilder.add_to_tree(num_id, tag[i], new_tree)
             tree_dict[tag[i]] = num_id
-        # return(new_tree, tree_dict
-        return new_tree
+
+        return(new_tree, tree_dict)
+
+        # return new_tree
 
     def add_to_tree(id, tag, tree):
         '''
@@ -91,3 +94,10 @@ class TreeBuilder:
         while len(parent) < 11:
             parent = parent+'.00'
         return(parent)
+
+    def match_tag_to_nid(tree, tree_dict):
+        '''
+        This function will be to match the nid to the tag of each of the
+        nodes in the tree. Since datasets provide the tags and note the
+        numeric id's, tags are more easily usable to access a specific node.
+        '''
