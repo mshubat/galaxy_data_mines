@@ -61,8 +61,6 @@ class TreeBuilder:
 
         return(new_tree, tree_dict)
 
-        # return new_tree
-
     def add_to_tree(id, tag, tree):
         '''
         Add an entry to treelib tree, using ab.cd.ef.gh as identifier
@@ -97,7 +95,5 @@ class TreeBuilder:
 
     def match_tag_to_nid(tree, tree_dict):
         '''
-        This function will be to match the nid to the tag of each of the
-        nodes in the tree. Since datasets provide the tags and note the
-        numeric id's, tags are more easily usable to access a specific node.
+        Matches identifier and tag of each node in the tree.
         '''

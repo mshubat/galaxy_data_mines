@@ -1,6 +1,14 @@
+# Tree Tester Class
+#
+# Class is used to unit test code and methods. Prior to data integration.
+#
+#
+
+
 from treelib import Node, Tree, exceptions
-from ComparisonTree import ComparisonTree
-from DataStore import DataStore
+from comparison_tree import ComparisonTree
+from data_controller import DataController
+from astropy.table import Table
 
 
 def siblingMethodTest(ct):
@@ -64,6 +72,8 @@ def shareCommonAncestorMethodTest(ct):
         ct.shareCommonAncestor("h", "t")))
     print("h and h share a common ancestor: {}".format(
         ct.shareCommonAncestor("h", "h")))
+    print("h and z share a common ancestor: {}".format(
+        ct.shareCommonAncestor("h", "z")))
 
 
 if __name__ == "__main__":
@@ -72,32 +82,12 @@ if __name__ == "__main__":
 
     ct = ComparisonTree(run_mode=True)
     ct.showTree()
-    # print(ct.dict)
-    print(ct.dict["Rad"])
-    print(ct.areSiblings("reg", "SCG"))
 
-'''
    # Run tests
     try:
-        # siblingMethodTest(ct)
-        # parentMethodTest(ct)
-        # isOfTypeMethodTest(ct)
+        siblingMethodTest(ct)
+        parentMethodTest(ct)
+        isOfTypeMethodTest(ct)
         shareCommonAncestorMethodTest(ct)
     except exceptions.NodeIDAbsentError:
         print(print("Oh no. It looks like that node is not in the tree."))
-'''
-
-#root_node = ct.tree.get_node("root")
-#a_node = ct.tree.get_node("a")
-#t_node = ct.tree.get_node("t")
-
-# print(ct.tree.parent("a").is_root())
-#print(ct.areSiblings(a_node.identifier, t_node.identifier))
-# print(a_node.identifier)
-
-store = DataStore()
-store.simbad_from_ned("*")
-store.simbad_from_ned("C*")
-store.simbad_from_ned("Neb")
-store.simbad_from_ned("GammaS")
-print(type(store.simbad_from_ned("Blue*")))

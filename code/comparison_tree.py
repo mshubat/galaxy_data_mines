@@ -1,14 +1,18 @@
 from treelib import Node, Tree
-from TreeBuilder import TreeBuilder
+from tree_builder import TreeBuilder
+from data_controller import DataController
+from astropy.table import Table, Column
 
 
 class ComparisonTree:
 
-    def __init__(self, *, run_mode):
+    def __init__(self, run_mode):
         self.builder = TreeBuilder()
         self.run_mode = run_mode
 
         if run_mode:
+            print("Run Mode: Enabled. Converting numeric\
+             id's to SIMBAD entries.")
             dictandtree = self.builder.buildTree("simbad_raw.csv")
             self.tree = dictandtree[0]
             self.dict = dictandtree[1]
@@ -27,11 +31,8 @@ class ComparisonTree:
         in the tree provided. It will return False otherwise.
         '''
         if self.run_mode:
-            print("Run Mode: Enabled. Converting nid's to SIMBAD entries.")
             firstNodeId = self.dict[firstNodeId]
             secNodeId = self.dict[secNodeId]
-        else:
-            print("Test variable is set, using literal id's.")
 
         siblings = self.tree.siblings(firstNodeId)
 
@@ -46,11 +47,8 @@ class ComparisonTree:
         second. It will return False otherwise.
         '''
         if self.run_mode:
-            print("Run Mode: Enabled. Converting nid's to SIMBAD entries.")
             firstNodeId = self.dict[firstNodeId]
             secNodeId = self.dict[secNodeId]
-        else:
-            print("Test variable is set, using literal id's.")
 
         parent = self.tree.parent(secNodeId)
 
@@ -66,25 +64,12 @@ class ComparisonTree:
         second (ie. if it is the the same type). It will return False otherwise.
         '''
         if self.run_mode:
-            print("Run Mode: Enabled. Converting nid's to SIMBAD entries.")
             firstNodeId = self.dict[firstNodeId]
             secNodeId = self.dict[secNodeId]
-        else:
-            print("Test variable is set, using literal id's.")
 
         subtree = self.tree.subtree(secNodeId)
 
         return subtree.contains(firstNodeId)
-
-    def test(self, firstNodeId, secNodeId):
-        return areSiblings(firstNodeId, secNodeId)
-
-        if self.run_mode:
-            print("Run Mode: Enabled. Converting nid's to SIMBAD entries.")
-            firstNodeId = self.dict[firstNodeId]
-            secNodeId = self.dict[secNodeId]
-        else:
-            print("Test variable is set, using literal id's.")
 
     def shareCommonAncestor(self, firstNodeId, secNodeId):
         '''
@@ -92,11 +77,8 @@ class ComparisonTree:
         nodeIDs share a common ancestor. Return False othewise.
         '''
         if self.run_mode:
-            print("Run Mode: Enabled. Converting nid's to SIMBAD entries.")
             firstNodeId = self.dict[firstNodeId]
             secNodeId = self.dict[secNodeId]
-        else:
-            print("Test variable is set, using literal id's.")
 
         first_node = self.tree.get_node(firstNodeId)
         sec_node = self.tree.get_node(secNodeId)
@@ -118,3 +100,33 @@ class ComparisonTree:
             else:
                 p = self.tree.parent(p.identifier)
         return False
+
+    def compare_objects(self, t):
+        '''
+        Once you have the matched table is either generated or imported
+        we need to do the comparisons between NED and SIMBAD objects.
+
+        t - the combined table fetched or generated.
+        '''
+        tsize = len(t)
+
+        cols = []
+        cols.append(Column(name='exactMatch', length=tsize, dtype=bool))
+        cols.append(Column(name='candidateMatch', length=tsize, dtype=bool))
+        t.add_columns(cols)
+
+        print(DataController.ned_to_simbad("*Ass"))
+
+        for i in range(0, tsize):
+            if (DataController.ned_to_simbad(t["Type_N"][i]) == t["Type_S"][i]):
+                t["exactMatch"][i] = True
+            elif (DataController.ned_to_simbad(t["Type_N"][i])+"?" == t["Type_S"][i]):
+                t["candidateMatch"][i] = True
+            else:
+                print("N: {} S: {}".format(DataController.ned_to_simbad(t["Type_N"][i]),
+                                           t["Type_S"][i]))
+        a = "star"
+        b = "plus"
+
+        a = a + b
+        print(a)

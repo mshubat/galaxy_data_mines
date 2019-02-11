@@ -86,14 +86,14 @@ def reformat_cat(in_tab, old_name, new_name, old_type, new_type, replace_names=n
     in_tab.rename_column(old_type, new_type)
 
     # reformat some object names
-    # for pair in replace_names:
-    #    in_tab[new_name] = np.char.replace(in_tab[new_name], pair[0], pair[1])
+    for pair in replace_names:
+        in_tab[new_name] = np.char.replace(in_tab[new_name], pair[0], pair[1])
 
     # reformat some object types # ***** MATT S. Can remove this code, will be handled by dictionary
-    #in_tab[new_type] = np.char.replace(in_tab[new_type], "?", "")
-    #in_tab[new_type] = np.char.replace(in_tab[new_type], " ", "")
-    # for pair in replace_types:
-    #    in_tab[new_type][in_tab[new_type] == pair[0]] = pair[1]
+    in_tab[new_type] = np.char.replace(in_tab[new_type], "?", "")
+    in_tab[new_type] = np.char.replace(in_tab[new_type], " ", "")
+    for pair in replace_types:
+        in_tab[new_type][in_tab[new_type] == pair[0]] = pair[1]
 
     # delete rows whose names are in remove_id
     # there's a non-loopy way to do this but I can't remember it
