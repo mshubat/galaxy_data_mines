@@ -130,6 +130,6 @@ class DataController:
 
     def saveTable(self, *, fileName):
 
-        self.combined_table.write('alteredTable.csv',
+        self.combined_table.write(fileName,
                                   format='ascii.csv',
                                   fast_writer=False)

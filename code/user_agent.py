@@ -12,5 +12,5 @@ data.load_data(combined_table)
 
 ct.compare_objects(data.combined_table)
 # load the data from the file and
-
+data.saveTable(fileName="alteredTable.csv")
 data.combined_table.show_in_browser(jsviewer=True)
