@@ -80,9 +80,17 @@ if __name__ == "__main__":
 
     # Create and Show the ComparisonTree
 
-    ct = ComparisonTree(run_mode=True)
-    ct.showTree()
+    ct = ComparisonTree(run_mode=False)
+    # ct.showTree()
+    ct.tree.save2file("savedTree", nid="10.00.00.00")
 
+    str_test = ct.tree.to_json()
+    dic_test = ct.tree.to_dict()
+
+    print(dic_test)
+    print(dic_test["ROOT"])
+    print(dic_test["ROOT"]["children"])
+'''
    # Run tests
     try:
         siblingMethodTest(ct)
@@ -91,3 +99,4 @@ if __name__ == "__main__":
         shareCommonAncestorMethodTest(ct)
     except exceptions.NodeIDAbsentError:
         print(print("Oh no. It looks like that node is not in the tree."))
+'''

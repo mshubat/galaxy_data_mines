@@ -2,11 +2,12 @@ from treelib import Node, Tree
 from tree_builder import TreeBuilder
 from data_controller import DataController
 from astropy.table import Table, Column
+import numpy as np
 
 
 class ComparisonTree:
 
-    def __init__(self, run_mode):
+    def __init__(self, *, run_mode):
         self.builder = TreeBuilder()
         self.run_mode = run_mode
 
@@ -24,6 +25,14 @@ class ComparisonTree:
         Allows ComparisonTree user to call Tree show() function more easily.
         '''
         self.tree.show()
+
+    def areDirectMatch(self, Type_N, Type_S):
+        return Type_N == Type_S
+
+    def areCandidateMatch(self, *, Type_N, Type_S):
+
+        if (Type_N + "?" == Type_S):
+            return True
 
     def areSiblings(self, firstNodeId, secNodeId):
         '''
@@ -113,20 +122,30 @@ class ComparisonTree:
         cols = []
         cols.append(Column(name='exactMatch', length=tsize, dtype=bool))
         cols.append(Column(name='candidateMatch', length=tsize, dtype=bool))
+        # cols.append(Column(name='shareCommonAncestor', length=tsize, dtype=bool))
+        # cols.append(Column(name='areSiblings', length=tsize, dtype=bool))
+
+        # t.index_column("Type_N")
+        t.add_column(Column(name="Type_N_Analogue", length=tsize, dtype=np.dtype(('U', 8))),
+                     index=t.index_column("Type_N")+1)
         t.add_columns(cols)
 
-        print(DataController.ned_to_simbad("*Ass"))
-
         for i in range(0, tsize):
-            if (DataController.ned_to_simbad(t["Type_N"][i]) == t["Type_S"][i]):
-                t["exactMatch"][i] = True
-            elif (DataController.ned_to_simbad(t["Type_N"][i])+"?" == t["Type_S"][i]):
-                t["candidateMatch"][i] = True
-            else:
-                print("N: {} S: {}".format(DataController.ned_to_simbad(t["Type_N"][i]),
-                                           t["Type_S"][i]))
-        a = "star"
-        b = "plus"
+            ned_analogue = DataController.ned_to_simbad(t["Type_N"][i])
+            t["Type_N_Analogue"][i] = ned_analogue
 
-        a = a + b
-        print(a)
+            if (self.areDirectMatch(ned_analogue, t["Type_S"][i])):
+                t["exactMatch"][i] = True
+                print("match i={} - N: {} S: {}".format(i,
+                                                        ned_analogue,
+                                                        t["Type_S"][i]))
+            elif (self.areCandidateMatch(Type_N=ned_analogue, Type_S=t["Type_S"][i])):
+                t["candidateMatch"][i] = True
+                print("candidateMatch i={} - N: {} S: {}".format(i,
+                                                                 ned_analogue,
+                                                                 t["Type_S"][i]))
+
+            else:
+                print("non-match i={} - N: {} S: {}".format(i,
+                                                            ned_analogue,
+                                                            t["Type_S"][i]))

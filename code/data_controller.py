@@ -127,3 +127,9 @@ class DataController:
 
     def match_by_objects_location(self):
         pass
+
+    def saveTable(self, *, fileName):
+
+        self.combined_table.write('alteredTable.csv',
+                                  format='ascii.csv',
+                                  fast_writer=False)

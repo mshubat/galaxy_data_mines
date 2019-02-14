@@ -6,7 +6,7 @@ from comparison_tree import ComparisonTree
 combined_table = "M83_NScomb_myTest.fits"
 # ned_name = input("Please enter the NED filename: ")
 
-ct = ComparisonTree(True)
+ct = ComparisonTree(run_mode=True)
 data = DataController()
 data.load_data(combined_table)
 
