@@ -122,30 +122,38 @@ class ComparisonTree:
         cols = []
         cols.append(Column(name='exactMatch', length=tsize, dtype=bool))
         cols.append(Column(name='candidateMatch', length=tsize, dtype=bool))
+        cols.append(Column(name='areSiblings', length=tsize, dtype=bool))
         # cols.append(Column(name='shareCommonAncestor', length=tsize, dtype=bool))
-        # cols.append(Column(name='areSiblings', length=tsize, dtype=bool))
 
-        # t.index_column("Type_N")
+        # Insert NED Analogues right after the Name_N column.
         t.add_column(Column(name="Type_N_Analogue", length=tsize, dtype=np.dtype(('U', 8))),
                      index=t.index_column("Type_N")+1)
+        t.add_column(Column(name="Type_S_cond", length=tsize, dtype=np.dtype(('U', 8))),
+                     index=t.index_column("Type_S")+1)
         t.add_columns(cols)
 
         for i in range(0, tsize):
             ned_analogue = DataController.ned_to_simbad(t["Type_N"][i])
             t["Type_N_Analogue"][i] = ned_analogue
+            t["Type_S_cond"][i] = DataController.simbad_long_to_small(t["Type_S"][i])
 
-            if (self.areDirectMatch(ned_analogue, t["Type_S"][i])):
+            if (self.areDirectMatch(t["Type_N_Analogue"][i], t["Type_S"][i])):
                 t["exactMatch"][i] = True
                 print("match i={} - N: {} S: {}".format(i,
                                                         ned_analogue,
                                                         t["Type_S"][i]))
-            elif (self.areCandidateMatch(Type_N=ned_analogue, Type_S=t["Type_S"][i])):
+            elif (self.areCandidateMatch(Type_N=t["Type_N_Analogue"][i], Type_S=t["Type_S"][i])):
                 t["candidateMatch"][i] = True
                 print("candidateMatch i={} - N: {} S: {}".format(i,
                                                                  ned_analogue,
                                                                  t["Type_S"][i]))
-
             else:
                 print("non-match i={} - N: {} S: {}".format(i,
                                                             ned_analogue,
                                                             t["Type_S"][i]))
+
+            '''elif (self.areSiblings(t["Type_N_Analogue"][i], t["Type_S"][i])):
+                t["areSiblings"][i] = True
+                print("areSiblings i={} - N: {} S: {}".format(i,
+                                                              ned_analogue,
+                                                              t["Type_S"][i]))'''

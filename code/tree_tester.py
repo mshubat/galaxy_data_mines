@@ -80,9 +80,10 @@ if __name__ == "__main__":
 
     # Create and Show the ComparisonTree
 
-    ct = ComparisonTree(run_mode=False)
-    # ct.showTree()
-    ct.tree.save2file("savedTree", nid="10.00.00.00")
+    ct = ComparisonTree(run_mode=True)
+    ct.showTree()
+    # ct.tree.save2file("savedTree")
+    #ct.tree.save2file("savedTree", nid="10.00.00.00")
 
     str_test = ct.tree.to_json()
     dic_test = ct.tree.to_dict()
@@ -90,6 +91,7 @@ if __name__ == "__main__":
     print(dic_test)
     print(dic_test["ROOT"])
     print(dic_test["ROOT"]["children"])
+
 '''
    # Run tests
     try:
