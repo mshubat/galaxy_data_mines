@@ -31,17 +31,31 @@ class ComparisonTree:
 
     def areCandidateMatch(self, *, Type_N, Type_S):
 
-        if (Type_N + "?" == Type_S):
+        try:
+            cmatch = DataController.candidate_match(Type_N) == Type_S
+        except KeyError:
+            return False
+
+        if (cmatch):
             return True
+        else:
+            return False
 
     def areSiblings(self, firstNodeId, secNodeId):
         '''
         This function will return True if two nodes are siblings
         in the tree provided. It will return False otherwise.
         '''
+        # tag->id dict has no entry for null string
+        if firstNodeId == "":
+            return False
+
         if self.run_mode:
             firstNodeId = self.dict[firstNodeId]
             secNodeId = self.dict[secNodeId]
+
+        if (self.tree.parent(firstNodeId).identifier == "root") or (self.tree.parent(secNodeId).identifier == "root"):
+            return False
 
         siblings = self.tree.siblings(firstNodeId)
 
@@ -137,23 +151,22 @@ class ComparisonTree:
             t["Type_N_Analogue"][i] = ned_analogue
             t["Type_S_cond"][i] = DataController.simbad_long_to_small(t["Type_S"][i])
 
-            if (self.areDirectMatch(t["Type_N_Analogue"][i], t["Type_S"][i])):
+            if (self.areDirectMatch(t["Type_N_Analogue"][i], t["Type_S_cond"][i])):
                 t["exactMatch"][i] = True
                 print("match i={} - N: {} S: {}".format(i,
                                                         ned_analogue,
                                                         t["Type_S"][i]))
-            elif (self.areCandidateMatch(Type_N=t["Type_N_Analogue"][i], Type_S=t["Type_S"][i])):
+            elif (self.areCandidateMatch(Type_N=t["Type_N_Analogue"][i], Type_S=t["Type_S_cond"][i])):
                 t["candidateMatch"][i] = True
                 print("candidateMatch i={} - N: {} S: {}".format(i,
                                                                  ned_analogue,
                                                                  t["Type_S"][i]))
+            elif (self.areSiblings(t["Type_N_Analogue"][i], t["Type_S_cond"][i])):
+                t["areSiblings"][i] = True
+                print("areSiblings i={} - N: {} S: {}".format(i,
+                                                              ned_analogue,
+                                                              t["Type_S"][i]))
             else:
                 print("non-match i={} - N: {} S: {}".format(i,
                                                             ned_analogue,
                                                             t["Type_S"][i]))
-
-            '''elif (self.areSiblings(t["Type_N_Analogue"][i], t["Type_S"][i])):
-                t["areSiblings"][i] = True
-                print("areSiblings i={} - N: {} S: {}".format(i,
-                                                              ned_analogue,
-                                                              t["Type_S"][i]))'''

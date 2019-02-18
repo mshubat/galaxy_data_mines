@@ -32,7 +32,7 @@ id,long_name,tag
 "10.02.00.00",Possible_SClG,SC?
 "10.03.00.00",Possible_ClG,C?G
 "10.04.00.00",Possible_GrG,Gr?
-"10.06.00.00",Possible_As*,A*
+"10.06.00.00",Possible_As*,As?
 "10.11.00.00",Candidate_**,**?
 "10.11.01.00",Candidate_EB*,EB?
 "10.11.10.00",Candidate_Symb*,Sy?
@@ -174,7 +174,7 @@ id,long_name,tag
 "14.09.03.01",Flare*,Fl*
 "14.09.03.02",FUOr,FU*
 "14.09.03.04",Erupt*RCrB,RC*
-"14.09.03.05",RCrB_Candida,teRC?
+"14.09.03.05",RCrB_Candidate,RC?
 "14.09.04.00",RotV*,Ro*
 "14.09.04.01",RotV*alf2CVn,a2*
 "14.09.04.03",Pulsar,Psr

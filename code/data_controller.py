@@ -116,7 +116,7 @@ class DataController:
         "Possible_SClG": "SC?",
         "Possible_ClG": "C?G",
         "Possible_GrG": "Gr?",
-        "Possible_As*": "A*",
+        "Possible_As*": "As?",
         "Candidate_**": "**?",
         "Candidate_EB*": "EB?",
         "Candidate_Symb*": "Sy?",
@@ -258,7 +258,7 @@ class DataController:
         "Flare*": "Fl*",
         "FUOr": "FU*",
         "Erupt*RCrB": "RC*",
-        "RCrB_Candida": "teRC?",
+        "RCrB_Candidate": "RC?",
         "RotV*": "Ro*",
         "RotV*alf2CVn": "a2*",
         "Pulsar": "Psr",
@@ -318,6 +318,67 @@ class DataController:
         "QSO": "QSO",
     }
 
+    candidate_dict = {
+        "ULX": "UX?",
+        "gLS": "LS?",
+        "gLe": "Le?",
+        "LeI": "LI?",
+        "G": "G?",
+        "SCG": "SC?",
+        "ClG": "C?G",
+        "GrG": "Gr?",
+        "**": "**?",
+        "EB*": "EB?",
+        "Sy*": "Sy?",
+        "CV*": "CV?",
+        "No*": "No?",
+        "XB*": "XB?",
+        "LXB": "LX?",
+        "HXB": "HX?",
+        "Pe*": "Pec?",
+        "Y*O": "Y*?",
+        "pr*": "pr?",
+        "TT*": "TT?",
+        "C*": "C*?",
+        "S*": "S*?",
+        "OH*": "OH?",
+        "CH*": "CH?",
+        "WR*": "WR?",
+        "Be*": "Be?",
+        "Ae*": "Ae?",
+        "HB*": "HB?",
+        "RR*": "RR?",
+        "Ce*": "Ce?",
+        "RG*": "RB?",
+        "sg*": "sg?",
+        "s*r": "s?r",
+        "s*y": "s?y",
+        "s*b": "s?b",
+        "AB*": "AB?",
+        "LP*": "LP?",
+        "Mi*": "Mi?",
+        "sr*": "sv?",
+        "pA*": "pA?",
+        "BS*": "BS?",
+        "WD*": "WD?",
+        "N*": "N*?",
+        "SN*": "SN?",
+        "LM*": "LM?",
+        "BD*": "BD?",
+        "Cl*": "C?*",
+        "GlC": "Gl?",
+        "PN": "PN?",
+        "SNR": "SR?",
+        "out": "of?",
+        "V*": "V*?",
+        "RC*": "RC?",
+        "Pl": "Pl?",
+        "AGN": "AG?",
+        "QSO": "Q?",
+        "Bla": "Bz?",
+        "BLL": "BL?",
+    }
+
     def __init__(self):
         self.combined_table = None
 
@@ -328,6 +389,10 @@ class DataController:
     @staticmethod
     def simbad_long_to_small(simbad_std):
         return DataController.simbad_std_to_cond[simbad_std]
+
+    @staticmethod
+    def candidate_match(non_candidate):
+        return DataController.candidate_dict[non_candidate]
 
     def download_data(self):
         '''
