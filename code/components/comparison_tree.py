@@ -86,19 +86,23 @@ class ComparisonTree:
         This method will return True if the first node is a descendent of the
         second (ie. if it is the the same type). It will return False otherwise.
         '''
-        if self.run_mode:
-            firstNodeId = self.dict[firstNodeId]
-            secNodeId = self.dict[secNodeId]
+        # if self.run_mode:
+        #    firstNodeId = self.dict[firstNodeId]
+        #    secNodeId = self.dict[secNodeId]
 
         subtree = self.tree.subtree(secNodeId)
 
         return subtree.contains(firstNodeId)
 
-    def shareCommonAncestor(self, firstNodeId, secNodeId):
+    def in_same_category(self, firstNodeId, secNodeId):
         '''
         This method will return True if the nodes corresponding to the given
         nodeIDs share a common ancestor. Return False othewise.
         '''
+        # tag->id dict has no entry for null string
+        if firstNodeId == "":
+            return False
+
         if self.run_mode:
             firstNodeId = self.dict[firstNodeId]
             secNodeId = self.dict[secNodeId]
@@ -106,18 +110,21 @@ class ComparisonTree:
         first_node = self.tree.get_node(firstNodeId)
         sec_node = self.tree.get_node(secNodeId)
 
+        if self.isOfType(firstNodeId, secNodeId) or self.isOfType(secNodeId, firstNodeId):
+            return True
+
         # If the nodes are at the top level they do not share a common
         # ancestor. ie. Star and Galaxy. and their parent is root.
         if (self.tree.parent(firstNodeId).is_root() or
                 self.tree.parent(secNodeId).is_root()):
+            print("parent is root")
             return False
-        else:
-            return True
 
         # Otherwise traverse up to look for common ancestor.
         current_node_id = firstNodeId
         p = self.tree.parent(current_node_id)
         while (p and not p.identifier == "root"):
+            print("Current p is : {}".format(p))
             if (self.isOfType(secNodeId, p.identifier)):
                 return True
             else:
@@ -134,10 +141,10 @@ class ComparisonTree:
         tsize = len(t)
 
         cols = []
-        cols.append(Column(name='exactMatch', length=tsize, dtype=bool))
-        cols.append(Column(name='candidateMatch', length=tsize, dtype=bool))
-        cols.append(Column(name='areSiblings', length=tsize, dtype=bool))
-        # cols.append(Column(name='shareCommonAncestor', length=tsize, dtype=bool))
+        cols.append(Column(name='Exact Match', length=tsize, dtype=bool))
+        cols.append(Column(name='Candidate Match', length=tsize, dtype=bool))
+        cols.append(Column(name='Same Category', length=tsize, dtype=bool))
+        cols.append(Column(name='Same Level', length=tsize, dtype=bool))
 
         # Insert NED Analogues right after the Name_N column.
         t.add_column(Column(name="Type_N_Analogue", length=tsize, dtype=np.dtype(('U', 8))),
@@ -152,20 +159,26 @@ class ComparisonTree:
             t["Type_S_cond"][i] = DataController.simbad_long_to_small(t["Type_S"][i])
 
             if (self.areDirectMatch(t["Type_N_Analogue"][i], t["Type_S_cond"][i])):
-                t["exactMatch"][i] = True
+                t["Exact Match"][i] = True
                 print("match i={} - N: {} S: {}".format(i,
                                                         ned_analogue,
                                                         t["Type_S"][i]))
             elif (self.areCandidateMatch(Type_N=t["Type_N_Analogue"][i], Type_S=t["Type_S_cond"][i])):
-                t["candidateMatch"][i] = True
+                t["Candidate Match"][i] = True
                 print("candidateMatch i={} - N: {} S: {}".format(i,
                                                                  ned_analogue,
                                                                  t["Type_S"][i]))
-            elif (self.areSiblings(t["Type_N_Analogue"][i], t["Type_S_cond"][i])):
-                t["areSiblings"][i] = True
-                print("areSiblings i={} - N: {} S: {}".format(i,
-                                                              ned_analogue,
-                                                              t["Type_S"][i]))
+            elif self.in_same_category(t["Type_N_Analogue"][i], t["Type_S_cond"][i]):
+                t["Same Category"][i] = True
+                print("Same Category i={} - N: {} S: {}".format(i,
+                                                                ned_analogue,
+                                                                t["Type_S"][i]))
+
+                if (self.areSiblings(t["Type_N_Analogue"][i], t["Type_S_cond"][i])):
+                    t["Same Level"][i] = True
+                    print("areSiblings i={} - N: {} S: {}".format(i,
+                                                                  ned_analogue,
+                                                                  t["Type_S"][i]))
             else:
                 print("non-match i={} - N: {} S: {}".format(i,
                                                             ned_analogue,

@@ -1,0 +1,18 @@
+clustering_labels                        ^            AK-extracted catalog entries for specific object types
+hlsp_wfc3ers_hst_wfc3_m83_cat_all_v2-corrected.txt ^  Link to ERS catalog
+hubble_src_cat-m83.csv                  ^             Hubble Source Catalog objects near M83, downloaded via http://archive.stsci.edu/hst/hsc_sum/search.php
+hubble_src_cat-m83.fits                 ^             modified version of above (RA/Dec in degrees)
+kim12_wr.fits                           ^             table with location of WR stars from Kim et al 2012 (see other_datasets for prelim version)
+m83_ers_pubcat_by_object                ^             region and txt files for each category of objecct in M83_ers_pubcat.txt
+M83_ers_pubcat.txt                       ^           result of matching M83_final.fits with hlsp_wfc3ers...
+M83_final.fits                            ^           combined published catalogs: M83_NSall.fits+kim12_er.fits+williams15_reg.fits
+M83_NSall.fits                            ^           NED & simbad combined catalog (1 entry/obj) produced by published_cats.py
+M83_NScomb.fits                            ^          NED & simbad matches produced by published_cats.py
+ned-20160629.fits                         ^           Result of TOPCAT: VO->Cone Search. Centre on 204.26761, -29.839939 radius 3.3arcmin.
+ned-non-simbad.20160629.fits              ^           Matching result from ned-20160629.fits and simbad-20160629.fits: NED objects not in SIMBAD.
+ned-simbad-match.20160629.fits            ^           Matching result from ned-20160629.fits and simbad-20160629.fits: best match, symmetric.
+other_datasets                            ^           tables from published papers with catalogs of objects in M83
+published_cats.py                         ^           code for matching/combining published catalogs with each & with ERS catalog
+simbad-20160629.fits                      ^           Result of TOPCAT: VO->Cone Search. Centre on 204.26761, -29.839939 radius 3.3arcmin.
+simbad-non-ned.20160629.fits              ^           Matching result from ned-20160629.fits and simbad-20160629.fits: SIMBAD objects not in NED.
+williams15_rsg.fits                       ^           table with location of RSG stars from Williams et al 2015 (see other_datasets for prelim version)

@@ -1,0 +1,1297 @@
+Run Mode: Enabled. Converting numeric             id's to SIMBAD entries.
+parent is root
+non-match i=0 - N: X S: SNR?
+parent is root
+non-match i=1 - N: X S: Cl*?
+parent is root
+non-match i=2 - N: X S: SNR
+parent is root
+non-match i=3 - N: X S: Cl*
+candidateMatch i=4 - N: Cl* S: Cl*?
+Same Category i=5 - N: PoG S: Galaxy
+Same Category i=6 - N: PoG S: Galaxy
+parent is root
+non-match i=7 - N: Rad S: X
+parent is root
+non-match i=8 - N: Rad S: Cl*
+parent is root
+non-match i=9 - N: X S: HII
+parent is root
+non-match i=10 - N: X S: HII
+match i=11 - N: X S: X
+match i=12 - N: X S: X
+match i=13 - N: X S: X
+match i=14 - N: X S: X
+parent is root
+non-match i=15 - N: X S: Star
+parent is root
+non-match i=16 - N: X S: StarburstG
+match i=17 - N: X S: X
+parent is root
+non-match i=18 - N: X S: Radio
+match i=19 - N: X S: X
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+non-match i=20 - N: HII S: Cl*
+parent is root
+non-match i=21 - N: Cl* S: X
+match i=22 - N: X S: X
+match i=23 - N: X S: X
+parent is root
+non-match i=24 - N: X S: Cl*?
+parent is root
+non-match i=25 - N: X S: SNR
+candidateMatch i=26 - N: SNR S: SNR?
+parent is root
+non-match i=27 - N: X S: PN
+parent is root
+non-match i=28 - N: HII S: X
+match i=29 - N: X S: X
+match i=30 - N: X S: X
+match i=31 - N: X S: X
+match i=32 - N: X S: X
+match i=33 - N: X S: X
+match i=34 - N: X S: X
+match i=35 - N: X S: X
+parent is root
+non-match i=36 - N: HII S: X
+parent is root
+non-match i=37 - N: G S: X
+candidateMatch i=38 - N: SNR S: SNR?
+match i=39 - N: X S: X
+candidateMatch i=40 - N: SNR S: SNR?
+parent is root
+non-match i=41 - N: X S: SNR
+match i=42 - N: X S: X
+match i=43 - N: X S: X
+candidateMatch i=44 - N: SNR S: SNR?
+match i=45 - N: SNR S: SNR
+parent is root
+non-match i=46 - N: Cl* S: X
+match i=47 - N: X S: X
+parent is root
+non-match i=48 - N: X S: SNR?
+match i=49 - N: X S: X
+match i=50 - N: X S: X
+match i=51 - N: X S: X
+candidateMatch i=52 - N: SNR S: SNR?
+match i=53 - N: X S: X
+match i=54 - N: X S: X
+match i=55 - N: SNR S: SNR
+match i=56 - N: X S: X
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+Same Category i=57 - N: HII S: SNR
+areSiblings i=57 - N: HII S: SNR
+parent is root
+non-match i=58 - N: SNR S: X
+match i=59 - N: X S: X
+parent is root
+non-match i=60 - N: HII S: X
+parent is root
+non-match i=61 - N: Cl* S: X
+match i=62 - N: X S: X
+match i=63 - N: X S: X
+match i=64 - N: X S: X
+match i=65 - N: X S: X
+match i=66 - N: X S: X
+match i=67 - N: X S: X
+parent is root
+non-match i=68 - N: X S: SNR?
+match i=69 - N: X S: X
+match i=70 - N: X S: X
+parent is root
+non-match i=71 - N: Cl* S: X
+match i=72 - N: X S: X
+candidateMatch i=73 - N: SNR S: SNR?
+match i=74 - N: X S: X
+parent is root
+non-match i=75 - N: X S: SNR
+match i=76 - N: X S: X
+match i=77 - N: X S: X
+match i=78 - N: X S: X
+match i=79 - N: X S: X
+match i=80 - N: X S: X
+match i=81 - N: X S: X
+parent is root
+non-match i=82 - N: X S: SNR
+match i=83 - N: X S: X
+match i=84 - N: X S: X
+match i=85 - N: Cl* S: Cl*
+match i=86 - N: SNR S: SNR
+match i=87 - N: SNR S: SNR
+candidateMatch i=88 - N: SNR S: SNR?
+candidateMatch i=89 - N: SNR S: SNR?
+candidateMatch i=90 - N: SNR S: SNR?
+candidateMatch i=91 - N: SNR S: SNR?
+candidateMatch i=92 - N: SNR S: SNR?
+Same Category i=93 - N: SNR S: ISM
+candidateMatch i=94 - N: SNR S: SNR?
+candidateMatch i=95 - N: SNR S: SNR?
+candidateMatch i=96 - N: SNR S: SNR?
+candidateMatch i=97 - N: SNR S: SNR?
+candidateMatch i=98 - N: SNR S: SNR?
+candidateMatch i=99 - N: SNR S: SNR?
+candidateMatch i=100 - N: SNR S: SNR?
+candidateMatch i=101 - N: SNR S: SNR?
+candidateMatch i=102 - N: SNR S: SNR?
+candidateMatch i=103 - N: SNR S: SNR?
+match i=104 - N: SNR S: SNR
+candidateMatch i=105 - N: SNR S: SNR?
+candidateMatch i=106 - N: SNR S: SNR?
+candidateMatch i=107 - N: SNR S: SNR?
+candidateMatch i=108 - N: SNR S: SNR?
+candidateMatch i=109 - N: SNR S: SNR?
+candidateMatch i=110 - N: SNR S: SNR?
+candidateMatch i=111 - N: SNR S: SNR?
+candidateMatch i=112 - N: SNR S: SNR?
+candidateMatch i=113 - N: SNR S: SNR?
+candidateMatch i=114 - N: SNR S: SNR?
+candidateMatch i=115 - N: SNR S: SNR?
+candidateMatch i=116 - N: SNR S: SNR?
+candidateMatch i=117 - N: SNR S: SNR?
+candidateMatch i=118 - N: SNR S: SNR?
+candidateMatch i=119 - N: SNR S: SNR?
+candidateMatch i=120 - N: SNR S: SNR?
+candidateMatch i=121 - N: SNR S: SNR?
+candidateMatch i=122 - N: SNR S: SNR?
+candidateMatch i=123 - N: SNR S: SNR?
+candidateMatch i=124 - N: SNR S: SNR?
+candidateMatch i=125 - N: SNR S: SNR?
+candidateMatch i=126 - N: SNR S: SNR?
+candidateMatch i=127 - N: SNR S: SNR?
+non-match i=128 - N:  S: EmObj
+match i=129 - N: WR* S: WR*
+non-match i=130 - N:  S: SNR?
+match i=131 - N: SNR S: SNR
+non-match i=132 - N:  S: SNR?
+non-match i=133 - N:  S: EmObj
+non-match i=134 - N:  S: SNR?
+match i=135 - N: WR* S: WR*
+match i=136 - N: WR* S: WR*
+non-match i=137 - N:  S: SNR?
+non-match i=138 - N:  S: SNR?
+non-match i=139 - N:  S: EmObj
+non-match i=140 - N:  S: EmObj
+non-match i=141 - N:  S: SNR?
+non-match i=142 - N:  S: EmObj
+match i=143 - N: SNR S: SNR
+match i=144 - N: SNR S: SNR
+candidateMatch i=145 - N: SNR S: SNR?
+match i=146 - N: SNR S: SNR
+candidateMatch i=147 - N: SNR S: SNR?
+candidateMatch i=148 - N: SNR S: SNR?
+match i=149 - N: SNR S: SNR
+candidateMatch i=150 - N: SNR S: SNR?
+candidateMatch i=151 - N: SNR S: SNR?
+candidateMatch i=152 - N: SNR S: SNR?
+candidateMatch i=153 - N: SNR S: SNR?
+candidateMatch i=154 - N: SNR S: SNR?
+candidateMatch i=155 - N: SNR S: SNR?
+match i=156 - N: SNR S: SNR
+match i=157 - N: SNR S: SNR
+candidateMatch i=158 - N: SNR S: SNR?
+candidateMatch i=159 - N: SNR S: SNR?
+match i=160 - N: SNR S: SNR
+candidateMatch i=161 - N: SNR S: SNR?
+match i=162 - N: SNR S: SNR
+candidateMatch i=163 - N: SNR S: SNR?
+candidateMatch i=164 - N: SNR S: SNR?
+candidateMatch i=165 - N: SNR S: SNR?
+candidateMatch i=166 - N: SNR S: SNR?
+match i=167 - N: SNR S: SNR
+candidateMatch i=168 - N: SNR S: SNR?
+candidateMatch i=169 - N: SNR S: SNR?
+candidateMatch i=170 - N: SNR S: SNR?
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+Same Category i=171 - N: Cld S: SNR?
+areSiblings i=171 - N: Cld S: SNR?
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+Same Category i=172 - N: Cld S: SNR?
+areSiblings i=172 - N: Cld S: SNR?
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+Same Category i=173 - N: Cld S: SNR?
+areSiblings i=173 - N: Cld S: SNR?
+match i=174 - N: SNR S: SNR
+candidateMatch i=175 - N: SNR S: SNR?
+candidateMatch i=176 - N: SNR S: SNR?
+candidateMatch i=177 - N: SNR S: SNR?
+match i=178 - N: SNR S: SNR
+candidateMatch i=179 - N: SNR S: SNR?
+candidateMatch i=180 - N: SNR S: SNR?
+match i=181 - N: X S: X
+parent is root
+non-match i=182 - N: Rad S: MolCld
+parent is root
+non-match i=183 - N: Rad S: SNR
+parent is root
+non-match i=184 - N: Rad S: Cl*
+parent is root
+non-match i=185 - N: Rad S: SNR
+parent is root
+non-match i=186 - N: Rad S: X
+parent is root
+non-match i=187 - N: Rad S: SNR?
+parent is root
+non-match i=188 - N: Rad S: MolCld
+parent is root
+non-match i=189 - N: Rad S: Cl*?
+parent is root
+non-match i=190 - N: Rad S: X
+parent is root
+non-match i=191 - N: Rad S: Cl*
+parent is root
+non-match i=192 - N: Rad S: SNR
+parent is root
+non-match i=193 - N: Rad S: Cl*
+parent is root
+non-match i=194 - N: Rad S: SNR
+parent is root
+non-match i=195 - N: Rad S: HII
+parent is root
+non-match i=196 - N: Rad S: Cl*?
+parent is root
+non-match i=197 - N: Rad S: Cl*?
+parent is root
+non-match i=198 - N: Rad S: Cl*?
+parent is root
+non-match i=199 - N: Rad S: Cl*?
+parent is root
+non-match i=200 - N: Rad S: HII
+parent is root
+non-match i=201 - N: Rad S: Cl*?
+parent is root
+non-match i=202 - N: Rad S: Cl*?
+parent is root
+non-match i=203 - N: Rad S: Cl*
+parent is root
+non-match i=204 - N: Rad S: Cl*
+parent is root
+non-match i=205 - N: Rad S: Cl*?
+match i=206 - N: Rad S: Radio
+parent is root
+non-match i=207 - N: Rad S: HII
+parent is root
+non-match i=208 - N: Rad S: HII
+parent is root
+non-match i=209 - N: Rad S: PN
+parent is root
+non-match i=210 - N: Rad S: SNR?
+parent is root
+non-match i=211 - N: Rad S: PN
+parent is root
+non-match i=212 - N: X S: MolCld
+parent is root
+non-match i=213 - N: X S: Cepheid
+parent is root
+non-match i=214 - N: X S: Cl*?
+parent is root
+non-match i=215 - N: X S: IR
+parent is root
+non-match i=216 - N: X S: EmObj
+parent is root
+non-match i=217 - N: X S: Cl*?
+parent is root
+non-match i=218 - N: X S: SNR?
+parent is root
+non-match i=219 - N: X S: Cepheid
+parent is root
+non-match i=220 - N: X S: SNR?
+parent is root
+non-match i=221 - N: X S: HII
+parent is root
+non-match i=222 - N: X S: HII
+parent is root
+non-match i=223 - N: X S: Cl*?
+parent is root
+non-match i=224 - N: X S: Cepheid
+parent is root
+non-match i=225 - N: X S: Cepheid
+parent is root
+non-match i=226 - N: X S: Radio
+parent is root
+non-match i=227 - N: X S: MolCld
+parent is root
+non-match i=228 - N: X S: Cl*
+parent is root
+non-match i=229 - N: X S: SNR
+parent is root
+non-match i=230 - N: X S: HII
+parent is root
+non-match i=231 - N: X S: SNR?
+parent is root
+non-match i=232 - N: X S: Cl*
+parent is root
+non-match i=233 - N: X S: Cl*
+match i=234 - N: X S: X
+parent is root
+non-match i=235 - N: X S: SNR
+parent is root
+non-match i=236 - N: X S: V*
+match i=237 - N: X S: X
+parent is root
+non-match i=238 - N: X S: HII
+parent is root
+non-match i=239 - N: X S: Cl*?
+parent is root
+non-match i=240 - N: X S: Cl*?
+parent is root
+non-match i=241 - N: X S: Cl*?
+match i=242 - N: X S: X
+match i=243 - N: X S: X
+parent is root
+non-match i=244 - N: X S: Cl*
+parent is root
+non-match i=245 - N: X S: Cl*
+parent is root
+non-match i=246 - N: X S: Cl*
+parent is root
+non-match i=247 - N: X S: SNR
+parent is root
+non-match i=248 - N: X S: Cl*?
+parent is root
+non-match i=249 - N: X S: Cl*?
+parent is root
+non-match i=250 - N: X S: IR
+parent is root
+non-match i=251 - N: X S: SNR
+parent is root
+non-match i=252 - N: X S: Cl*
+parent is root
+non-match i=253 - N: X S: Star
+parent is root
+non-match i=254 - N: X S: Cl*
+parent is root
+non-match i=255 - N: X S: HII
+parent is root
+non-match i=256 - N: X S: SNR
+parent is root
+non-match i=257 - N: X S: SNR
+parent is root
+non-match i=258 - N: X S: Cl*
+parent is root
+non-match i=259 - N: X S: Cl*
+parent is root
+non-match i=260 - N: X S: Cl*
+parent is root
+non-match i=261 - N: X S: Cl*
+parent is root
+non-match i=262 - N: X S: Cl*
+parent is root
+non-match i=263 - N: X S: SNR
+parent is root
+non-match i=264 - N: X S: Cl*
+parent is root
+non-match i=265 - N: X S: Cl*
+parent is root
+non-match i=266 - N: X S: Radio
+parent is root
+non-match i=267 - N: X S: Cl*
+match i=268 - N: X S: X
+parent is root
+non-match i=269 - N: X S: SNR?
+parent is root
+non-match i=270 - N: X S: SNR
+parent is root
+non-match i=271 - N: X S: SNR?
+parent is root
+non-match i=272 - N: X S: SNR?
+parent is root
+non-match i=273 - N: X S: Star
+parent is root
+non-match i=274 - N: X S: Cl*
+parent is root
+non-match i=275 - N: X S: SNR?
+parent is root
+non-match i=276 - N: X S: SNR?
+match i=277 - N: X S: X
+parent is root
+non-match i=278 - N: X S: SNR?
+parent is root
+non-match i=279 - N: X S: HII
+match i=280 - N: X S: X
+match i=281 - N: X S: X
+parent is root
+non-match i=282 - N: X S: SNR
+parent is root
+non-match i=283 - N: X S: Cl*
+parent is root
+non-match i=284 - N: X S: Cl*?
+parent is root
+non-match i=285 - N: X S: Cl*
+match i=286 - N: Rad S: Radio
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+non-match i=287 - N: HII S: Cl*
+match i=288 - N: HII S: HII
+match i=289 - N: HII S: HII
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+Same Category i=290 - N: HII S: SNR?
+areSiblings i=290 - N: HII S: SNR?
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+Same Category i=291 - N: HII S: SNR?
+areSiblings i=291 - N: HII S: SNR?
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+non-match i=292 - N: HII S: Cl*
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+non-match i=293 - N: HII S: Cl*
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+non-match i=294 - N: HII S: Cl*
+match i=295 - N: HII S: HII
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+Same Category i=296 - N: HII S: SNR?
+areSiblings i=296 - N: HII S: SNR?
+match i=297 - N: HII S: HII
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+non-match i=298 - N: HII S: Cl*
+parent is root
+non-match i=299 - N: HII S: Galaxy
+candidateMatch i=300 - N: Cl* S: Cl*?
+candidateMatch i=301 - N: Cl* S: Cl*?
+candidateMatch i=302 - N: Cl* S: Cl*?
+candidateMatch i=303 - N: Cl* S: Cl*?
+candidateMatch i=304 - N: Cl* S: Cl*?
+candidateMatch i=305 - N: Cl* S: Cl*?
+candidateMatch i=306 - N: Cl* S: Cl*?
+candidateMatch i=307 - N: Cl* S: Cl*?
+candidateMatch i=308 - N: Cl* S: Cl*?
+candidateMatch i=309 - N: Cl* S: Cl*?
+candidateMatch i=310 - N: Cl* S: Cl*?
+candidateMatch i=311 - N: Cl* S: Cl*?
+candidateMatch i=312 - N: Cl* S: Cl*?
+candidateMatch i=313 - N: Cl* S: Cl*?
+candidateMatch i=314 - N: Cl* S: Cl*?
+candidateMatch i=315 - N: Cl* S: Cl*?
+candidateMatch i=316 - N: Cl* S: Cl*?
+candidateMatch i=317 - N: Cl* S: Cl*?
+candidateMatch i=318 - N: Cl* S: Cl*?
+candidateMatch i=319 - N: Cl* S: Cl*?
+candidateMatch i=320 - N: Cl* S: Cl*?
+candidateMatch i=321 - N: Cl* S: Cl*?
+candidateMatch i=322 - N: Cl* S: Cl*?
+candidateMatch i=323 - N: Cl* S: Cl*?
+candidateMatch i=324 - N: Cl* S: Cl*?
+candidateMatch i=325 - N: Cl* S: Cl*?
+candidateMatch i=326 - N: Cl* S: Cl*?
+candidateMatch i=327 - N: Cl* S: Cl*?
+candidateMatch i=328 - N: Cl* S: Cl*?
+candidateMatch i=329 - N: Cl* S: Cl*?
+candidateMatch i=330 - N: Cl* S: Cl*?
+candidateMatch i=331 - N: Cl* S: Cl*?
+candidateMatch i=332 - N: Cl* S: Cl*?
+candidateMatch i=333 - N: Cl* S: Cl*?
+candidateMatch i=334 - N: Cl* S: Cl*?
+candidateMatch i=335 - N: Cl* S: Cl*?
+candidateMatch i=336 - N: Cl* S: Cl*?
+candidateMatch i=337 - N: Cl* S: Cl*?
+match i=338 - N: Cl* S: Cl*
+candidateMatch i=339 - N: Cl* S: Cl*?
+candidateMatch i=340 - N: Cl* S: Cl*?
+candidateMatch i=341 - N: Cl* S: Cl*?
+candidateMatch i=342 - N: Cl* S: Cl*?
+candidateMatch i=343 - N: Cl* S: Cl*?
+candidateMatch i=344 - N: Cl* S: Cl*?
+candidateMatch i=345 - N: Cl* S: Cl*?
+candidateMatch i=346 - N: Cl* S: Cl*?
+candidateMatch i=347 - N: Cl* S: Cl*?
+candidateMatch i=348 - N: Cl* S: Cl*?
+candidateMatch i=349 - N: Cl* S: Cl*?
+candidateMatch i=350 - N: Cl* S: Cl*?
+candidateMatch i=351 - N: Cl* S: Cl*?
+candidateMatch i=352 - N: Cl* S: Cl*?
+candidateMatch i=353 - N: Cl* S: Cl*?
+candidateMatch i=354 - N: Cl* S: Cl*?
+candidateMatch i=355 - N: Cl* S: Cl*?
+candidateMatch i=356 - N: Cl* S: Cl*?
+candidateMatch i=357 - N: Cl* S: Cl*?
+candidateMatch i=358 - N: Cl* S: Cl*?
+candidateMatch i=359 - N: Cl* S: Cl*?
+candidateMatch i=360 - N: Cl* S: Cl*?
+candidateMatch i=361 - N: Cl* S: Cl*?
+match i=362 - N: Cl* S: Cl*
+candidateMatch i=363 - N: Cl* S: Cl*?
+candidateMatch i=364 - N: Cl* S: Cl*?
+candidateMatch i=365 - N: Cl* S: Cl*?
+candidateMatch i=366 - N: Cl* S: Cl*?
+candidateMatch i=367 - N: Cl* S: Cl*?
+candidateMatch i=368 - N: Cl* S: Cl*?
+candidateMatch i=369 - N: Cl* S: Cl*?
+candidateMatch i=370 - N: Cl* S: Cl*?
+candidateMatch i=371 - N: Cl* S: Cl*?
+candidateMatch i=372 - N: Cl* S: Cl*?
+candidateMatch i=373 - N: Cl* S: Cl*?
+candidateMatch i=374 - N: Cl* S: Cl*?
+match i=375 - N: Cl* S: Cl*
+candidateMatch i=376 - N: Cl* S: Cl*?
+candidateMatch i=377 - N: Cl* S: Cl*?
+candidateMatch i=378 - N: Cl* S: Cl*?
+candidateMatch i=379 - N: Cl* S: Cl*?
+candidateMatch i=380 - N: Cl* S: Cl*?
+candidateMatch i=381 - N: Cl* S: Cl*?
+candidateMatch i=382 - N: Cl* S: Cl*?
+candidateMatch i=383 - N: Cl* S: Cl*?
+candidateMatch i=384 - N: Cl* S: Cl*?
+candidateMatch i=385 - N: Cl* S: Cl*?
+candidateMatch i=386 - N: Cl* S: Cl*?
+candidateMatch i=387 - N: Cl* S: Cl*?
+candidateMatch i=388 - N: Cl* S: Cl*?
+candidateMatch i=389 - N: Cl* S: Cl*?
+candidateMatch i=390 - N: Cl* S: Cl*?
+candidateMatch i=391 - N: Cl* S: Cl*?
+match i=392 - N: Cl* S: Cl*
+candidateMatch i=393 - N: Cl* S: Cl*?
+candidateMatch i=394 - N: Cl* S: Cl*?
+candidateMatch i=395 - N: Cl* S: Cl*?
+candidateMatch i=396 - N: Cl* S: Cl*?
+candidateMatch i=397 - N: Cl* S: Cl*?
+candidateMatch i=398 - N: Cl* S: Cl*?
+candidateMatch i=399 - N: Cl* S: Cl*?
+candidateMatch i=400 - N: Cl* S: Cl*?
+candidateMatch i=401 - N: Cl* S: Cl*?
+candidateMatch i=402 - N: Cl* S: Cl*?
+candidateMatch i=403 - N: Cl* S: Cl*?
+candidateMatch i=404 - N: Cl* S: Cl*?
+candidateMatch i=405 - N: Cl* S: Cl*?
+candidateMatch i=406 - N: Cl* S: Cl*?
+candidateMatch i=407 - N: Cl* S: Cl*?
+candidateMatch i=408 - N: Cl* S: Cl*?
+candidateMatch i=409 - N: Cl* S: Cl*?
+candidateMatch i=410 - N: Cl* S: Cl*?
+candidateMatch i=411 - N: Cl* S: Cl*?
+candidateMatch i=412 - N: Cl* S: Cl*?
+candidateMatch i=413 - N: Cl* S: Cl*?
+candidateMatch i=414 - N: Cl* S: Cl*?
+candidateMatch i=415 - N: Cl* S: Cl*?
+candidateMatch i=416 - N: Cl* S: Cl*?
+candidateMatch i=417 - N: Cl* S: Cl*?
+candidateMatch i=418 - N: Cl* S: Cl*?
+candidateMatch i=419 - N: Cl* S: Cl*?
+candidateMatch i=420 - N: Cl* S: Cl*?
+candidateMatch i=421 - N: Cl* S: Cl*?
+candidateMatch i=422 - N: Cl* S: Cl*?
+candidateMatch i=423 - N: Cl* S: Cl*?
+candidateMatch i=424 - N: Cl* S: Cl*?
+candidateMatch i=425 - N: Cl* S: Cl*?
+candidateMatch i=426 - N: Cl* S: Cl*?
+candidateMatch i=427 - N: Cl* S: Cl*?
+candidateMatch i=428 - N: Cl* S: Cl*?
+candidateMatch i=429 - N: Cl* S: Cl*?
+candidateMatch i=430 - N: Cl* S: Cl*?
+candidateMatch i=431 - N: Cl* S: Cl*?
+candidateMatch i=432 - N: Cl* S: Cl*?
+candidateMatch i=433 - N: Cl* S: Cl*?
+candidateMatch i=434 - N: Cl* S: Cl*?
+candidateMatch i=435 - N: Cl* S: Cl*?
+candidateMatch i=436 - N: Cl* S: Cl*?
+candidateMatch i=437 - N: Cl* S: Cl*?
+candidateMatch i=438 - N: Cl* S: Cl*?
+candidateMatch i=439 - N: Cl* S: Cl*?
+candidateMatch i=440 - N: Cl* S: Cl*?
+candidateMatch i=441 - N: Cl* S: Cl*?
+candidateMatch i=442 - N: Cl* S: Cl*?
+candidateMatch i=443 - N: Cl* S: Cl*?
+candidateMatch i=444 - N: Cl* S: Cl*?
+candidateMatch i=445 - N: Cl* S: Cl*?
+candidateMatch i=446 - N: Cl* S: Cl*?
+candidateMatch i=447 - N: Cl* S: Cl*?
+candidateMatch i=448 - N: Cl* S: Cl*?
+candidateMatch i=449 - N: Cl* S: Cl*?
+candidateMatch i=450 - N: Cl* S: Cl*?
+candidateMatch i=451 - N: Cl* S: Cl*?
+candidateMatch i=452 - N: Cl* S: Cl*?
+candidateMatch i=453 - N: Cl* S: Cl*?
+candidateMatch i=454 - N: Cl* S: Cl*?
+candidateMatch i=455 - N: Cl* S: Cl*?
+candidateMatch i=456 - N: Cl* S: Cl*?
+candidateMatch i=457 - N: Cl* S: Cl*?
+candidateMatch i=458 - N: Cl* S: Cl*?
+candidateMatch i=459 - N: Cl* S: Cl*?
+candidateMatch i=460 - N: Cl* S: Cl*?
+match i=461 - N: Cl* S: Cl*
+candidateMatch i=462 - N: Cl* S: Cl*?
+candidateMatch i=463 - N: Cl* S: Cl*?
+candidateMatch i=464 - N: Cl* S: Cl*?
+candidateMatch i=465 - N: Cl* S: Cl*?
+candidateMatch i=466 - N: Cl* S: Cl*?
+candidateMatch i=467 - N: Cl* S: Cl*?
+candidateMatch i=468 - N: Cl* S: Cl*?
+candidateMatch i=469 - N: Cl* S: Cl*?
+candidateMatch i=470 - N: Cl* S: Cl*?
+candidateMatch i=471 - N: Cl* S: Cl*?
+candidateMatch i=472 - N: Cl* S: Cl*?
+candidateMatch i=473 - N: Cl* S: Cl*?
+candidateMatch i=474 - N: Cl* S: Cl*?
+candidateMatch i=475 - N: Cl* S: Cl*?
+match i=476 - N: Cl* S: Cl*
+candidateMatch i=477 - N: Cl* S: Cl*?
+candidateMatch i=478 - N: Cl* S: Cl*?
+candidateMatch i=479 - N: Cl* S: Cl*?
+candidateMatch i=480 - N: Cl* S: Cl*?
+candidateMatch i=481 - N: Cl* S: Cl*?
+candidateMatch i=482 - N: Cl* S: Cl*?
+candidateMatch i=483 - N: Cl* S: Cl*?
+candidateMatch i=484 - N: Cl* S: Cl*?
+candidateMatch i=485 - N: Cl* S: Cl*?
+candidateMatch i=486 - N: Cl* S: Cl*?
+candidateMatch i=487 - N: Cl* S: Cl*?
+candidateMatch i=488 - N: Cl* S: Cl*?
+candidateMatch i=489 - N: Cl* S: Cl*?
+candidateMatch i=490 - N: Cl* S: Cl*?
+candidateMatch i=491 - N: Cl* S: Cl*?
+candidateMatch i=492 - N: Cl* S: Cl*?
+candidateMatch i=493 - N: Cl* S: Cl*?
+candidateMatch i=494 - N: Cl* S: Cl*?
+candidateMatch i=495 - N: Cl* S: Cl*?
+candidateMatch i=496 - N: Cl* S: Cl*?
+candidateMatch i=497 - N: Cl* S: Cl*?
+candidateMatch i=498 - N: Cl* S: Cl*?
+candidateMatch i=499 - N: Cl* S: Cl*?
+candidateMatch i=500 - N: Cl* S: Cl*?
+candidateMatch i=501 - N: Cl* S: Cl*?
+candidateMatch i=502 - N: Cl* S: Cl*?
+candidateMatch i=503 - N: Cl* S: Cl*?
+candidateMatch i=504 - N: Cl* S: Cl*?
+candidateMatch i=505 - N: Cl* S: Cl*?
+candidateMatch i=506 - N: Cl* S: Cl*?
+candidateMatch i=507 - N: Cl* S: Cl*?
+candidateMatch i=508 - N: Cl* S: Cl*?
+candidateMatch i=509 - N: Cl* S: Cl*?
+candidateMatch i=510 - N: Cl* S: Cl*?
+candidateMatch i=511 - N: Cl* S: Cl*?
+candidateMatch i=512 - N: Cl* S: Cl*?
+candidateMatch i=513 - N: Cl* S: Cl*?
+candidateMatch i=514 - N: Cl* S: Cl*?
+candidateMatch i=515 - N: Cl* S: Cl*?
+candidateMatch i=516 - N: Cl* S: Cl*?
+candidateMatch i=517 - N: Cl* S: Cl*?
+candidateMatch i=518 - N: Cl* S: Cl*?
+candidateMatch i=519 - N: Cl* S: Cl*?
+candidateMatch i=520 - N: Cl* S: Cl*?
+candidateMatch i=521 - N: Cl* S: Cl*?
+candidateMatch i=522 - N: Cl* S: Cl*?
+candidateMatch i=523 - N: Cl* S: Cl*?
+candidateMatch i=524 - N: Cl* S: Cl*?
+candidateMatch i=525 - N: Cl* S: Cl*?
+candidateMatch i=526 - N: Cl* S: Cl*?
+candidateMatch i=527 - N: Cl* S: Cl*?
+candidateMatch i=528 - N: Cl* S: Cl*?
+candidateMatch i=529 - N: Cl* S: Cl*?
+candidateMatch i=530 - N: Cl* S: Cl*?
+candidateMatch i=531 - N: Cl* S: Cl*?
+candidateMatch i=532 - N: Cl* S: Cl*?
+candidateMatch i=533 - N: Cl* S: Cl*?
+candidateMatch i=534 - N: Cl* S: Cl*?
+candidateMatch i=535 - N: Cl* S: Cl*?
+candidateMatch i=536 - N: Cl* S: Cl*?
+candidateMatch i=537 - N: Cl* S: Cl*?
+candidateMatch i=538 - N: Cl* S: Cl*?
+candidateMatch i=539 - N: Cl* S: Cl*?
+candidateMatch i=540 - N: Cl* S: Cl*?
+candidateMatch i=541 - N: Cl* S: Cl*?
+candidateMatch i=542 - N: Cl* S: Cl*?
+candidateMatch i=543 - N: Cl* S: Cl*?
+candidateMatch i=544 - N: Cl* S: Cl*?
+candidateMatch i=545 - N: Cl* S: Cl*?
+candidateMatch i=546 - N: Cl* S: Cl*?
+candidateMatch i=547 - N: Cl* S: Cl*?
+candidateMatch i=548 - N: Cl* S: Cl*?
+candidateMatch i=549 - N: Cl* S: Cl*?
+candidateMatch i=550 - N: Cl* S: Cl*?
+candidateMatch i=551 - N: Cl* S: Cl*?
+candidateMatch i=552 - N: Cl* S: Cl*?
+candidateMatch i=553 - N: Cl* S: Cl*?
+candidateMatch i=554 - N: Cl* S: Cl*?
+candidateMatch i=555 - N: Cl* S: Cl*?
+candidateMatch i=556 - N: Cl* S: Cl*?
+candidateMatch i=557 - N: Cl* S: Cl*?
+candidateMatch i=558 - N: Cl* S: Cl*?
+candidateMatch i=559 - N: Cl* S: Cl*?
+candidateMatch i=560 - N: Cl* S: Cl*?
+candidateMatch i=561 - N: Cl* S: Cl*?
+candidateMatch i=562 - N: Cl* S: Cl*?
+candidateMatch i=563 - N: Cl* S: Cl*?
+candidateMatch i=564 - N: Cl* S: Cl*?
+candidateMatch i=565 - N: Cl* S: Cl*?
+candidateMatch i=566 - N: Cl* S: Cl*?
+candidateMatch i=567 - N: Cl* S: Cl*?
+candidateMatch i=568 - N: Cl* S: Cl*?
+candidateMatch i=569 - N: Cl* S: Cl*?
+candidateMatch i=570 - N: Cl* S: Cl*?
+candidateMatch i=571 - N: Cl* S: Cl*?
+candidateMatch i=572 - N: Cl* S: Cl*?
+candidateMatch i=573 - N: Cl* S: Cl*?
+candidateMatch i=574 - N: Cl* S: Cl*?
+candidateMatch i=575 - N: Cl* S: Cl*?
+candidateMatch i=576 - N: Cl* S: Cl*?
+candidateMatch i=577 - N: Cl* S: Cl*?
+candidateMatch i=578 - N: Cl* S: Cl*?
+candidateMatch i=579 - N: Cl* S: Cl*?
+candidateMatch i=580 - N: Cl* S: Cl*?
+candidateMatch i=581 - N: Cl* S: Cl*?
+candidateMatch i=582 - N: Cl* S: Cl*?
+candidateMatch i=583 - N: Cl* S: Cl*?
+candidateMatch i=584 - N: Cl* S: Cl*?
+candidateMatch i=585 - N: Cl* S: Cl*?
+candidateMatch i=586 - N: Cl* S: Cl*?
+candidateMatch i=587 - N: Cl* S: Cl*?
+candidateMatch i=588 - N: Cl* S: Cl*?
+candidateMatch i=589 - N: Cl* S: Cl*?
+candidateMatch i=590 - N: Cl* S: Cl*?
+candidateMatch i=591 - N: Cl* S: Cl*?
+candidateMatch i=592 - N: Cl* S: Cl*?
+candidateMatch i=593 - N: Cl* S: Cl*?
+candidateMatch i=594 - N: Cl* S: Cl*?
+candidateMatch i=595 - N: Cl* S: Cl*?
+candidateMatch i=596 - N: Cl* S: Cl*?
+candidateMatch i=597 - N: Cl* S: Cl*?
+candidateMatch i=598 - N: Cl* S: Cl*?
+candidateMatch i=599 - N: Cl* S: Cl*?
+candidateMatch i=600 - N: Cl* S: Cl*?
+candidateMatch i=601 - N: Cl* S: Cl*?
+candidateMatch i=602 - N: Cl* S: Cl*?
+candidateMatch i=603 - N: Cl* S: Cl*?
+candidateMatch i=604 - N: Cl* S: Cl*?
+candidateMatch i=605 - N: Cl* S: Cl*?
+candidateMatch i=606 - N: Cl* S: Cl*?
+candidateMatch i=607 - N: Cl* S: Cl*?
+candidateMatch i=608 - N: Cl* S: Cl*?
+candidateMatch i=609 - N: Cl* S: Cl*?
+candidateMatch i=610 - N: Cl* S: Cl*?
+candidateMatch i=611 - N: Cl* S: Cl*?
+candidateMatch i=612 - N: Cl* S: Cl*?
+candidateMatch i=613 - N: Cl* S: Cl*?
+candidateMatch i=614 - N: Cl* S: Cl*?
+candidateMatch i=615 - N: Cl* S: Cl*?
+candidateMatch i=616 - N: Cl* S: Cl*?
+candidateMatch i=617 - N: Cl* S: Cl*?
+candidateMatch i=618 - N: Cl* S: Cl*?
+candidateMatch i=619 - N: Cl* S: Cl*?
+candidateMatch i=620 - N: Cl* S: Cl*?
+candidateMatch i=621 - N: Cl* S: Cl*?
+candidateMatch i=622 - N: Cl* S: Cl*?
+candidateMatch i=623 - N: Cl* S: Cl*?
+candidateMatch i=624 - N: Cl* S: Cl*?
+candidateMatch i=625 - N: Cl* S: Cl*?
+candidateMatch i=626 - N: Cl* S: Cl*?
+candidateMatch i=627 - N: Cl* S: Cl*?
+candidateMatch i=628 - N: Cl* S: Cl*?
+candidateMatch i=629 - N: Cl* S: Cl*?
+candidateMatch i=630 - N: Cl* S: Cl*?
+candidateMatch i=631 - N: Cl* S: Cl*?
+candidateMatch i=632 - N: Cl* S: Cl*?
+candidateMatch i=633 - N: Cl* S: Cl*?
+candidateMatch i=634 - N: Cl* S: Cl*?
+candidateMatch i=635 - N: Cl* S: Cl*?
+candidateMatch i=636 - N: Cl* S: Cl*?
+candidateMatch i=637 - N: Cl* S: Cl*?
+candidateMatch i=638 - N: Cl* S: Cl*?
+candidateMatch i=639 - N: Cl* S: Cl*?
+candidateMatch i=640 - N: Cl* S: Cl*?
+candidateMatch i=641 - N: Cl* S: Cl*?
+candidateMatch i=642 - N: Cl* S: Cl*?
+candidateMatch i=643 - N: Cl* S: Cl*?
+candidateMatch i=644 - N: Cl* S: Cl*?
+candidateMatch i=645 - N: Cl* S: Cl*?
+candidateMatch i=646 - N: Cl* S: Cl*?
+candidateMatch i=647 - N: Cl* S: Cl*?
+candidateMatch i=648 - N: Cl* S: Cl*?
+candidateMatch i=649 - N: Cl* S: Cl*?
+candidateMatch i=650 - N: Cl* S: Cl*?
+candidateMatch i=651 - N: Cl* S: Cl*?
+candidateMatch i=652 - N: Cl* S: Cl*?
+candidateMatch i=653 - N: Cl* S: Cl*?
+candidateMatch i=654 - N: Cl* S: Cl*?
+candidateMatch i=655 - N: Cl* S: Cl*?
+candidateMatch i=656 - N: Cl* S: Cl*?
+candidateMatch i=657 - N: Cl* S: Cl*?
+candidateMatch i=658 - N: Cl* S: Cl*?
+candidateMatch i=659 - N: Cl* S: Cl*?
+candidateMatch i=660 - N: Cl* S: Cl*?
+candidateMatch i=661 - N: Cl* S: Cl*?
+candidateMatch i=662 - N: Cl* S: Cl*?
+candidateMatch i=663 - N: Cl* S: Cl*?
+candidateMatch i=664 - N: Cl* S: Cl*?
+candidateMatch i=665 - N: Cl* S: Cl*?
+candidateMatch i=666 - N: Cl* S: Cl*?
+candidateMatch i=667 - N: Cl* S: Cl*?
+candidateMatch i=668 - N: Cl* S: Cl*?
+candidateMatch i=669 - N: Cl* S: Cl*?
+candidateMatch i=670 - N: Cl* S: Cl*?
+candidateMatch i=671 - N: Cl* S: Cl*?
+candidateMatch i=672 - N: Cl* S: Cl*?
+candidateMatch i=673 - N: Cl* S: Cl*?
+candidateMatch i=674 - N: Cl* S: Cl*?
+candidateMatch i=675 - N: Cl* S: Cl*?
+candidateMatch i=676 - N: Cl* S: Cl*?
+candidateMatch i=677 - N: Cl* S: Cl*?
+candidateMatch i=678 - N: Cl* S: Cl*?
+candidateMatch i=679 - N: Cl* S: Cl*?
+candidateMatch i=680 - N: Cl* S: Cl*?
+candidateMatch i=681 - N: Cl* S: Cl*?
+candidateMatch i=682 - N: Cl* S: Cl*?
+candidateMatch i=683 - N: Cl* S: Cl*?
+candidateMatch i=684 - N: Cl* S: Cl*?
+candidateMatch i=685 - N: Cl* S: Cl*?
+candidateMatch i=686 - N: Cl* S: Cl*?
+candidateMatch i=687 - N: Cl* S: Cl*?
+candidateMatch i=688 - N: Cl* S: Cl*?
+candidateMatch i=689 - N: Cl* S: Cl*?
+candidateMatch i=690 - N: Cl* S: Cl*?
+candidateMatch i=691 - N: Cl* S: Cl*?
+candidateMatch i=692 - N: Cl* S: Cl*?
+candidateMatch i=693 - N: Cl* S: Cl*?
+candidateMatch i=694 - N: Cl* S: Cl*?
+candidateMatch i=695 - N: Cl* S: Cl*?
+candidateMatch i=696 - N: Cl* S: Cl*?
+candidateMatch i=697 - N: Cl* S: Cl*?
+candidateMatch i=698 - N: Cl* S: Cl*?
+candidateMatch i=699 - N: Cl* S: Cl*?
+candidateMatch i=700 - N: Cl* S: Cl*?
+candidateMatch i=701 - N: Cl* S: Cl*?
+candidateMatch i=702 - N: Cl* S: Cl*?
+candidateMatch i=703 - N: Cl* S: Cl*?
+candidateMatch i=704 - N: Cl* S: Cl*?
+candidateMatch i=705 - N: Cl* S: Cl*?
+candidateMatch i=706 - N: Cl* S: Cl*?
+candidateMatch i=707 - N: Cl* S: Cl*?
+candidateMatch i=708 - N: Cl* S: Cl*?
+candidateMatch i=709 - N: Cl* S: Cl*?
+candidateMatch i=710 - N: Cl* S: Cl*?
+candidateMatch i=711 - N: Cl* S: Cl*?
+candidateMatch i=712 - N: Cl* S: Cl*?
+candidateMatch i=713 - N: Cl* S: Cl*?
+candidateMatch i=714 - N: Cl* S: Cl*?
+candidateMatch i=715 - N: Cl* S: Cl*?
+candidateMatch i=716 - N: Cl* S: Cl*?
+candidateMatch i=717 - N: Cl* S: Cl*?
+candidateMatch i=718 - N: Cl* S: Cl*?
+candidateMatch i=719 - N: Cl* S: Cl*?
+candidateMatch i=720 - N: Cl* S: Cl*?
+candidateMatch i=721 - N: Cl* S: Cl*?
+candidateMatch i=722 - N: Cl* S: Cl*?
+candidateMatch i=723 - N: Cl* S: Cl*?
+candidateMatch i=724 - N: Cl* S: Cl*?
+candidateMatch i=725 - N: Cl* S: Cl*?
+candidateMatch i=726 - N: Cl* S: Cl*?
+candidateMatch i=727 - N: Cl* S: Cl*?
+candidateMatch i=728 - N: Cl* S: Cl*?
+match i=729 - N: Cl* S: Cl*
+candidateMatch i=730 - N: Cl* S: Cl*?
+candidateMatch i=731 - N: Cl* S: Cl*?
+candidateMatch i=732 - N: Cl* S: Cl*?
+candidateMatch i=733 - N: Cl* S: Cl*?
+candidateMatch i=734 - N: Cl* S: Cl*?
+candidateMatch i=735 - N: Cl* S: Cl*?
+candidateMatch i=736 - N: Cl* S: Cl*?
+candidateMatch i=737 - N: Cl* S: Cl*?
+candidateMatch i=738 - N: Cl* S: Cl*?
+candidateMatch i=739 - N: Cl* S: Cl*?
+candidateMatch i=740 - N: Cl* S: Cl*?
+candidateMatch i=741 - N: Cl* S: Cl*?
+candidateMatch i=742 - N: Cl* S: Cl*?
+candidateMatch i=743 - N: Cl* S: Cl*?
+candidateMatch i=744 - N: Cl* S: Cl*?
+candidateMatch i=745 - N: Cl* S: Cl*?
+candidateMatch i=746 - N: Cl* S: Cl*?
+candidateMatch i=747 - N: Cl* S: Cl*?
+candidateMatch i=748 - N: Cl* S: Cl*?
+candidateMatch i=749 - N: Cl* S: Cl*?
+candidateMatch i=750 - N: Cl* S: Cl*?
+candidateMatch i=751 - N: Cl* S: Cl*?
+candidateMatch i=752 - N: Cl* S: Cl*?
+candidateMatch i=753 - N: Cl* S: Cl*?
+candidateMatch i=754 - N: Cl* S: Cl*?
+candidateMatch i=755 - N: Cl* S: Cl*?
+candidateMatch i=756 - N: Cl* S: Cl*?
+candidateMatch i=757 - N: Cl* S: Cl*?
+candidateMatch i=758 - N: Cl* S: Cl*?
+candidateMatch i=759 - N: Cl* S: Cl*?
+candidateMatch i=760 - N: Cl* S: Cl*?
+candidateMatch i=761 - N: Cl* S: Cl*?
+candidateMatch i=762 - N: Cl* S: Cl*?
+candidateMatch i=763 - N: Cl* S: Cl*?
+candidateMatch i=764 - N: Cl* S: Cl*?
+candidateMatch i=765 - N: Cl* S: Cl*?
+candidateMatch i=766 - N: Cl* S: Cl*?
+candidateMatch i=767 - N: Cl* S: Cl*?
+candidateMatch i=768 - N: Cl* S: Cl*?
+candidateMatch i=769 - N: Cl* S: Cl*?
+candidateMatch i=770 - N: Cl* S: Cl*?
+candidateMatch i=771 - N: Cl* S: Cl*?
+candidateMatch i=772 - N: Cl* S: Cl*?
+candidateMatch i=773 - N: Cl* S: Cl*?
+candidateMatch i=774 - N: Cl* S: Cl*?
+candidateMatch i=775 - N: Cl* S: Cl*?
+candidateMatch i=776 - N: Cl* S: Cl*?
+candidateMatch i=777 - N: Cl* S: Cl*?
+candidateMatch i=778 - N: Cl* S: Cl*?
+candidateMatch i=779 - N: Cl* S: Cl*?
+candidateMatch i=780 - N: Cl* S: Cl*?
+candidateMatch i=781 - N: Cl* S: Cl*?
+candidateMatch i=782 - N: Cl* S: Cl*?
+candidateMatch i=783 - N: Cl* S: Cl*?
+candidateMatch i=784 - N: Cl* S: Cl*?
+candidateMatch i=785 - N: Cl* S: Cl*?
+candidateMatch i=786 - N: Cl* S: Cl*?
+candidateMatch i=787 - N: Cl* S: Cl*?
+candidateMatch i=788 - N: Cl* S: Cl*?
+candidateMatch i=789 - N: Cl* S: Cl*?
+candidateMatch i=790 - N: Cl* S: Cl*?
+candidateMatch i=791 - N: Cl* S: Cl*?
+candidateMatch i=792 - N: Cl* S: Cl*?
+candidateMatch i=793 - N: Cl* S: Cl*?
+candidateMatch i=794 - N: Cl* S: Cl*?
+match i=795 - N: Cl* S: Cl*
+candidateMatch i=796 - N: Cl* S: Cl*?
+candidateMatch i=797 - N: Cl* S: Cl*?
+candidateMatch i=798 - N: Cl* S: Cl*?
+candidateMatch i=799 - N: Cl* S: Cl*?
+candidateMatch i=800 - N: Cl* S: Cl*?
+candidateMatch i=801 - N: Cl* S: Cl*?
+candidateMatch i=802 - N: Cl* S: Cl*?
+candidateMatch i=803 - N: Cl* S: Cl*?
+candidateMatch i=804 - N: Cl* S: Cl*?
+candidateMatch i=805 - N: Cl* S: Cl*?
+candidateMatch i=806 - N: Cl* S: Cl*?
+candidateMatch i=807 - N: Cl* S: Cl*?
+candidateMatch i=808 - N: Cl* S: Cl*?
+candidateMatch i=809 - N: Cl* S: Cl*?
+candidateMatch i=810 - N: Cl* S: Cl*?
+candidateMatch i=811 - N: Cl* S: Cl*?
+candidateMatch i=812 - N: Cl* S: Cl*?
+candidateMatch i=813 - N: Cl* S: Cl*?
+candidateMatch i=814 - N: Cl* S: Cl*?
+candidateMatch i=815 - N: Cl* S: Cl*?
+candidateMatch i=816 - N: Cl* S: Cl*?
+candidateMatch i=817 - N: Cl* S: Cl*?
+candidateMatch i=818 - N: Cl* S: Cl*?
+candidateMatch i=819 - N: Cl* S: Cl*?
+candidateMatch i=820 - N: Cl* S: Cl*?
+candidateMatch i=821 - N: Cl* S: Cl*?
+candidateMatch i=822 - N: Cl* S: Cl*?
+candidateMatch i=823 - N: Cl* S: Cl*?
+candidateMatch i=824 - N: Cl* S: Cl*?
+candidateMatch i=825 - N: Cl* S: Cl*?
+candidateMatch i=826 - N: Cl* S: Cl*?
+candidateMatch i=827 - N: Cl* S: Cl*?
+candidateMatch i=828 - N: Cl* S: Cl*?
+candidateMatch i=829 - N: Cl* S: Cl*?
+candidateMatch i=830 - N: Cl* S: Cl*?
+candidateMatch i=831 - N: Cl* S: Cl*?
+candidateMatch i=832 - N: Cl* S: Cl*?
+candidateMatch i=833 - N: Cl* S: Cl*?
+candidateMatch i=834 - N: Cl* S: Cl*?
+candidateMatch i=835 - N: Cl* S: Cl*?
+candidateMatch i=836 - N: Cl* S: Cl*?
+candidateMatch i=837 - N: Cl* S: Cl*?
+candidateMatch i=838 - N: Cl* S: Cl*?
+candidateMatch i=839 - N: Cl* S: Cl*?
+candidateMatch i=840 - N: Cl* S: Cl*?
+candidateMatch i=841 - N: Cl* S: Cl*?
+candidateMatch i=842 - N: Cl* S: Cl*?
+candidateMatch i=843 - N: Cl* S: Cl*?
+candidateMatch i=844 - N: Cl* S: Cl*?
+candidateMatch i=845 - N: Cl* S: Cl*?
+candidateMatch i=846 - N: Cl* S: Cl*?
+candidateMatch i=847 - N: Cl* S: Cl*?
+candidateMatch i=848 - N: Cl* S: Cl*?
+candidateMatch i=849 - N: Cl* S: Cl*?
+candidateMatch i=850 - N: Cl* S: Cl*?
+candidateMatch i=851 - N: Cl* S: Cl*?
+candidateMatch i=852 - N: Cl* S: Cl*?
+candidateMatch i=853 - N: Cl* S: Cl*?
+candidateMatch i=854 - N: Cl* S: Cl*?
+candidateMatch i=855 - N: Cl* S: Cl*?
+candidateMatch i=856 - N: Cl* S: Cl*?
+candidateMatch i=857 - N: Cl* S: Cl*?
+candidateMatch i=858 - N: Cl* S: Cl*?
+candidateMatch i=859 - N: Cl* S: Cl*?
+candidateMatch i=860 - N: Cl* S: Cl*?
+candidateMatch i=861 - N: Cl* S: Cl*?
+candidateMatch i=862 - N: Cl* S: Cl*?
+candidateMatch i=863 - N: Cl* S: Cl*?
+candidateMatch i=864 - N: Cl* S: Cl*?
+candidateMatch i=865 - N: Cl* S: Cl*?
+candidateMatch i=866 - N: Cl* S: Cl*?
+candidateMatch i=867 - N: Cl* S: Cl*?
+candidateMatch i=868 - N: Cl* S: Cl*?
+candidateMatch i=869 - N: Cl* S: Cl*?
+candidateMatch i=870 - N: Cl* S: Cl*?
+candidateMatch i=871 - N: Cl* S: Cl*?
+candidateMatch i=872 - N: Cl* S: Cl*?
+candidateMatch i=873 - N: Cl* S: Cl*?
+candidateMatch i=874 - N: Cl* S: Cl*?
+candidateMatch i=875 - N: Cl* S: Cl*?
+candidateMatch i=876 - N: Cl* S: Cl*?
+candidateMatch i=877 - N: Cl* S: Cl*?
+candidateMatch i=878 - N: Cl* S: Cl*?
+candidateMatch i=879 - N: Cl* S: Cl*?
+candidateMatch i=880 - N: Cl* S: Cl*?
+candidateMatch i=881 - N: Cl* S: Cl*?
+candidateMatch i=882 - N: Cl* S: Cl*?
+candidateMatch i=883 - N: Cl* S: Cl*?
+candidateMatch i=884 - N: Cl* S: Cl*?
+candidateMatch i=885 - N: Cl* S: Cl*?
+candidateMatch i=886 - N: Cl* S: Cl*?
+candidateMatch i=887 - N: Cl* S: Cl*?
+candidateMatch i=888 - N: Cl* S: Cl*?
+match i=889 - N: Cl* S: Cl*
+candidateMatch i=890 - N: Cl* S: Cl*?
+candidateMatch i=891 - N: Cl* S: Cl*?
+candidateMatch i=892 - N: Cl* S: Cl*?
+candidateMatch i=893 - N: Cl* S: Cl*?
+candidateMatch i=894 - N: Cl* S: Cl*?
+candidateMatch i=895 - N: Cl* S: Cl*?
+candidateMatch i=896 - N: Cl* S: Cl*?
+candidateMatch i=897 - N: Cl* S: Cl*?
+candidateMatch i=898 - N: Cl* S: Cl*?
+candidateMatch i=899 - N: Cl* S: Cl*?
+candidateMatch i=900 - N: Cl* S: Cl*?
+candidateMatch i=901 - N: Cl* S: Cl*?
+candidateMatch i=902 - N: Cl* S: Cl*?
+candidateMatch i=903 - N: Cl* S: Cl*?
+candidateMatch i=904 - N: Cl* S: Cl*?
+candidateMatch i=905 - N: Cl* S: Cl*?
+candidateMatch i=906 - N: Cl* S: Cl*?
+candidateMatch i=907 - N: Cl* S: Cl*?
+candidateMatch i=908 - N: Cl* S: Cl*?
+candidateMatch i=909 - N: Cl* S: Cl*?
+candidateMatch i=910 - N: Cl* S: Cl*?
+candidateMatch i=911 - N: Cl* S: Cl*?
+candidateMatch i=912 - N: Cl* S: Cl*?
+candidateMatch i=913 - N: Cl* S: Cl*?
+candidateMatch i=914 - N: Cl* S: Cl*?
+candidateMatch i=915 - N: Cl* S: Cl*?
+candidateMatch i=916 - N: Cl* S: Cl*?
+candidateMatch i=917 - N: Cl* S: Cl*?
+candidateMatch i=918 - N: Cl* S: Cl*?
+candidateMatch i=919 - N: Cl* S: Cl*?
+candidateMatch i=920 - N: Cl* S: Cl*?
+candidateMatch i=921 - N: Cl* S: Cl*?
+candidateMatch i=922 - N: Cl* S: Cl*?
+candidateMatch i=923 - N: Cl* S: Cl*?
+candidateMatch i=924 - N: Cl* S: Cl*?
+candidateMatch i=925 - N: Cl* S: Cl*?
+candidateMatch i=926 - N: Cl* S: Cl*?
+candidateMatch i=927 - N: Cl* S: Cl*?
+candidateMatch i=928 - N: Cl* S: Cl*?
+candidateMatch i=929 - N: Cl* S: Cl*?
+candidateMatch i=930 - N: Cl* S: Cl*?
+candidateMatch i=931 - N: Cl* S: Cl*?
+candidateMatch i=932 - N: Cl* S: Cl*?
+candidateMatch i=933 - N: Cl* S: Cl*?
+candidateMatch i=934 - N: Cl* S: Cl*?
+candidateMatch i=935 - N: Cl* S: Cl*?
+candidateMatch i=936 - N: Cl* S: Cl*?
+candidateMatch i=937 - N: Cl* S: Cl*?
+candidateMatch i=938 - N: Cl* S: Cl*?
+candidateMatch i=939 - N: Cl* S: Cl*?
+candidateMatch i=940 - N: Cl* S: Cl*?
+candidateMatch i=941 - N: Cl* S: Cl*?
+candidateMatch i=942 - N: Cl* S: Cl*?
+candidateMatch i=943 - N: Cl* S: Cl*?
+candidateMatch i=944 - N: Cl* S: Cl*?
+candidateMatch i=945 - N: Cl* S: Cl*?
+candidateMatch i=946 - N: Cl* S: Cl*?
+candidateMatch i=947 - N: Cl* S: Cl*?
+candidateMatch i=948 - N: Cl* S: Cl*?
+candidateMatch i=949 - N: Cl* S: Cl*?
+candidateMatch i=950 - N: Cl* S: Cl*?
+candidateMatch i=951 - N: Cl* S: Cl*?
+candidateMatch i=952 - N: Cl* S: Cl*?
+candidateMatch i=953 - N: Cl* S: Cl*?
+candidateMatch i=954 - N: Cl* S: Cl*?
+candidateMatch i=955 - N: Cl* S: Cl*?
+candidateMatch i=956 - N: Cl* S: Cl*?
+candidateMatch i=957 - N: Cl* S: Cl*?
+candidateMatch i=958 - N: Cl* S: Cl*?
+candidateMatch i=959 - N: Cl* S: Cl*?
+candidateMatch i=960 - N: Cl* S: Cl*?
+candidateMatch i=961 - N: Cl* S: Cl*?
+candidateMatch i=962 - N: Cl* S: Cl*?
+candidateMatch i=963 - N: Cl* S: Cl*?
+candidateMatch i=964 - N: Cl* S: Cl*?
+candidateMatch i=965 - N: Cl* S: Cl*?
+candidateMatch i=966 - N: Cl* S: Cl*?
+candidateMatch i=967 - N: Cl* S: Cl*?
+candidateMatch i=968 - N: Cl* S: Cl*?
+candidateMatch i=969 - N: Cl* S: Cl*?
+candidateMatch i=970 - N: Cl* S: Cl*?
+candidateMatch i=971 - N: Cl* S: Cl*?
+candidateMatch i=972 - N: Cl* S: Cl*?
+candidateMatch i=973 - N: Cl* S: Cl*?
+candidateMatch i=974 - N: Cl* S: Cl*?
+candidateMatch i=975 - N: Cl* S: Cl*?
+candidateMatch i=976 - N: Cl* S: Cl*?
+match i=977 - N: Cl* S: Cl*
+candidateMatch i=978 - N: Cl* S: Cl*?
+match i=979 - N: Cl* S: Cl*
+candidateMatch i=980 - N: Cl* S: Cl*?
+candidateMatch i=981 - N: Cl* S: Cl*?
+candidateMatch i=982 - N: Cl* S: Cl*?
+candidateMatch i=983 - N: Cl* S: Cl*?
+candidateMatch i=984 - N: Cl* S: Cl*?
+candidateMatch i=985 - N: Cl* S: Cl*?
+candidateMatch i=986 - N: Cl* S: Cl*?
+candidateMatch i=987 - N: Cl* S: Cl*?
+candidateMatch i=988 - N: Cl* S: Cl*?
+candidateMatch i=989 - N: Cl* S: Cl*?
+candidateMatch i=990 - N: Cl* S: Cl*?
+match i=991 - N: Cl* S: Cl*
+candidateMatch i=992 - N: Cl* S: Cl*?
+candidateMatch i=993 - N: Cl* S: Cl*?
+candidateMatch i=994 - N: Cl* S: Cl*?
+candidateMatch i=995 - N: Cl* S: Cl*?
+candidateMatch i=996 - N: Cl* S: Cl*?
+candidateMatch i=997 - N: Cl* S: Cl*?
+candidateMatch i=998 - N: Cl* S: Cl*?
+candidateMatch i=999 - N: Cl* S: Cl*?
+candidateMatch i=1000 - N: Cl* S: Cl*?
+candidateMatch i=1001 - N: Cl* S: Cl*?
+candidateMatch i=1002 - N: Cl* S: Cl*?
+candidateMatch i=1003 - N: Cl* S: Cl*?
+candidateMatch i=1004 - N: Cl* S: Cl*?
+candidateMatch i=1005 - N: Cl* S: Cl*?
+candidateMatch i=1006 - N: Cl* S: Cl*?
+candidateMatch i=1007 - N: Cl* S: Cl*?
+candidateMatch i=1008 - N: Cl* S: Cl*?
+candidateMatch i=1009 - N: Cl* S: Cl*?
+candidateMatch i=1010 - N: Cl* S: Cl*?
+candidateMatch i=1011 - N: Cl* S: Cl*?
+candidateMatch i=1012 - N: Cl* S: Cl*?
+candidateMatch i=1013 - N: Cl* S: Cl*?
+candidateMatch i=1014 - N: Cl* S: Cl*?
+candidateMatch i=1015 - N: Cl* S: Cl*?
+candidateMatch i=1016 - N: Cl* S: Cl*?
+candidateMatch i=1017 - N: Cl* S: Cl*?
+candidateMatch i=1018 - N: Cl* S: Cl*?
+candidateMatch i=1019 - N: Cl* S: Cl*?
+candidateMatch i=1020 - N: Cl* S: Cl*?
+candidateMatch i=1021 - N: Cl* S: Cl*?
+non-match i=1022 - N:  S: Star
+non-match i=1023 - N:  S: Cl*
+non-match i=1024 - N:  S: Star
+non-match i=1025 - N:  S: PartofG
+non-match i=1026 - N:  S: Star
+non-match i=1027 - N:  S: Star
+non-match i=1028 - N:  S: Star
+non-match i=1029 - N:  S: Star
+non-match i=1030 - N:  S: PartofG
+non-match i=1031 - N:  S: PartofG
+non-match i=1032 - N:  S: Star
+non-match i=1033 - N:  S: Star
+non-match i=1034 - N:  S: PartofG
+non-match i=1035 - N:  S: Star
+match i=1036 - N: Cl* S: Cl*
+match i=1037 - N: Cl* S: Cl*
+match i=1038 - N: Cl* S: Cl*
+match i=1039 - N: Cl* S: Cl*
+match i=1040 - N: Cl* S: Cl*
+match i=1041 - N: Cl* S: Cl*
+match i=1042 - N: Cl* S: Cl*
+match i=1043 - N: Cl* S: Cl*
+match i=1044 - N: Cl* S: Cl*
+match i=1045 - N: Cl* S: Cl*
+match i=1046 - N: Cl* S: Cl*
+match i=1047 - N: Cl* S: Cl*
+match i=1048 - N: Cl* S: Cl*
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+Same Category i=1049 - N: HII S: SNR?
+areSiblings i=1049 - N: HII S: SNR?
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+non-match i=1050 - N: HII S: Cl*
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+non-match i=1051 - N: HII S: Cl*?
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+Same Category i=1052 - N: HII S: SNR
+areSiblings i=1052 - N: HII S: SNR
+parent is root
+non-match i=1053 - N: HII S: IR
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+Same Category i=1054 - N: HII S: SNR
+areSiblings i=1054 - N: HII S: SNR
+match i=1055 - N: HII S: HII
+parent is root
+non-match i=1056 - N: HII S: Radio
+match i=1057 - N: HII S: HII
+match i=1058 - N: HII S: HII
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+non-match i=1059 - N: HII S: Cl*?
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+Same Category i=1060 - N: HII S: SNR?
+areSiblings i=1060 - N: HII S: SNR?
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+Same Category i=1061 - N: HII S: SNR
+areSiblings i=1061 - N: HII S: SNR
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+Same Category i=1062 - N: HII S: SNR
+areSiblings i=1062 - N: HII S: SNR
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+non-match i=1063 - N: HII S: Cl*
+match i=1064 - N: HII S: HII
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+non-match i=1065 - N: HII S: Cl*
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+Same Category i=1066 - N: HII S: SNR
+areSiblings i=1066 - N: HII S: SNR
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+non-match i=1067 - N: HII S: Cl*
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+Same Category i=1068 - N: HII S: SNR?
+areSiblings i=1068 - N: HII S: SNR?
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+non-match i=1069 - N: HII S: Cl*
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+non-match i=1070 - N: HII S: Cl*?
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+non-match i=1071 - N: HII S: Cl*
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+non-match i=1072 - N: HII S: Cl*?
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+non-match i=1073 - N: HII S: Cl*
+match i=1074 - N: HII S: HII
+parent is root
+non-match i=1075 - N: HII S: Radio
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+Same Category i=1076 - N: HII S: SNR
+areSiblings i=1076 - N: HII S: SNR
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+Same Category i=1077 - N: HII S: SNR
+areSiblings i=1077 - N: HII S: SNR
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+non-match i=1078 - N: HII S: Cl*
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+non-match i=1079 - N: HII S: Cl*
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+Same Category i=1080 - N: HII S: SNR?
+areSiblings i=1080 - N: HII S: SNR?
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+non-match i=1081 - N: HII S: SN
+match i=1082 - N: HII S: HII
+parent is root
+non-match i=1083 - N: HII S: Radio
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+non-match i=1084 - N: HII S: Cl*?
+match i=1085 - N: HII S: HII
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+Same Category i=1086 - N: HII S: SNR
+areSiblings i=1086 - N: HII S: SNR
+Current p is : Node(tag=ISM, identifier=13.00.00.00, data=None)
+Same Category i=1087 - N: HII S: EmObj
+areSiblings i=1087 - N: HII S: EmObj
+parent is root
+non-match i=1088 - N: Rad S: SNR?
+parent is root
+non-match i=1089 - N: Rad S: Cl*?
+parent is root
+non-match i=1090 - N: Rad S: V*
+parent is root
+non-match i=1091 - N: Rad S: Cl*
+parent is root
+non-match i=1092 - N: X S: Cl*?
+match i=1093 - N: X S: X
+match i=1094 - N: X S: X
+Current p is : Node(tag=V*, identifier=14.09.00.00, data=None)
+Current p is : Node(tag=*, identifier=14.00.00.00, data=None)
+non-match i=1095 - N: SN* S: Cl*?
+match i=1096 - N: SN* S: SN
+match i=1097 - N: SN* S: SN
+match i=1098 - N: SN* S: SN
+match i=1099 - N: Rad S: Radio

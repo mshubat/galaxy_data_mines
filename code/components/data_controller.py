@@ -434,8 +434,10 @@ class DataController:
     def match_by_objects_location(self):
         pass
 
-    def saveTable(self, *, fileName):
-
-        self.combined_table.write(fileName,
-                                  format='ascii.csv',
-                                  fast_writer=False)
+    def saveTable(self, *, fileName, file_format):
+        if file_format == "csv":
+            self.combined_table.write(fileName,
+                                      format='ascii.csv',
+                                      fast_writer=False)
+        elif file_format == "fits":
+            self.combined_table.write(fileName)
