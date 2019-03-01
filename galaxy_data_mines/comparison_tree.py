@@ -1,8 +1,8 @@
 from treelib import Node, Tree
-from tree_builder import TreeBuilder
-from data_controller import DataController
 from astropy.table import Table, Column
 import numpy as np
+from .tree_builder import TreeBuilder
+from .data_controller import DataController
 
 
 class ComparisonTree:
@@ -14,7 +14,7 @@ class ComparisonTree:
         if run_mode:
             print("Run Mode: Enabled. Converting numeric\
              id's to SIMBAD entries.")
-            dictandtree = self.builder.buildTree("simbad_raw.csv")
+            dictandtree = self.builder.buildTree("data/simbad_raw.csv")
             self.tree = dictandtree[0]
             self.dict = dictandtree[1]
         else:
@@ -94,7 +94,7 @@ class ComparisonTree:
 
         return subtree.contains(firstNodeId)
 
-    def in_same_category(self, firstNodeId, secNodeId):
+    def share_common_ancestor(self, firstNodeId, secNodeId):
         '''
         This method will return True if the nodes corresponding to the given
         nodeIDs share a common ancestor. Return False othewise.
@@ -154,21 +154,25 @@ class ComparisonTree:
         t.add_columns(cols)
 
         for i in range(0, tsize):
+            matchmade = False
             ned_analogue = DataController.ned_to_simbad(t["Type_N"][i])
             t["Type_N_Analogue"][i] = ned_analogue
             t["Type_S_cond"][i] = DataController.simbad_long_to_small(t["Type_S"][i])
 
             if (self.areDirectMatch(t["Type_N_Analogue"][i], t["Type_S_cond"][i])):
+                matchmade = True
                 t["Exact Match"][i] = True
                 print("match i={} - N: {} S: {}".format(i,
                                                         ned_analogue,
                                                         t["Type_S"][i]))
             elif (self.areCandidateMatch(Type_N=t["Type_N_Analogue"][i], Type_S=t["Type_S_cond"][i])):
+                matchmade = True
                 t["Candidate Match"][i] = True
                 print("candidateMatch i={} - N: {} S: {}".format(i,
                                                                  ned_analogue,
                                                                  t["Type_S"][i]))
-            elif self.in_same_category(t["Type_N_Analogue"][i], t["Type_S_cond"][i]):
+            if self.share_common_ancestor(t["Type_N_Analogue"][i], t["Type_S_cond"][i]):
+                matchmade = True
                 t["Same Category"][i] = True
                 print("Same Category i={} - N: {} S: {}".format(i,
                                                                 ned_analogue,
@@ -179,7 +183,7 @@ class ComparisonTree:
                     print("areSiblings i={} - N: {} S: {}".format(i,
                                                                   ned_analogue,
                                                                   t["Type_S"][i]))
-            else:
+            if not matchmade:
                 print("non-match i={} - N: {} S: {}".format(i,
                                                             ned_analogue,
                                                             t["Type_S"][i]))

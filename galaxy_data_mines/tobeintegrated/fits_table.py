@@ -2,10 +2,8 @@ from astropy.io import fits
 from astropy.table import Table
 import numpy as np
 import matplotlib.pyplot as plt
-import sys
-sys.path.insert(0, '/Users/matt/Desktop/Test Python Code')
 
-hdul = fits.open("/Users/matt/Desktop/Test Python Code/alteredTable.fits")
+hdul = fits.open("data/output/alteredTable.fits")
 
 data = hdul[1].data
 # print(data[122])
