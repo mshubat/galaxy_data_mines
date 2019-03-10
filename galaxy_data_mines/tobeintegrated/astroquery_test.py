@@ -30,8 +30,9 @@ from astroquery.simbad import Simbad
 # Simbad.get_field_description("otype")
 customSimbad = Simbad()
 # customSimbad.get_votable_fields()
-# customSimbad.add_votable_fields("otype")
+customSimbad.add_votable_fields("otype")
 result_table = customSimbad.query_region("m3")
+
 result_table.pprint(show_unit=True)
 
 

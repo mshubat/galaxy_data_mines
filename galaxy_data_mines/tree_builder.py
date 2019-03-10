@@ -2,6 +2,7 @@ from treelib import Node, Tree
 from astropy.table import Table
 import numpy as np
 import string
+import os
 
 
 class TreeBuilder:
@@ -51,7 +52,7 @@ class TreeBuilder:
         # are really separate trees.
         new_tree.create_node("ROOT", "root")
         tree_dict = {}
-        dat = Table.read(infile, format='csv')
+        dat = Table.read(os.path.join(os.path.dirname(__file__), infile), format='csv')
         numeric_id = dat['id']
         tag = dat['tag']
         for i, num_id in enumerate(numeric_id):

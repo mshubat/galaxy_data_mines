@@ -9,12 +9,16 @@
 #
 
 from astropy.table import Table, Column
+from astroquery.simbad import Simbad
+from astroquery.ned import Ned
+from astropy import units as u
+from astropy.coordinates import SkyCoord, match_coordinates_sky
 # from astropy.table import Table, Column, hstack, vstack
 
 
 class DataController:
 
-    ned_to_simbad_dict = {
+    ned_to_simbad_cond_dict = {
         "*": "*",
         "**": "**",
         "*Ass": "As*",
@@ -384,7 +388,7 @@ class DataController:
 
     @staticmethod
     def ned_to_simbad(ned_entry):
-        return DataController.ned_to_simbad_dict[ned_entry]
+        return DataController.ned_to_simbad_cond_dict[ned_entry]
 
     @staticmethod
     def simbad_long_to_small(simbad_std):
@@ -394,11 +398,132 @@ class DataController:
     def candidate_match(non_candidate):
         return DataController.candidate_dict[non_candidate]
 
-    def download_data(self):
+    def query_region_by_name(self, objectname, match_tol=1.0):  # match_tol in arcsec
         '''
         Fetch remote data from NED and SIMBAD matching coordinates and build table.
         '''
+        # Create custom query objects
+        customSimbad = Simbad()
+        customNed = Ned()
+
+        print("SIMBAD votable fields")
+        print(customSimbad.get_votable_fields())
+        customSimbad.remove_votable_fields('coordinates')
+        customSimbad.add_votable_fields("otype(3)", "ra(d)", "dec(d)")
+
+        # print("NED votable fields")
+        # customNed.get_votable_fields()
+
+        # downlaod object data from both simbad and ned
+        simbad_table = customSimbad.query_region(objectname)
+        ned_table = Ned.query_region(objectname)
+
+        print()
+        print("Before Formatting")
+        print("----------------------------------------------------")
+        ned_table.info()
+        simbad_table.info()
+
+        # process tables
+        ned_table = self.reformat_table(ned_table,
+                                        keepcols=['Object Name', 'RA(deg)', 'DEC(deg)', 'Type'],
+                                        old_name='Object Name', new_name='Name_N',
+                                        old_type='Type', new_type='Type_N')
+
+        simbad_table = self.reformat_table(simbad_table,
+                                           keepcols=["MAIN_ID", "RA_d", "DEC_d", "OTYPE_3"],
+                                           old_name='MAIN_ID', new_name='Name_S',
+                                           old_type='OTYPE_3', new_type='Type_S')
+
+        print()
+        print("After Formatting")
+        print("----------------------------------------------------")
+        ned_table.info()
+        simbad_table.info()
+
+        # Build SkyCoord from appropriate ned and simbad col's with matching units
+        ned_coo = SkyCoord(ra=ned_table['RA(deg)'], dec=ned_table['DEC(deg)'])
+        sim_coo = SkyCoord(ra=simbad_table['RA_d'], dec=simbad_table['DEC_d'])
+
+        # Find object matches
+        matched_ned, matched_sim, ned_only, sim_only = self.symmetric_match_sky_coords(
+            ned_coo, sim_coo, match_tol*u.arcsec)
+
+        print()
+        print("Matched NED rows:")
+        print(ned_table[matched_ned])
+        print("Matched SIMBAD rows:")
+        print(simbad_table[matched_ned])
+        print()
+
+        # Explore results
+        print("Matched NED:")
+        print(matched_ned)
+        print("Matched SIMBAD")
+        print(matched_sim)
+        print("NED ONLY")
+        print(ned_only)
+        print("SIMBAD ONLY")
+        print(sim_only)
+
+        simbad_table.show_in_browser(jsviewer=True)
+        # Temporarily set the combined table to be NED query results.
+        self.combined_table = ned_table
+
+    def query_region_by_coord(self, coord_type, RA, DEC):
         pass
+
+    def reformat_table(self, table, keepcols, old_name, new_name, old_type, new_type):
+        ''' reformat NED or SIMBAD catalog to make more intercompatible'''
+
+        ra_dec_cols = ['RA(deg)', 'DEC(deg)', 'RA_d', 'DEC_d']
+
+        # just keep selected columns
+        if keepcols != None:
+            table = table[keepcols]
+
+        # change units for RA/Dec
+        for col in ra_dec_cols:
+            if col in table.colnames:
+                table[col].unit = u.degree
+
+        # change ID for name & type columns
+        table.rename_column(old_name, new_name)
+        table.rename_column(old_type, new_type)
+
+        return(table)
+
+    def symmetric_match_sky_coords(self, coord1, coord2, tolerance):
+        '''produce the symmetric match of coord1 to coord2
+           output:
+           index1_matched: index into coord1 for matched objects
+           index2_matched: index into coord2 for matches of objects in index1_matched
+           index1_unmatch: indices for unmatched objects in coord1
+           index2_unmatch: indices for unmatched objects in coord2
+        '''
+        closest_2to1, sep2d_2to1, sep3d = match_coordinates_sky(
+            coord1, coord2)  # location in coord2 for closest match to each coord1. len = len(coord1)
+        # location in coord1 for closest match to each coord2. len = len(coord2)
+        closest_1to2, sep2d_1to2, sep3d = match_coordinates_sky(coord2, coord1)
+
+        index1_matched = []
+        index2_matched = []
+        index1_unmatched = []
+        index2_unmatched = []
+
+        for i in range(0, len(coord1)):  # doubtless there is a more Pythonic way to do this..
+            # not sure this condition covers all of the possible corner cases. But good enough.
+            if sep2d_1to2[i] < tolerance and i == closest_2to1[closest_1to2[i]]:
+                index1_matched.append(i)
+                index2_matched.append(closest_2to1[i])
+            else:
+                index1_unmatched.append(i)
+
+        for j in range(0, len(coord2)):
+            if j not in index2_matched:
+                index2_unmatched.append(j)
+
+        return(index1_matched, index2_matched, index1_unmatched, index2_unmatched)
 
     def load_data(self, first_file, sec_file=None):
         '''
@@ -412,6 +537,7 @@ class DataController:
 
         filename2 - optional - if given 2 tables will be processed and joined
         into common table. First file MUST be NED Second MUST be SIMBAD.
+
         '''
         if (sec_file == None):
             self.combined_table = Table.read(first_file)

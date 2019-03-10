@@ -34,13 +34,22 @@ def ns_combine(ned_name, simbad_name, ns_combine, final_tab, match_tol=1.0):  # 
     sim_proc = reformat_cat(simbad_in, old_name='MAIN_ID', new_name='Name_S',
                             old_type='OTYPE', new_type='Type_S')
 
-    # construct coordinates needed for matching # ***** MATT - just pointed astropy to correct unit columns
+    # construct coordinates needed for matching # ***** MATT - created SkyCoord's w correct unit columns
     ned_coo = SkyCoord(ra=ned_proc['RA(deg)'], dec=ned_proc['DEC(deg)'])
     sim_coo = SkyCoord(ra=sim_proc['RA_d'], dec=sim_proc['DEC_d'])
 
     # do the matching # ***** MATT - Returns indices of matched col's for ned+sim tables
     matched_ned, matched_sim, ned_only, sim_only = symmetric_match_sky_coords(
         ned_coo, sim_coo, match_tol*u.arcsec)
+
+    print("Matched NED column:")
+    print(ned_proc[matched_ned])
+    print("Matched SIMBAD column:")
+    print(sim_proc[matched_sim])
+    print("Unmatched NED:")
+    print(ned_proc[ned_only])
+    print("Unmatched SIMBAD:")
+    print(sim_proc[sim_only])
 
     # generate the matched table
     matchtab = hstack([ned_proc[matched_ned], sim_proc[matched_sim]], join_type='outer')
