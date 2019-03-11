@@ -8,11 +8,12 @@
 # - remote - via astroquery quieries to NED and SIMBAD
 #
 
-from astropy.table import Table, Column
+from astropy.table import Table, Column, hstack, vstack
 from astroquery.simbad import Simbad
 from astroquery.ned import Ned
 from astropy import units as u
 from astropy.coordinates import SkyCoord, match_coordinates_sky
+import logging
 # from astropy.table import Table, Column, hstack, vstack
 
 
@@ -388,14 +389,23 @@ class DataController:
 
     @staticmethod
     def ned_to_simbad(ned_entry):
+        if type(ned_entry) is bytes:
+            ned_entry = ned_entry.decode("utf-8")
+
         return DataController.ned_to_simbad_cond_dict[ned_entry]
 
     @staticmethod
     def simbad_long_to_small(simbad_std):
+        if type(simbad_std) is bytes:
+            simbad_std = simbad_std.decode("utf-8")
+
         return DataController.simbad_std_to_cond[simbad_std]
 
     @staticmethod
     def candidate_match(non_candidate):
+        if type(non_candidate) is bytes:
+            non_candidate = non_candidate.decode("utf-8")
+
         return DataController.candidate_dict[non_candidate]
 
     def query_region_by_name(self, objectname, match_tol=1.0):  # match_tol in arcsec
@@ -406,23 +416,15 @@ class DataController:
         customSimbad = Simbad()
         customNed = Ned()
 
-        print("SIMBAD votable fields")
-        print(customSimbad.get_votable_fields())
+        logging.info("SIMBAD votable fields")
+        logging.info(customSimbad.get_votable_fields())
         customSimbad.remove_votable_fields('coordinates')
-        customSimbad.add_votable_fields("otype(3)", "ra(d)", "dec(d)")
-
-        # print("NED votable fields")
-        # customNed.get_votable_fields()
+        #customSimbad.add_votable_fields("otype(3)", "ra(d)", "dec(d)")
+        customSimbad.add_votable_fields("otype", "ra(d)", "dec(d)")
 
         # downlaod object data from both simbad and ned
         simbad_table = customSimbad.query_region(objectname)
         ned_table = Ned.query_region(objectname)
-
-        print()
-        print("Before Formatting")
-        print("----------------------------------------------------")
-        ned_table.info()
-        simbad_table.info()
 
         # process tables
         ned_table = self.reformat_table(ned_table,
@@ -431,15 +433,9 @@ class DataController:
                                         old_type='Type', new_type='Type_N')
 
         simbad_table = self.reformat_table(simbad_table,
-                                           keepcols=["MAIN_ID", "RA_d", "DEC_d", "OTYPE_3"],
+                                           keepcols=["MAIN_ID", "RA_d", "DEC_d", "OTYPE"],
                                            old_name='MAIN_ID', new_name='Name_S',
-                                           old_type='OTYPE_3', new_type='Type_S')
-
-        print()
-        print("After Formatting")
-        print("----------------------------------------------------")
-        ned_table.info()
-        simbad_table.info()
+                                           old_type='OTYPE', new_type='Type_S')
 
         # Build SkyCoord from appropriate ned and simbad col's with matching units
         ned_coo = SkyCoord(ra=ned_table['RA(deg)'], dec=ned_table['DEC(deg)'])
@@ -449,26 +445,27 @@ class DataController:
         matched_ned, matched_sim, ned_only, sim_only = self.symmetric_match_sky_coords(
             ned_coo, sim_coo, match_tol*u.arcsec)
 
-        print()
-        print("Matched NED rows:")
-        print(ned_table[matched_ned])
-        print("Matched SIMBAD rows:")
-        print(simbad_table[matched_ned])
-        print()
+        logging.info("")
+        logging.info("Matched NED rows:")
+        logging.info(ned_table[matched_ned])
+        logging.info("Matched SIMBAD rows:")
+        logging.info(simbad_table[matched_ned])
+        logging.info("")
 
         # Explore results
-        print("Matched NED:")
-        print(matched_ned)
-        print("Matched SIMBAD")
-        print(matched_sim)
-        print("NED ONLY")
-        print(ned_only)
-        print("SIMBAD ONLY")
-        print(sim_only)
+        logging.info("Matched NED:")
+        logging.info(matched_ned)
+        logging.info("Matched SIMBAD")
+        logging.info(matched_sim)
+        logging.info("NED ONLY")
+        logging.info(ned_only)
+        logging.info("SIMBAD ONLY")
+        logging.info(sim_only)
 
-        simbad_table.show_in_browser(jsviewer=True)
-        # Temporarily set the combined table to be NED query results.
-        self.combined_table = ned_table
+        # Generate the matched table and save the result.
+        matched_table = hstack(
+            [ned_table[matched_ned], simbad_table[matched_sim]], join_type='outer')
+        self.combined_table = matched_table
 
     def query_region_by_coord(self, coord_type, RA, DEC):
         pass
@@ -502,7 +499,7 @@ class DataController:
            index2_unmatch: indices for unmatched objects in coord2
         '''
         closest_2to1, sep2d_2to1, sep3d = match_coordinates_sky(
-            coord1, coord2)  # location in coord2 for closest match to each coord1. len = len(coord1)
+            coord1, coord2)  # indices for "coord2" for closest match to each coord1. len = len(coord1)
         # location in coord1 for closest match to each coord2. len = len(coord2)
         closest_1to2, sep2d_1to2, sep3d = match_coordinates_sky(coord2, coord1)
 
@@ -511,8 +508,23 @@ class DataController:
         index1_unmatched = []
         index2_unmatched = []
 
+        logging.debug("DEBUG STATEMENTS:")
+        logging.debug("tolerance = {}".format(tolerance))
+        logging.debug("len(sep2d_2to1) = {}".format(len(sep2d_2to1)))
+        logging.debug("len(sep2d_1to2) = {}".format(len(sep2d_1to2)))
+        logging.debug("len(closest_2to1) = {}".format(len(closest_2to1)))
+        logging.debug("len(closest_1to2) = {}".format(len(closest_1to2)))
+        logging.debug("len(coord1) = {}".format(len(coord1)))
+        logging.debug("len(coord2) = {}".format(len(coord2)))
+
         for i in range(0, len(coord1)):  # doubtless there is a more Pythonic way to do this..
             # not sure this condition covers all of the possible corner cases. But good enough.
+            logging.debug("-------------------")
+            logging.debug("iteration i = {}".format(i))
+            logging.debug("-------------------")
+            logging.debug("sep2d_1to2[i] = {}".format(sep2d_1to2[i]))
+            logging.debug("closest_1to2[i] = {}".format(closest_1to2[i]))
+
             if sep2d_1to2[i] < tolerance and i == closest_2to1[closest_1to2[i]]:
                 index1_matched.append(i)
                 index2_matched.append(closest_2to1[i])

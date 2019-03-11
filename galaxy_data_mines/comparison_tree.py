@@ -3,6 +3,7 @@ from astropy.table import Table, Column
 import numpy as np
 from .tree_builder import TreeBuilder
 from .data_controller import DataController
+import logging
 
 
 class ComparisonTree:
@@ -12,7 +13,7 @@ class ComparisonTree:
         self.run_mode = run_mode
 
         if run_mode:
-            print("Run Mode: Enabled. Converting numeric\
+            logging.info("Run Mode: Enabled. Converting numeric\
              id's to SIMBAD entries.")
             dictandtree = self.builder.buildTree("data/simbad_raw.csv")
             self.tree = dictandtree[0]
@@ -117,14 +118,14 @@ class ComparisonTree:
         # ancestor. ie. Star and Galaxy. and their parent is root.
         if (self.tree.parent(firstNodeId).is_root() or
                 self.tree.parent(secNodeId).is_root()):
-            print("parent is root")
+            logging.info("parent is root")
             return False
 
         # Otherwise traverse up to look for common ancestor.
         current_node_id = firstNodeId
         p = self.tree.parent(current_node_id)
         while (p and not p.identifier == "root"):
-            print("Current p is : {}".format(p))
+            logging.info("Current p is : {}".format(p))
             if (self.isOfType(secNodeId, p.identifier)):
                 return True
             else:
@@ -157,33 +158,34 @@ class ComparisonTree:
             matchmade = False
             ned_analogue = DataController.ned_to_simbad(t["Type_N"][i])
             t["Type_N_Analogue"][i] = ned_analogue
-            t["Type_S_cond"][i] = DataController.simbad_long_to_small(t["Type_S"][i])
+            t["Type_S_cond"][i] = DataController.simbad_long_to_small(
+                t["Type_S"][i])
 
             if (self.areDirectMatch(t["Type_N_Analogue"][i], t["Type_S_cond"][i])):
                 matchmade = True
                 t["Exact Match"][i] = True
-                print("match i={} - N: {} S: {}".format(i,
-                                                        ned_analogue,
-                                                        t["Type_S"][i]))
+                logging.info("match i={} - N: {} S: {}".format(i,
+                                                               ned_analogue,
+                                                               t["Type_S"][i]))
             elif (self.areCandidateMatch(Type_N=t["Type_N_Analogue"][i], Type_S=t["Type_S_cond"][i])):
                 matchmade = True
                 t["Candidate Match"][i] = True
-                print("candidateMatch i={} - N: {} S: {}".format(i,
-                                                                 ned_analogue,
-                                                                 t["Type_S"][i]))
+                logging.info("candidateMatch i={} - N: {} S: {}".format(i,
+                                                                        ned_analogue,
+                                                                        t["Type_S"][i]))
             if self.share_common_ancestor(t["Type_N_Analogue"][i], t["Type_S_cond"][i]):
                 matchmade = True
                 t["Same Category"][i] = True
-                print("Same Category i={} - N: {} S: {}".format(i,
-                                                                ned_analogue,
-                                                                t["Type_S"][i]))
+                logging.info("Same Category i={} - N: {} S: {}".format(i,
+                                                                       ned_analogue,
+                                                                       t["Type_S"][i]))
 
                 if (self.areSiblings(t["Type_N_Analogue"][i], t["Type_S_cond"][i])):
                     t["Same Level"][i] = True
-                    print("areSiblings i={} - N: {} S: {}".format(i,
-                                                                  ned_analogue,
-                                                                  t["Type_S"][i]))
+                    logging.info("areSiblings i={} - N: {} S: {}".format(i,
+                                                                         ned_analogue,
+                                                                         t["Type_S"][i]))
             if not matchmade:
-                print("non-match i={} - N: {} S: {}".format(i,
-                                                            ned_analogue,
-                                                            t["Type_S"][i]))
+                logging.info("non-match i={} - N: {} S: {}".format(i,
+                                                                   ned_analogue,
+                                                                   t["Type_S"][i]))

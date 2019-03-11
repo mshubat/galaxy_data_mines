@@ -4,13 +4,18 @@ from .comparison_tree import ComparisonTree
 import sys
 import click
 import os
+import logging
 this_dir, this_filename = os.path.split(__file__)
 test_dir = os.path.dirname(__file__)
 
 
 @click.group()
-@click.option('-log', is_flag=True, help="Save console output to log file.")
-@click.option('-savetable', is_flag=True, help="Use this option to save comparison table to output folder")
+@click.option('-log',
+              type=click.Choice(['debug', 'info', 'warning', 'error', 'critical']),
+              help="Use this option to display messages at log level choice.")
+@click.option('-savetable',
+              is_flag=True,
+              help="Use this option to save comparison table to output folder.")
 @click.pass_context
 def main(ctx, log, savetable):
     '''
@@ -26,20 +31,32 @@ def main(ctx, log, savetable):
     # Create data controller to handle and retrieve data
     dc = DataController()
 
-    if log:
-        original = sys.stdout
+    dir_exists = False
+    # If log or savetable options set, attempt to create directory
+    if log or savetable:
         try:
             os.makedirs("output", exist_ok=True)  # succeeds even if directory exists.
         except OSError:
-            print("Creation of the directory /data failed")
-            sys.stdout = open('log.txt', 'w+')
+            logging.warning("Creation of the directory /output failed")
+            dc.saveTable(fileName="alteredTable.fits", file_format="fits")
         else:
-            print("Successfully created the directory /data")
-            sys.stdout = open('data/log.txt', 'w+')
+            dir_exists = True
+            log.info("Successfully created the directory /output")
+            dc.saveTable(fileName="output/alteredTable.fits", file_format="fits")
+
+    if log:
+        if dir_exists:
+            logging.basicConfig(filename='data/output.log', level=logging.DEBUG)
+        else:
+            logging.basicConfig(filename='output.log', level=logging.DEBUG)
 
     if savetable:
-        dc.saveTable(fileName="alteredTable.fits", file_format="fits")
+        if dir_exists:
+            dc.saveTable(fileName="alteredTable.fits", file_format="fits")
+        else:
+            dc.saveTable(fileName="data/alteredTable.fits", file_format="fits")
 
+    # Pass ct and dc to context object for click commands
     ctx.obj['ct'] = ct
     ctx.obj['dc'] = dc
 
@@ -55,12 +72,13 @@ def byname(ctx, name):
         NAME - the name of the object to be searched around
     '''
     dc = ctx.obj['dc']
+    ct = ctx.obj['ct']
 
-    print("Querying region by name: {}".format(name))
+    logging.info("Querying region by name: {}".format(name))
     dc.query_region_by_name(name)
 
     # Pass table to comparison tree to compare each object
-    # ct.compare_objects(dc.combined_table)
+    ct.compare_objects(dc.combined_table)
 
     if dc.combined_table is not None:
         dc.combined_table.show_in_browser(jsviewer=True)
