@@ -464,7 +464,9 @@ class DataController:
 
         # Generate the matched table and save the result.
         matched_table = hstack(
-            [ned_table[matched_ned], simbad_table[matched_sim]], join_type='outer')
+            [ned_table[matched_ned], simbad_table[matched_sim]],
+            join_type='outer',
+            metadata_conflicts='silent')  # hide the metadata warning
         self.combined_table = matched_table
 
     def query_region_by_coord(self, coord_type, RA, DEC):

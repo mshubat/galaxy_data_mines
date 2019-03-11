@@ -12,7 +12,7 @@ test_dir = os.path.dirname(__file__)
 @click.group()
 @click.option('-log',
               type=click.Choice(['debug', 'info', 'warning', 'error', 'critical']),
-              help="Use this option to display messages at log level choice.")
+              help="Use this option to display messages at log level of choice.")
 @click.option('-savetable',
               is_flag=True,
               help="Use this option to save comparison table to output folder.")
@@ -63,8 +63,10 @@ def main(ctx, log, savetable):
 
 @main.command()
 @click.argument('name', type=str)
+@click.option('-match-tol', type=float,
+              help='Optional 2D match tolerance (in arc seconds). Default value is 1.0 arcsec')
 @click.pass_context
-def byname(ctx, name):
+def byname(ctx, name, match_tol):
     '''
     Downloads objects, via NED and SIMBAD, from region around object name
 
@@ -75,7 +77,13 @@ def byname(ctx, name):
     ct = ctx.obj['ct']
 
     logging.info("Querying region by name: {}".format(name))
-    dc.query_region_by_name(name)
+
+    if match_tol:
+        logging.info("Confirm: match-toll passed")
+        dc.query_region_by_name(name, match_tol=match_tol)
+    else:
+        logging.info("No match-tol passed")
+        dc.query_region_by_name(name)
 
     # Pass table to comparison tree to compare each object
     ct.compare_objects(dc.combined_table)
