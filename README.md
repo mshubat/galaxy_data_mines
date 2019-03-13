@@ -1,8 +1,7 @@
 # Galaxy Data Mines
+This project is focused on comparing two popular astronomical datasets: [NED](https://ned.ipac.caltech.edu) and [SIMBAD](http://simbad.u-strasbg.fr/simbad/).
 
 <img src="https://i.pinimg.com/originals/56/85/cd/5685cdbaacb0b043347c34113b206a92.jpg" alt="space"/>
-
-This project is focused on comparing two popular astronomical datasets: [NED](https://ned.ipac.caltech.edu) and [SIMBAD](http://simbad.u-strasbg.fr/simbad/). 
 
 This tool can be used to compare NED and SIMBAD objects from common regions (via coordinates) or object names ("M83"), to see how the classifications given to common objects in each system compare
 
