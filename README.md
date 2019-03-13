@@ -8,15 +8,16 @@ This tool can be used to compare NED and SIMBAD objects from common regions (via
 
 The workflow looks like:
 1. Data
-   1. via local data *or*
-   1. via online search
-1. Compute 
-   1. matches object in dataset by coordinates
-   1. compares objects classes between NED & SIMBAD
-1. Display
-   1. via exported table *or*
-   1. via graphical display
-
+   * provided locally *or* via online search
+2. Compute 
+   * match objects in each dataset by coordinates *or* region
+   * compare objects classes between NED & SIMBAD
+3. Display
+   * output is provided in several ways:
+      * as tabular data 
+      * as plots
+      * as a "match summary" giving the basic statistics of the matches
+   
 More project details will be added here soon. For now, you can read the initial project proposal below to get a sense of the impetus behind this tool.
 
 ## Project Plan 
