@@ -5,7 +5,7 @@ This project is focused on comparing object classifications between two popular 
 
 This tool compares classifications given to common astronomical objects in NED and SIMBAD. Objects are found in user provided searches: from regions via coordinates (RA/DEC/rad) or via object names ("M83").
 
-Once the regions are provided the software will query the particular areas provided for objects and compute matches. Once matches have been computed the class of each object is compared. Since SIMBAD uses a [hierarchical classification scheme](http://simbad.u-strasbg.fr/simbad/sim-display?data=otypes) and [NED a linear one](https://ned.ipac.caltech.edu/?q=help/srcnom/list-objecttypes&popup=1), the comparisons are done via a mapping from NED's scheme to SIMBAD's. (This produces few issues as the SIMBAD system is (mostly) a superset of NED.
+Once the regions are provided the software will query the particular areas for objects and compute matches. Once matches have been computed the class of each object is compared. Since SIMBAD uses a [hierarchical classification scheme](http://simbad.u-strasbg.fr/simbad/sim-display?data=otypes) and [NED a linear one](https://ned.ipac.caltech.edu/?q=help/srcnom/list-objecttypes&popup=1), the comparisons are done via a mapping from NED's scheme to SIMBAD's. (This produces few issues as the SIMBAD system is (mostly) a superset of NED.
 
 Once mapping is completed the analysis can be done to gather the results in a few different ways. The user can then peruse the results to get a better sense of the object classification consistency between the two systems.
 
