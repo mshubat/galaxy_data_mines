@@ -13,6 +13,7 @@ from astroquery.simbad import Simbad
 from astroquery.ned import Ned
 from astropy import units as u
 from astropy.coordinates import SkyCoord, match_coordinates_sky
+import matplotlib.pyplot as plt
 import logging
 # from astropy.table import Table, Column, hstack, vstack
 
@@ -416,52 +417,61 @@ class DataController:
         customSimbad = Simbad()
         customNed = Ned()
 
-        logging.info("SIMBAD votable fields")
-        logging.info(customSimbad.get_votable_fields())
+        logging.debug("SIMBAD votable fields")
+        logging.debug(customSimbad.get_votable_fields())
         customSimbad.remove_votable_fields('coordinates')
         #customSimbad.add_votable_fields("otype(3)", "ra(d)", "dec(d)")
         customSimbad.add_votable_fields("otype", "ra(d)", "dec(d)")
 
+        logging.info("Querying SIMBAD and NED for region {}".format(objectname))
         # downlaod object data from both simbad and ned
         simbad_table = customSimbad.query_region(objectname)
         ned_table = Ned.query_region(objectname)
 
         # process tables
         ned_table = self.reformat_table(ned_table,
-                                        keepcols=['Object Name', 'RA(deg)', 'DEC(deg)', 'Type'],
+                                        keepcols=['Object Name',
+                                                  # cover NED changing names of cols
+                                                  'RA(deg)',
+                                                  'DEC(deg)',
+                                                  'Type'],
                                         old_name='Object Name', new_name='Name_N',
                                         old_type='Type', new_type='Type_N')
 
+        logging.info("Reformating tables.")
         simbad_table = self.reformat_table(simbad_table,
                                            keepcols=["MAIN_ID", "RA_d", "DEC_d", "OTYPE"],
                                            old_name='MAIN_ID', new_name='Name_S',
                                            old_type='OTYPE', new_type='Type_S')
 
+        logging.info("Building sky coordinates.")
         # Build SkyCoord from appropriate ned and simbad col's with matching units
         ned_coo = SkyCoord(ra=ned_table['RA(deg)'], dec=ned_table['DEC(deg)'])
         sim_coo = SkyCoord(ra=simbad_table['RA_d'], dec=simbad_table['DEC_d'])
 
+        logging.info("Finding object matches.")
         # Find object matches
         matched_ned, matched_sim, ned_only, sim_only = self.symmetric_match_sky_coords(
             ned_coo, sim_coo, match_tol*u.arcsec)
 
-        logging.info("")
-        logging.info("Matched NED rows:")
-        logging.info(ned_table[matched_ned])
-        logging.info("Matched SIMBAD rows:")
-        logging.info(simbad_table[matched_ned])
-        logging.info("")
+        logging.debug("")
+        logging.debug("Matched NED rows:")
+        logging.debug(ned_table[matched_ned])
+        logging.debug("Matched SIMBAD rows:")
+        logging.debug(simbad_table[matched_ned])
+        logging.debug("")
 
         # Explore results
-        logging.info("Matched NED:")
-        logging.info(matched_ned)
-        logging.info("Matched SIMBAD")
-        logging.info(matched_sim)
-        logging.info("NED ONLY")
-        logging.info(ned_only)
-        logging.info("SIMBAD ONLY")
-        logging.info(sim_only)
+        logging.debug("Matched NED:")
+        logging.debug(matched_ned)
+        logging.debug("Matched SIMBAD")
+        logging.debug(matched_sim)
+        logging.debug("NED ONLY")
+        logging.debug(ned_only)
+        logging.debug("SIMBAD ONLY")
+        logging.debug(sim_only)
 
+        logging.info("Building combined table.")
         # Generate the matched table and save the result.
         matched_table = hstack(
             [ned_table[matched_ned], simbad_table[matched_sim]],
@@ -478,8 +488,11 @@ class DataController:
         ra_dec_cols = ['RA(deg)', 'DEC(deg)', 'RA_d', 'DEC_d']
 
         # just keep selected columns
+        logging.debug(table.colnames)
         if keepcols != None:
-            table = table[keepcols]
+            for col in keepcols:
+                if col in table.colnames:
+                    table = table[keepcols]
 
         # change units for RA/Dec
         for col in ra_dec_cols:
@@ -573,6 +586,40 @@ class DataController:
 
     def match_by_objects_location(self):
         pass
+
+    def get_table_stats(self):
+        '''
+        Use the Pandas package to get some stats about the generated
+        match table.
+        '''
+        pass
+
+    @staticmethod
+    def plot_match_table(combtab):
+        '''
+        The more blue the closer the match.
+        '''
+        fig, ax = plt.subplots()
+
+        # xmatchgrouped = combtab.group_by('Exact Match')
+        # xmatches = xmatchgrouped.groups[1]  # all exact matches
+        # xmatches.show_in_browser(jsviewer=True)
+
+        for d in combtab:
+            c = 'red'
+            if d['Exact Match'] == True:
+                c = 'violet'
+            elif d['Candidate Match'] == True:
+                c = 'blue'
+            elif d['Same Level'] == True:
+                c = 'cyan'
+            elif d['Same Category'] == True:
+                c = 'magenta'
+
+            ax.scatter(d['RA(deg)'], d['DEC(deg)'], color=c, label=c)
+
+        # ax.legend()
+        plt.show()
 
     def saveTable(self, *, fileName, file_format):
         if file_format == "csv":

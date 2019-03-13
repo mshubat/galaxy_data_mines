@@ -5,60 +5,83 @@ import sys
 import click
 import os
 import logging
+import datetime
 this_dir, this_filename = os.path.split(__file__)
 test_dir = os.path.dirname(__file__)
 
 
 @click.group()
-@click.option('-log',
+@click.option('--log',
               type=click.Choice(['debug', 'info', 'warning', 'error', 'critical']),
               help="Use this option to display messages at log level of choice.")
-@click.option('-savetable',
+@click.option('--savetable',
               is_flag=True,
               help="Use this option to save comparison table to output folder.")
+@click.option('--showplot',
+              is_flag=True,
+              help="Shows graphical plot of comparison results.")
+@click.option('--showtree',
+              is_flag=True,
+              help="Shows the simbad tree for relationship comparisons.")
 @click.pass_context
-def main(ctx, log, savetable):
+def main(ctx, log, savetable, showplot, showtree):
     '''
     Compares object classifications between NED and SIMBAD.
     '''
-    # Ensure that ctx.obj exists and is a dict (in case `cli()` is called
-    # by means other than the `if __name__ == "__main__"` block below
-    ctx.ensure_object(dict)
 
-    # Create comparison tree for object comparisons
-    ct = ComparisonTree(run_mode=True)
+    # Environment setup and checks.
+    ctx.ensure_object(dict)  # Click convention.
 
-    # Create data controller to handle and retrieve data
-    dc = DataController()
-
+    # Attempt to create directory
     dir_exists = False
-    # If log or savetable options set, attempt to create directory
-    if log or savetable:
-        try:
-            os.makedirs("output", exist_ok=True)  # succeeds even if directory exists.
-        except OSError:
-            logging.warning("Creation of the directory /output failed")
-            dc.saveTable(fileName="alteredTable.fits", file_format="fits")
-        else:
-            dir_exists = True
-            log.info("Successfully created the directory /output")
-            dc.saveTable(fileName="output/alteredTable.fits", file_format="fits")
+    try:
+        os.makedirs("gdm_output", exist_ok=True)  # Succeeds even if directory exists.
+    except OSError:
+        print("Creation of the directory /gdm_output failed")
+    else:
+        dir_exists = True
+        print("Successfully created 'gdm_output' directory.")
 
+    # Deal with relevant options
     if log:
+
+        currentDT = datetime.datetime.now()
+
+        filename = (currentDT.strftime("%Y-%m-%d|%Hhr-%Mm-%Ss")) + "-gdm.log"
+        numeric_level = getattr(logging, log.upper(), None)
+
         if dir_exists:
-            logging.basicConfig(filename='data/output.log', level=logging.DEBUG)
+            print("log is set and dir_exists")
+            logging.basicConfig(filename='gdm_output/'+filename,
+                                level=numeric_level)
         else:
-            logging.basicConfig(filename='output.log', level=logging.DEBUG)
+            logging.basicConfig(filename=filename,
+                                level=numeric_level)
 
     if savetable:
         if dir_exists:
             dc.saveTable(fileName="alteredTable.fits", file_format="fits")
         else:
-            dc.saveTable(fileName="data/alteredTable.fits", file_format="fits")
+            dc.saveTable(fileName="gdm_output/alteredTable.fits", file_format="fits")
+
+    if showtree:
+        treefile = "data/savedTree.txt"
+        if (sys.platform == "darwin"):  # MacOS
+            print("test")
+            os.system("open " + test_dir + "/data/savedTree.txt")
+        elif (sys.platform == "cygwin" or sys.platform == "win32"):  # Windows
+            os.system("start "+treefile)
+        elif (sys.platform == "linux"):
+            os.system("xdg-open "+treefile)
+
+    # Compares object and handles/retrieves data respectively.
+    ct = ComparisonTree(run_mode=True)
+    dc = DataController()
 
     # Pass ct and dc to context object for click commands
     ctx.obj['ct'] = ct
     ctx.obj['dc'] = dc
+    ctx.obj['sp'] = showplot
 
 
 @main.command()
@@ -90,6 +113,9 @@ def byname(ctx, name, match_tol):
 
     if dc.combined_table is not None:
         dc.combined_table.show_in_browser(jsviewer=True)
+        # If show plot option is present.
+        if ctx.obj['sp'] == True:
+            DataController.plot_match_table(dc.combined_table)
 
 
 @main.command()
