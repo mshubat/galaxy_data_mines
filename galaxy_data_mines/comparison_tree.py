@@ -146,6 +146,7 @@ class ComparisonTree:
         cols.append(Column(name='Candidate Match', length=tsize, dtype=bool))
         cols.append(Column(name='Same Category', length=tsize, dtype=bool))
         cols.append(Column(name='Same Level', length=tsize, dtype=bool))
+        cols.append(Column(name='Non Match', length=tsize, dtype=bool))
 
         # Insert NED Analogues right after the Name_N column.
         t.add_column(Column(name="Type_N_Analogue", length=tsize, dtype=np.dtype(('U', 8))),
@@ -186,6 +187,7 @@ class ComparisonTree:
                                                                          ned_analogue,
                                                                          t["Type_S"][i]))
             if not matchmade:
+                t["Non Match"][i] = True
                 logging.info("non-match i={} - N: {} S: {}".format(i,
                                                                    ned_analogue,
                                                                    t["Type_S"][i]))

@@ -420,27 +420,29 @@ class DataController:
         logging.debug("SIMBAD votable fields")
         logging.debug(customSimbad.get_votable_fields())
         customSimbad.remove_votable_fields('coordinates')
-        #customSimbad.add_votable_fields("otype(3)", "ra(d)", "dec(d)")
+        # customSimbad.add_votable_fields("otype(3)", "ra(d)", "dec(d)")
         customSimbad.add_votable_fields("otype", "ra(d)", "dec(d)")
 
         logging.info("Querying SIMBAD and NED for region {}".format(objectname))
         # downlaod object data from both simbad and ned
-        simbad_table = customSimbad.query_region(objectname)
-        ned_table = Ned.query_region(objectname)
+        simbad_table = customSimbad.query_region(objectname, radius=1.0*u.arcmin)
+        ned_table = Ned.query_region(objectname, radius=1.0*u.arcmin)
 
         # process tables
         ned_table = self.reformat_table(ned_table,
-                                        keepcols=['Object Name',
-                                                  # cover NED changing names of cols
-                                                  'RA(deg)',
-                                                  'DEC(deg)',
-                                                  'Type'],
+                                        keepcolsifpresent=['Object Name',
+                                                           # cover NED changing names of cols
+                                                           'RA(deg)',
+                                                           'RA',
+                                                           'DEC(deg)',
+                                                           'DEC',
+                                                           'Type'],
                                         old_name='Object Name', new_name='Name_N',
                                         old_type='Type', new_type='Type_N')
 
         logging.info("Reformating tables.")
         simbad_table = self.reformat_table(simbad_table,
-                                           keepcols=["MAIN_ID", "RA_d", "DEC_d", "OTYPE"],
+                                           keepcolsifpresent=["MAIN_ID", "RA_d", "DEC_d", "OTYPE"],
                                            old_name='MAIN_ID', new_name='Name_S',
                                            old_type='OTYPE', new_type='Type_S')
 
@@ -482,17 +484,18 @@ class DataController:
     def query_region_by_coord(self, coord_type, RA, DEC):
         pass
 
-    def reformat_table(self, table, keepcols, old_name, new_name, old_type, new_type):
+    def reformat_table(self, table, keepcolsifpresent, old_name, new_name, old_type, new_type):
         ''' reformat NED or SIMBAD catalog to make more intercompatible'''
 
-        ra_dec_cols = ['RA(deg)', 'DEC(deg)', 'RA_d', 'DEC_d']
+        ra_dec_cols = ['RA(deg)', 'DEC(deg)', 'RA', 'DEC', 'RA_d', 'DEC_d']
 
         # just keep selected columns
-        logging.debug(table.colnames)
-        if keepcols != None:
-            for col in keepcols:
+        keepcols = []
+        if keepcolsifpresent != None:
+            for col in keepcolsifpresent:
                 if col in table.colnames:
-                    table = table[keepcols]
+                    keepcols.append(col)
+            table = table[keepcols]
 
         # change units for RA/Dec
         for col in ra_dec_cols:
@@ -502,6 +505,12 @@ class DataController:
         # change ID for name & type columns
         table.rename_column(old_name, new_name)
         table.rename_column(old_type, new_type)
+
+        # If ned name changes, revert to consistent name.
+        if 'DEC' in table.colnames:
+            table.rename_column('DEC', 'DEC(deg)')
+        if 'RA' in table.colnames:
+            table.rename_column('RA', 'RA(deg)')
 
         return(table)
 
@@ -599,26 +608,45 @@ class DataController:
         '''
         The more blue the closer the match.
         '''
-        fig, ax = plt.subplots()
 
-        # xmatchgrouped = combtab.group_by('Exact Match')
-        # xmatches = xmatchgrouped.groups[1]  # all exact matches
-        # xmatches.show_in_browser(jsviewer=True)
+        xmask = combtab['Exact Match'] == True
+        cmask = combtab['Candidate Match'] == True
+        scatmask = combtab['Same Category'] == True
+        slmask = combtab['Same Level'] == True
+        nomatchmask = combtab['Non Match'] == True
 
-        for d in combtab:
-            c = 'red'
-            if d['Exact Match'] == True:
-                c = 'violet'
-            elif d['Candidate Match'] == True:
-                c = 'blue'
-            elif d['Same Level'] == True:
-                c = 'cyan'
-            elif d['Same Category'] == True:
-                c = 'magenta'
+        #eclusivesibling = combtab['Candidate Match'] == False and combtab['Same Level'] == True
+        #excsiblingmatch = combtab[eclusivesibling]
+        # excsiblingmatch.show_in_browser(jsviewer=True)
+        # masks = [xmask, cmask, scatmask, slmask]
 
-            ax.scatter(d['RA(deg)'], d['DEC(deg)'], color=c, label=c)
+        xmatches = combtab[xmask]
+        cmatches = combtab[cmask]
+        scatmatches = combtab[scatmask]
+        slmatches = combtab[slmask]
+        nonmatches = combtab[nomatchmask]
 
-        # ax.legend()
+        cols = ['violet', 'blue', 'cyan', 'magenta', 'red']
+        labels = ['Exact Match', 'Candidate Match', 'Same Category', 'Same Level', 'Non Matches']
+        matchtypes = [xmatches, cmatches, scatmatches, slmatches, nonmatches]
+
+        plt.figure(figsize=(10, 7))
+
+        for i, m in enumerate(matchtypes):
+            c = cols[i]
+            l = labels[i]
+
+            if l == "Candidate Match":
+                plt.scatter(m['RA(deg)'], m['DEC(deg)'], color=c, label=l, s=100)
+            elif l == "Same Category":
+                plt.scatter(m['RA(deg)'], m['DEC(deg)'], color=c, label=l, s=50)
+            else:
+                plt.scatter(m['RA(deg)'], m['DEC(deg)'], color=c, label=l, s=20)
+
+        plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=5, mode='expand')
+        plt.xlabel("RA(deg)")
+        plt.ylabel("DEC(deg)")
+        plt.tight_layout()  # make room for plot labels
         plt.show()
 
     def saveTable(self, *, fileName, file_format):
