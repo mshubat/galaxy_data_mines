@@ -14,6 +14,7 @@ from astroquery.ned import Ned
 from astropy import units as u
 from astropy.coordinates import SkyCoord, match_coordinates_sky
 import matplotlib.pyplot as plt
+import pandas as pd
 import logging
 # from astropy.table import Table, Column, hstack, vstack
 
@@ -88,7 +89,8 @@ class DataController:
         "!WR*": "WR*"}
 
     simbad_std_to_cond = {
-        "long_name": "tag",
+        "Unknown": "?",
+        "Transient": "ev",
         "Radio": "Rad",
         "Radio_m": "mR",
         "Radio_cm": "cm",
@@ -393,12 +395,20 @@ class DataController:
         if type(ned_entry) is bytes:
             ned_entry = ned_entry.decode("utf-8")
 
+        if ned_entry == "":
+            logging.warning("Empty string was passed as ned_entry object type.")
+            return ""
+
         return DataController.ned_to_simbad_cond_dict[ned_entry]
 
     @staticmethod
     def simbad_long_to_small(simbad_std):
         if type(simbad_std) is bytes:
             simbad_std = simbad_std.decode("utf-8")
+
+        if simbad_std == "":
+            logging.warning("Empty string was passed as simbad_std object type.")
+            return ""
 
         return DataController.simbad_std_to_cond[simbad_std]
 
@@ -407,26 +417,40 @@ class DataController:
         if type(non_candidate) is bytes:
             non_candidate = non_candidate.decode("utf-8")
 
+        if non_candidate == "":
+            logging.info("Empty string was passed during candidate lookup.")
+            return ""
+
         return DataController.candidate_dict[non_candidate]
 
-    def query_region_by_name(self, objectname, match_tol=1.0):  # match_tol in arcsec
+    def query_region_by_name(self, objectname, match_tol=1.0, obj_radius=1.0):  # match_tol in arcsec
         '''
         Fetch remote data from NED and SIMBAD matching coordinates and build table.
         '''
-        # Create custom query objects
+        # Create custom query objects.
         customSimbad = Simbad()
         customNed = Ned()
 
+        # Log SIMBAD votable (changeable) fields.
         logging.debug("SIMBAD votable fields")
         logging.debug(customSimbad.get_votable_fields())
+
         customSimbad.remove_votable_fields('coordinates')
         # customSimbad.add_votable_fields("otype(3)", "ra(d)", "dec(d)")
         customSimbad.add_votable_fields("otype", "ra(d)", "dec(d)")
 
+        # Downlaod object data from both SIMBAD and NED.
         logging.info("Querying SIMBAD and NED for region {}".format(objectname))
-        # downlaod object data from both simbad and ned
-        simbad_table = customSimbad.query_region(objectname, radius=1.0*u.arcmin)
-        ned_table = Ned.query_region(objectname, radius=1.0*u.arcmin)
+
+        # SIMBAD
+        logging.info("SIMBAD is currently being queried...")
+        simbad_table = customSimbad.query_region(objectname, radius=obj_radius*u.arcmin)
+        logging.info("SUCCESS: SIMBAD Data retrieved.")
+
+        # NED
+        logging.info("NED is currently being queried...")
+        ned_table = Ned.query_region(objectname, radius=obj_radius*u.arcmin)
+        logging.info("SUCCESS: NED Data retrieved.")
 
         # process tables
         ned_table = self.reformat_table(ned_table,
@@ -453,14 +477,14 @@ class DataController:
 
         logging.info("Finding object matches.")
         # Find object matches
-        matched_ned, matched_sim, ned_only, sim_only = self.symmetric_match_sky_coords(
+        matched_ned, matched_sim, ned_only, sim_only = self.symmetric_match_sky_coords_v2(
             ned_coo, sim_coo, match_tol*u.arcsec)
 
         logging.debug("")
         logging.debug("Matched NED rows:")
         logging.debug(ned_table[matched_ned])
         logging.debug("Matched SIMBAD rows:")
-        logging.debug(simbad_table[matched_ned])
+        logging.debug(simbad_table[matched_sim])
         logging.debug("")
 
         # Explore results
@@ -546,8 +570,8 @@ class DataController:
             logging.debug("-------------------")
             logging.debug("iteration i = {}".format(i))
             logging.debug("-------------------")
-            logging.debug("sep2d_1to2[i] = {}".format(sep2d_1to2[i]))
-            logging.debug("closest_1to2[i] = {}".format(closest_1to2[i]))
+            # logging.debug("sep2d_1to2[i] = {}".format(sep2d_1to2[i]))
+            # logging.debug("closest_1to2[i] = {}".format(closest_1to2[i]))
 
             if sep2d_1to2[i] < tolerance and i == closest_2to1[closest_1to2[i]]:
                 index1_matched.append(i)
@@ -560,6 +584,76 @@ class DataController:
                 index2_unmatched.append(j)
 
         return(index1_matched, index2_matched, index1_unmatched, index2_unmatched)
+
+    def symmetric_match_sky_coords_v2(self, coord1, coord2, tolerance):
+        '''produce the symmetric match of coord1 to coord2
+           output:
+           index1_matched: index into coord1 for matched objects
+           index2_matched: index into coord2 for matches of objects in index1_matched
+           index1_unmatch: indices for unmatched objects in coord1
+           index2_unmatch: indices for unmatched objects in coord2
+        '''
+        closest_2to1, sep2d_2to1, sep3d = match_coordinates_sky(
+            coord1, coord2)  # indices for "coord2" for closest match to each coord1. len = len(coord1)
+        # location in coord1 for closest match to each coord2. len = len(coord2)
+        closest_1to2, sep2d_1to2, sep3d = match_coordinates_sky(coord2, coord1)
+
+        index1_matched = []
+        index2_matched = []
+        index1_unmatched = []
+        index2_unmatched = []
+
+        logging.debug("DEBUG STATEMENTS:")
+        logging.debug("tolerance = {}".format(tolerance))
+        logging.debug("len(sep2d_2to1) = {}".format(len(sep2d_2to1)))
+        logging.debug("len(sep2d_1to2) = {}".format(len(sep2d_1to2)))
+        logging.debug("len(closest_2to1) = {}".format(len(closest_2to1)))
+        logging.debug("len(closest_1to2) = {}".format(len(closest_1to2)))
+        logging.debug("len(coord1) = {}".format(len(coord1)))
+        logging.debug("len(coord2) = {}".format(len(coord2)))
+
+        # ----------- Matt's attempt ----------- #
+        # -------------------------------------- #
+
+        if len(coord1) < len(coord2):
+            shortest_len = len(coord1)
+            longest_len = len(coord2)
+            shortest = "coord1"
+            longest = "coord2"
+        else:
+            shortest_len = len(coord2)
+            longest_len = len(coord1)
+            shortest = "coord2"
+            longest = "coord1"
+
+        i = 0
+        while i < shortest_len:
+            if shortest == "coord1":
+                if sep2d_2to1[i] < tolerance and i == closest_1to2[closest_2to1[i]]:
+                    index1_matched.append(i)
+                    index2_matched.append(closest_2to1[i])
+                else:
+                    index1_unmatched.append(i)
+
+            elif shortest == "coord2":
+                if sep2d_1to2[i] < tolerance and i == closest_2to1[closest_1to2[i]]:
+                    index2_matched.append(i)
+                    index1_matched.append(closest_1to2[i])
+            i += 1
+
+        for j in range(longest_len):
+            if longest == "coord1":
+                if j not in index1_matched:
+                    index1_unmatched.append(j)
+
+            elif longest == "coord2":
+                if j not in index2_matched:
+                    index2_unmatched.append(j)
+
+        return (index1_matched, index2_matched, index1_unmatched, index2_unmatched)
+
+        # -------------------------------------- #
+        # ----------- Matt's attempt ----------- #
 
     def load_data(self, first_file, sec_file=None):
         '''
@@ -583,13 +677,8 @@ class DataController:
             ned_in = Table.read(first_file)
             simbad_in = Table.read(sec_file)
 
-        # rest of published_cats relevant functionality
-
-        pass
-
     def build_joint_table(self):
         '''
-
         '''
         pass
 
@@ -601,7 +690,15 @@ class DataController:
         Use the Pandas package to get some stats about the generated
         match table.
         '''
-        pass
+        # convert table to pandas dataframe
+        df = self.combined_table.to_pandas()
+
+        cols = df.columns[10:]  # just match columns
+
+        # for c in cols:
+        #    print(df[c].value_counts())
+
+        return df.describe(include="all")
 
     @staticmethod
     def plot_match_table(combtab):
@@ -615,8 +712,8 @@ class DataController:
         slmask = combtab['Same Level'] == True
         nomatchmask = combtab['Non Match'] == True
 
-        #eclusivesibling = combtab['Candidate Match'] == False and combtab['Same Level'] == True
-        #excsiblingmatch = combtab[eclusivesibling]
+        # eclusivesibling = combtab['Candidate Match'] == False and combtab['Same Level'] == True
+        # excsiblingmatch = combtab[eclusivesibling]
         # excsiblingmatch.show_in_browser(jsviewer=True)
         # masks = [xmask, cmask, scatmask, slmask]
 
@@ -636,7 +733,9 @@ class DataController:
             c = cols[i]
             l = labels[i]
 
-            if l == "Candidate Match":
+            if l == "Exact Match":
+                plt.scatter(m['RA(deg)'], m['DEC(deg)'], color=c, label=l, s=150)
+            elif l == "Candidate Match":
                 plt.scatter(m['RA(deg)'], m['DEC(deg)'], color=c, label=l, s=100)
             elif l == "Same Category":
                 plt.scatter(m['RA(deg)'], m['DEC(deg)'], color=c, label=l, s=50)

@@ -9,6 +9,8 @@ import datetime
 this_dir, this_filename = os.path.split(__file__)
 test_dir = os.path.dirname(__file__)
 
+import pandas as pd
+
 
 @click.group()
 @click.option('--log',
@@ -32,15 +34,16 @@ def main(ctx, log, savetable, showplot, showtree):
     # Environment setup and checks.
     ctx.ensure_object(dict)  # Click convention.
 
-    # Attempt to create directory
+    # Attempt to create directory if relevant option provided
     dir_exists = False
-    try:
-        os.makedirs("gdm_output", exist_ok=True)  # Succeeds even if directory exists.
-    except OSError:
-        print("Creation of the directory /gdm_output failed")
-    else:
-        dir_exists = True
-        print("Successfully created 'gdm_output' directory.")
+    if log or savetable:
+        try:
+            os.makedirs("gdm_output", exist_ok=True)  # Succeeds even if directory exists.
+        except OSError:
+            logging.error("Creation of the directory /gdm_output failed")
+        else:
+            dir_exists = True
+            logging.info("Successfully created 'gdm_output' directory.")
 
     # Deal with relevant options
     if log:
@@ -51,12 +54,20 @@ def main(ctx, log, savetable, showplot, showtree):
         numeric_level = getattr(logging, log.upper(), None)
 
         if dir_exists:
-            print("log is set and dir_exists")
             logging.basicConfig(filename='gdm_output/'+filename,
                                 level=numeric_level)
         else:
             logging.basicConfig(filename=filename,
                                 level=numeric_level)
+
+        root = logging.getLogger()
+        root.setLevel(numeric_level)
+
+        handler = logging.StreamHandler(sys.stdout)
+        handler.setLevel(logging.DEBUG)
+        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        handler.setFormatter(formatter)
+        root.addHandler(handler)
 
     if savetable:
         if dir_exists:
@@ -67,7 +78,6 @@ def main(ctx, log, savetable, showplot, showtree):
     if showtree:
         treefile = "data/savedTree.txt"
         if (sys.platform == "darwin"):  # MacOS
-            print("test")
             os.system("open " + test_dir + "/data/savedTree.txt")
         elif (sys.platform == "cygwin" or sys.platform == "win32"):  # Windows
             os.system("start "+treefile)
@@ -78,44 +88,79 @@ def main(ctx, log, savetable, showplot, showtree):
     ct = ComparisonTree(run_mode=True)
     dc = DataController()
 
-    # Pass ct and dc to context object for click commands
+    # Pass ct and dc to context object for click commands.
     ctx.obj['ct'] = ct
     ctx.obj['dc'] = dc
     ctx.obj['sp'] = showplot
+    ctx.obj['dir_exists'] = dir_exists
 
 
 @main.command()
 @click.argument('name', type=str)
 @click.option('-match-tol', type=float,
-              help='Optional 2D match tolerance (in arc seconds). Default value is 1.0 arcsec')
+              help='Optional 2D match tolerance (in arc seconds). Default value is 1.0 arcsec.')
+@click.option('-obj-radius', type=float,
+              help='Optional radius to search around object (in arc minutes). Default value is 1.0 arcmin.')
 @click.pass_context
-def byname(ctx, name, match_tol):
+def byname(ctx, name, match_tol, obj_radius):
     '''
     Downloads objects, via NED and SIMBAD, from region around object name
 
     Arguments:
-        NAME - the name of the object to be searched around
+        NAME - the name of the object to    be searched around
     '''
     dc = ctx.obj['dc']
     ct = ctx.obj['ct']
 
     logging.info("Querying region by name: {}".format(name))
 
+    # Confirm match_tol and obj_radius are valid values.
     if match_tol:
-        logging.info("Confirm: match-toll passed")
-        dc.query_region_by_name(name, match_tol=match_tol)
+        if match_tol > 0 and match_tol <= 60:
+            match_tol_status = "valid"
+        else:
+            match_tol_status = "invalid"
     else:
-        logging.info("No match-tol passed")
-        dc.query_region_by_name(name)
+        match_tol_status = "valid"
 
-    # Pass table to comparison tree to compare each object
-    ct.compare_objects(dc.combined_table)
+    if obj_radius:
+        if obj_radius > 0 and obj_radius <= 60:
+            obj_radius_status = "valid"
+        else:
+            obj_radius_status = "invalid"
+    else:
+        obj_radius_status = "valid"
 
-    if dc.combined_table is not None:
-        dc.combined_table.show_in_browser(jsviewer=True)
-        # If show plot option is present.
-        if ctx.obj['sp'] == True:
-            DataController.plot_match_table(dc.combined_table)
+    if match_tol_status == "invalid":
+        logging.error("Invalid match_tol entered.")
+        logging.error("mmatch_tol must be between 0 and 60 arcsecs")
+    elif obj_radius_status == "invalid":
+        logging.error("Invalid obj_radius entered.")
+        logging.error("obj_radius must be between 0 and 60 arcmins")
+    else:
+        if match_tol and obj_radius:
+            logging.info("Confirm: match-tol & obj-radius passed.")
+            dc.query_region_by_name(name, match_tol=match_tol, obj_radius=obj_radius)
+        elif match_tol:
+            logging.info("Confirm: match-tol passed.")
+            dc.query_region_by_name(name, match_tol=match_tol)
+        elif obj_radius:
+            logging.info("Confirm: obj-radius passed.")
+            dc.query_region_by_name(name, obj_radius=obj_radius)
+        else:
+            logging.info("Default settings used for byname query.")
+            dc.query_region_by_name(name)
+
+        # Pass table to comparison tree to compare each object
+        ct.compare_objects(dc.combined_table)
+
+        if dc.combined_table is not None:
+            dc.combined_table.show_in_browser(jsviewer=True)
+            # dc.get_table_stats().to_csv(r"gdm_output/result_stats.csv")
+
+            # If show plot option is present.
+            if ctx.obj['sp'] == True:
+                DataController.plot_match_table(dc.combined_table)
 
 
 @main.command()

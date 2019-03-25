@@ -48,7 +48,7 @@ class ComparisonTree:
         in the tree provided. It will return False otherwise.
         '''
         # tag->id dict has no entry for null string
-        if firstNodeId == "":
+        if firstNodeId == "" or secNodeId == "":
             return False
 
         if self.run_mode:
@@ -101,7 +101,7 @@ class ComparisonTree:
         nodeIDs share a common ancestor. Return False othewise.
         '''
         # tag->id dict has no entry for null string
-        if firstNodeId == "":
+        if firstNodeId == "" or secNodeId == "":
             return False
 
         if self.run_mode:
@@ -159,6 +159,7 @@ class ComparisonTree:
             matchmade = False
             ned_analogue = DataController.ned_to_simbad(t["Type_N"][i])
             t["Type_N_Analogue"][i] = ned_analogue
+            logging.debug("This is the value of Type_S being passed: {}".format(t["Type_S"][i]))
             t["Type_S_cond"][i] = DataController.simbad_long_to_small(
                 t["Type_S"][i])
 
@@ -191,3 +192,4 @@ class ComparisonTree:
                 logging.info("non-match i={} - N: {} S: {}".format(i,
                                                                    ned_analogue,
                                                                    t["Type_S"][i]))
+        self.combined_table = t
