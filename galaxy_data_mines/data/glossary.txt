@@ -1,0 +1,33 @@
+GLOSSARY OF TERMS
+------------------------------------------
+------------------------------------------
+
+High Level -
+------------------
+# Strong Matches:
+# Non Matches:
+# Weak Matches:
+
+% Weak Matches:
+% Strong Matches:
+% Non Matches
+
+Detailed
+------------------
+# Exact Matches:
+# Candidate Matches:
+# isOfType Matches:
+# Same Category Matches:
+# Generalization Matches:
+# Non Matches:
+
+% Exact Matches:
+% Candidate Matches:
+% isOfType Matches:
+% Same Category Matches:
+% Generalization Matches:
+% Non Matches:
+
+
+Pandas Table Statistics
+---------------------------------

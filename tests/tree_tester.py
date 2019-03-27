@@ -4,10 +4,9 @@
 #
 #
 
-
+from galaxy_data_mines.comparison_tree import ComparisonTree
+from galaxy_data_mines.data_controller import DataController
 from treelib import Node, Tree, exceptions
-from comparison_tree import ComparisonTree
-from data_controller import DataController
 from astropy.table import Table
 
 
@@ -78,19 +77,19 @@ def shareCommonAncestorMethodTest(ct):
 
 if __name__ == "__main__":
 
-    # Create and Show the ComparisonTree
-
-    ct = ComparisonTree(run_mode=True)
+    # Create and Show the ComparisonTree.
+    ct = ComparisonTree(run_mode=False)
     ct.showTree()
+
     # ct.tree.save2file("savedTree")
-    #ct.tree.save2file("savedTree", nid="10.00.00.00")
+    # ct.tree.save2file("savedTree", nid="10.00.00.00")
 
-    str_test = ct.tree.to_json()
-    dic_test = ct.tree.to_dict()
+    # str_test = ct.tree.to_json()
+    # dic_test = ct.tree.to_dict()
 
-    print(dic_test)
-    print(dic_test["ROOT"])
-    print(dic_test["ROOT"]["children"])
+    # print(dic_test)
+    # print(dic_test["ROOT"])
+    # print(dic_test["ROOT"]["children"])
 
 '''
    # Run tests

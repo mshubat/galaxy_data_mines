@@ -232,3 +232,10 @@ id,long_name,tag
 "15.15.03.01",BLLac,BLL
 "15.15.03.02",OVV,OVV
 "15.15.04.00",QSO,QSO
+# This is a comment, lines starting with '#' will be ignored
+# when building the tree.
+# NOTE: The 2 lines below do not match SIMBAD exactly.
+# They were added here in order to follow a proper key structure.
+# Their original id values are 00.00.00.0 and 00.02.00.0 respectively.
+"16.00.00.00",Unknown,?
+"17.00.00.00",Transient,ev

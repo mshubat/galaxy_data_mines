@@ -52,7 +52,8 @@ class TreeBuilder:
         # are really separate trees.
         new_tree.create_node("ROOT", "root")
         tree_dict = {}
-        dat = Table.read(os.path.join(os.path.dirname(__file__), infile), format='csv')
+        dat = Table.read(os.path.join(os.path.dirname(__file__), infile),
+                         format='csv', comment="#.*")
         numeric_id = dat['id']
         tag = dat['tag']
         for i, num_id in enumerate(numeric_id):

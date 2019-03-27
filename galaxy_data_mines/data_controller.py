@@ -1,4 +1,4 @@
-# Data Storage and organization class
+# Data Storage and Organization Class
 #
 # This class serves as an import, organization, and processing tool for NED
 # and SIMBAD data.
@@ -8,13 +8,13 @@
 # - remote - via astroquery quieries to NED and SIMBAD
 #
 
+from .match_stats import MatchStats
 from astropy.table import Table, Column, hstack, vstack
 from astroquery.simbad import Simbad
 from astroquery.ned import Ned
 from astropy import units as u
 from astropy.coordinates import SkyCoord, match_coordinates_sky
 import matplotlib.pyplot as plt
-import pandas as pd
 import logging
 # from astropy.table import Table, Column, hstack, vstack
 
@@ -49,7 +49,7 @@ class DataController:
         "PN": "PN",
         "PofG": "PoG",
         "Psr": "Psr",
-        "QGroup": "",  # # not too common
+        "QGroup": "",  # not too common
         "QSO": "QSO",
         "Q_Lens": "LeQ",
         "RadioS": "Rad",
@@ -60,7 +60,7 @@ class DataController:
         "UvES": "UV",
         "UvS": "UV",
         "V*": "V*",
-        "VisS": "",  # no match found
+        "VisS": "",  # no direct match found
         "WD*": "WD*",
         "WR*": "WR*",
         "XrayS": "X",
@@ -389,6 +389,7 @@ class DataController:
 
     def __init__(self):
         self.combined_table = None
+        self.stats = MatchStats()
 
     @staticmethod
     def ned_to_simbad(ned_entry):
@@ -452,6 +453,10 @@ class DataController:
         ned_table = Ned.query_region(objectname, radius=obj_radius*u.arcmin)
         logging.info("SUCCESS: NED Data retrieved.")
 
+        # Save some query stats.
+        self.stats.sim_count = len(simbad_table)
+        self.stats.ned_count = len(ned_table)
+
         # process tables
         ned_table = self.reformat_table(ned_table,
                                         keepcolsifpresent=['Object Name',
@@ -487,6 +492,9 @@ class DataController:
         logging.debug(simbad_table[matched_sim])
         logging.debug("")
 
+        self.stats.ned_match_count = len(matched_ned)
+        self.stats.ned_match_count = len(matched_ned)
+
         # Explore results
         logging.debug("Matched NED:")
         logging.debug(matched_ned)
@@ -497,23 +505,23 @@ class DataController:
         logging.debug("SIMBAD ONLY")
         logging.debug(sim_only)
 
-        logging.info("Building combined table.")
         # Generate the matched table and save the result.
+        logging.info("Building combined table.")
         matched_table = hstack(
             [ned_table[matched_ned], simbad_table[matched_sim]],
             join_type='outer',
-            metadata_conflicts='silent')  # hide the metadata warning
+            metadata_conflicts='silent')  # Hide the metadata warning.
         self.combined_table = matched_table
 
     def query_region_by_coord(self, coord_type, RA, DEC):
         pass
 
     def reformat_table(self, table, keepcolsifpresent, old_name, new_name, old_type, new_type):
-        ''' reformat NED or SIMBAD catalog to make more intercompatible'''
+        '''Reformat NED or SIMBAD catalog to make more intercompatible'''
 
         ra_dec_cols = ['RA(deg)', 'DEC(deg)', 'RA', 'DEC', 'RA_d', 'DEC_d']
 
-        # just keep selected columns
+        # Just keep selected columns.
         keepcols = []
         if keepcolsifpresent != None:
             for col in keepcolsifpresent:
@@ -521,12 +529,12 @@ class DataController:
                     keepcols.append(col)
             table = table[keepcols]
 
-        # change units for RA/Dec
+        # Change units for RA/DEC.
         for col in ra_dec_cols:
             if col in table.colnames:
                 table[col].unit = u.degree
 
-        # change ID for name & type columns
+        # Change ID for name & type columns.
         table.rename_column(old_name, new_name)
         table.rename_column(old_type, new_type)
 
@@ -677,29 +685,6 @@ class DataController:
             ned_in = Table.read(first_file)
             simbad_in = Table.read(sec_file)
 
-    def build_joint_table(self):
-        '''
-        '''
-        pass
-
-    def match_by_objects_location(self):
-        pass
-
-    def get_table_stats(self):
-        '''
-        Use the Pandas package to get some stats about the generated
-        match table.
-        '''
-        # convert table to pandas dataframe
-        df = self.combined_table.to_pandas()
-
-        cols = df.columns[10:]  # just match columns
-
-        # for c in cols:
-        #    print(df[c].value_counts())
-
-        return df.describe(include="all")
-
     @staticmethod
     def plot_match_table(combtab):
         '''
@@ -733,6 +718,9 @@ class DataController:
             c = cols[i]
             l = labels[i]
 
+            # Different sizes used since some match categories overlap.
+            # This will be either be changed soon or an additional plot
+            # function will be added.
             if l == "Exact Match":
                 plt.scatter(m['RA(deg)'], m['DEC(deg)'], color=c, label=l, s=150)
             elif l == "Candidate Match":

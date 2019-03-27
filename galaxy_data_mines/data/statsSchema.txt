@@ -1,0 +1,55 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Query Statistics
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+- For definitions of terms see the glossary
+
+High Level Overview
+---------------------------------
+# Total Objects retrieved:    $tot_obj_count
+
+# NED objects retrieved:      $ned_count
+# NED matches:                $ned_match_count
+% of NED matched:             $ned_match_perc
+
+# SIMBAD objects retrieved:   $sim_count
+# SIMBAD matches:             $sim_match_count
+% of SIMBAD matched:          $sim_match_perc
+
+
+Object Comparison Results
+---------------------------------
+# Total Objects compared:     $comp_count
+
+
+Binned Matches
+------------------
+# Strong Matches:             $strong_count
+# Weak Matches:               $weak_count
+# Non Matches:                $non_count
+
+% Strong Matches:             $strong_perc
+% Weak Matches:               $weak_perc
+% Non Matches:                $non_perc
+
+Detailed
+------------------
+# Exact Matches:              $exact_count
+# Candidate Matches:          $cand_count
+# isOfType Matches:           $oftype_count
+# Same Category Matches:      $samecat_count
+# Generalization Matches:     $general_count
+# Non Matches:                $non_count
+
+% Exact Matches:              $exact_perc
+% Candidate Matches:          $cand_perc
+% isOfType Matches:           $oftype_perc
+% Same Category Matches:      $samecat_perc
+% Generalization Matches:     $general_perc
+% Non Matches:                $non_perc
+
+
+Pandas Table Statistics
+---------------------------------
+$table_describe
+
+$table_col_counts

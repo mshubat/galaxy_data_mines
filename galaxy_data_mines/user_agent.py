@@ -6,27 +6,39 @@ import click
 import os
 import logging
 import datetime
+import pandas as pd
+
 this_dir, this_filename = os.path.split(__file__)
 test_dir = os.path.dirname(__file__)
-
-import pandas as pd
 
 
 @click.group()
 @click.option('--log',
               type=click.Choice(['debug', 'info', 'warning', 'error', 'critical']),
               help="Use this option to display messages at log level of choice.")
-@click.option('--savetable',
+@click.option('--glossary',
               is_flag=True,
-              help="Use this option to save comparison table to output folder.")
-@click.option('--showplot',
-              is_flag=True,
-              help="Shows graphical plot of comparison results.")
+              help="Shows the glossary of terms used by gdmines tool.")
 @click.option('--showtree',
               is_flag=True,
               help="Shows the simbad tree for relationship comparisons.")
+@click.option('--showplot',
+              is_flag=True,
+              help="Shows graphical plot of comparison results.")
+@click.option('--saveplot',
+              is_flag=True,
+              help="Shows graphical plot of comparison results.")
+@click.option('--savetable',
+              type=click.Choice(['csv', 'fits']),
+              help="Use this option to save the comparison table to the output\
+              folder in the format of your choice.")
+@click.option('--savestats',
+              is_flag=True,
+              help="Saves statistics of comparison results.")
 @click.pass_context
-def main(ctx, log, savetable, showplot, showtree):
+def main(ctx, log, glossary,
+         showtree, showplot,
+         saveplot, savetable, savestats):
     '''
     Compares object classifications between NED and SIMBAD.
     '''
@@ -34,9 +46,9 @@ def main(ctx, log, savetable, showplot, showtree):
     # Environment setup and checks.
     ctx.ensure_object(dict)  # Click convention.
 
-    # Attempt to create directory if relevant option provided
+    # Attempt to create directory if a relevant option is provided.
     dir_exists = False
-    if log or savetable:
+    if log or savetable or saveplot or savestats:
         try:
             os.makedirs("gdm_output", exist_ok=True)  # Succeeds even if directory exists.
         except OSError:
@@ -45,7 +57,7 @@ def main(ctx, log, savetable, showplot, showtree):
             dir_exists = True
             logging.info("Successfully created 'gdm_output' directory.")
 
-    # Deal with relevant options
+    # Deal with option(s) which don't need any additional information.
     if log:
 
         currentDT = datetime.datetime.now()
@@ -69,29 +81,26 @@ def main(ctx, log, savetable, showplot, showtree):
         handler.setFormatter(formatter)
         root.addHandler(handler)
 
-    if savetable:
-        if dir_exists:
-            dc.saveTable(fileName="alteredTable.fits", file_format="fits")
-        else:
-            dc.saveTable(fileName="gdm_output/alteredTable.fits", file_format="fits")
-
     if showtree:
-        treefile = "data/savedTree.txt"
-        if (sys.platform == "darwin"):  # MacOS
-            os.system("open " + test_dir + "/data/savedTree.txt")
-        elif (sys.platform == "cygwin" or sys.platform == "win32"):  # Windows
-            os.system("start "+treefile)
-        elif (sys.platform == "linux"):
-            os.system("xdg-open "+treefile)
+        treefile = "/data/savedTree.txt"
+        safelyopenfile(treefile)
 
-    # Compares object and handles/retrieves data respectively.
+    # Create important objects
     ct = ComparisonTree(run_mode=True)
     dc = DataController()
 
-    # Pass ct and dc to context object for click commands.
+    # Store reused objects in context.
     ctx.obj['ct'] = ct
     ctx.obj['dc'] = dc
-    ctx.obj['sp'] = showplot
+
+    # Store option values in context.
+    ctx.obj['glossary'] = glossary
+    ctx.obj['showplot'] = showplot
+    ctx.obj['savetable'] = savetable
+    ctx.obj['saveplot'] = saveplot
+    ctx.obj['savestats'] = savestats
+
+    # Store additional variables in context.
     ctx.obj['dir_exists'] = dir_exists
 
 
@@ -107,34 +116,29 @@ def byname(ctx, name, match_tol, obj_radius):
     Downloads objects, via NED and SIMBAD, from region around object name
 
     Arguments:
-        NAME - the name of the object to    be searched around
+        NAME - the name of the object to be searched around
     '''
     dc = ctx.obj['dc']
     ct = ctx.obj['ct']
 
-    logging.info("Querying region by name: {}".format(name))
+    logging.info("Query requested: {}".format(name))
 
-    # Confirm match_tol and obj_radius are valid values.
+    # Option values are assumed to be valid by default.
+    match_tol_valid = True
+    obj_radius_valid = True
+
+    # If supplied, confirm match_tol and obj_radius are valid values.
     if match_tol:
-        if match_tol > 0 and match_tol <= 60:
-            match_tol_status = "valid"
-        else:
-            match_tol_status = "invalid"
-    else:
-        match_tol_status = "valid"
+        match_tol_valid = withinbounds(match_tol, lower=0, upper=60)
 
     if obj_radius:
-        if obj_radius > 0 and obj_radius <= 60:
-            obj_radius_status = "valid"
-        else:
-            obj_radius_status = "invalid"
-    else:
-        obj_radius_status = "valid"
+        obj_radius_valid = withinbounds(obj_radius, lower=0, upper=60)
 
-    if match_tol_status == "invalid":
+    # Proceed based on validity of any options passed.
+    if match_tol_valid == False:
         logging.error("Invalid match_tol entered.")
         logging.error("mmatch_tol must be between 0 and 60 arcsecs")
-    elif obj_radius_status == "invalid":
+    elif obj_radius_valid == False:
         logging.error("Invalid obj_radius entered.")
         logging.error("obj_radius must be between 0 and 60 arcmins")
     else:
@@ -151,16 +155,10 @@ def byname(ctx, name, match_tol, obj_radius):
             logging.info("Default settings used for byname query.")
             dc.query_region_by_name(name)
 
-        # Pass table to comparison tree to compare each object
-        ct.compare_objects(dc.combined_table)
-
         if dc.combined_table is not None:
-            dc.combined_table.show_in_browser(jsviewer=True)
-            # dc.get_table_stats().to_csv(r"gdm_output/result_stats.csv")
-
-            # If show plot option is present.
-            if ctx.obj['sp'] == True:
-                DataController.plot_match_table(dc.combined_table)
+            # Pass table to comparison tree to compare each object
+            ct.compare_objects(dc.combined_table)
+            common_option_handler(ctx)
 
 
 @main.command()
@@ -184,6 +182,7 @@ def local(ctx, ned_name, simbad_name):
 
     dc = ctx.obj['dc']
     ct = ctx.obj['ct']
+    # ctx test
 
     dc.load_data(combined_table)
 
@@ -192,6 +191,47 @@ def local(ctx, ned_name, simbad_name):
 
     if dc.combined_table is not None:
         dc.combined_table.show_in_browser(jsviewer=True)
+
+
+# ----------- Helper Functions ----------- #
+
+def withinbounds(val, lower, upper):
+    '''
+    Function created to ensure float is within bounds.
+    '''
+    if val > lower and val <= upper:
+        return True
+    else:
+        return False
+
+
+def safelyopenfile(filepath):
+    '''open file on any platform'''
+
+    if (sys.platform == "darwin"):  # MacOS
+        os.system("open " + test_dir + filepath)
+    elif (sys.platform == "cygwin" or sys.platform == "win32"):  # Windows
+        os.system("start " + test_dir + filepath)
+    elif (sys.platform == "linux"):
+        os.system("xdg-open " + test_dir + filepath)
+
+
+def common_option_handler(ctx):
+    '''
+    Handle options/operations relavant to all query types.
+    '''
+    dc = ctx.obj['dc']
+
+    dc.combined_table.show_in_browser(jsviewer=True)
+    # dc.stats.derive_table_stats(dc.combined_table)
+
+    # If show plot option present.
+    if ctx.obj['showplot']:
+        DataController.plot_match_table(dc.combined_table)
+
+    # If glossary option present.
+    if ctx.obj['glossary']:
+        safelyopenfile('/data/glossary.txt')
 
 
 if __name__ == "__main__":
