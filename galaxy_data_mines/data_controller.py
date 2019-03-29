@@ -454,6 +454,7 @@ class DataController:
         logging.info("SUCCESS: NED Data retrieved.")
 
         # Save some query stats.
+        self.stats.query_name = objectname
         self.stats.sim_count = len(simbad_table)
         self.stats.ned_count = len(ned_table)
 
@@ -493,7 +494,7 @@ class DataController:
         logging.debug("")
 
         self.stats.ned_match_count = len(matched_ned)
-        self.stats.ned_match_count = len(matched_ned)
+        self.stats.sim_match_count = len(matched_sim)
 
         # Explore results
         logging.debug("Matched NED:")
@@ -693,24 +694,17 @@ class DataController:
 
         xmask = combtab['Exact Match'] == True
         cmask = combtab['Candidate Match'] == True
-        scatmask = combtab['Same Category'] == True
-        slmask = combtab['Same Level'] == True
+        scatmask = combtab['Shared Category Match'] == True
         nomatchmask = combtab['Non Match'] == True
-
-        # eclusivesibling = combtab['Candidate Match'] == False and combtab['Same Level'] == True
-        # excsiblingmatch = combtab[eclusivesibling]
-        # excsiblingmatch.show_in_browser(jsviewer=True)
-        # masks = [xmask, cmask, scatmask, slmask]
 
         xmatches = combtab[xmask]
         cmatches = combtab[cmask]
         scatmatches = combtab[scatmask]
-        slmatches = combtab[slmask]
         nonmatches = combtab[nomatchmask]
 
-        cols = ['violet', 'blue', 'cyan', 'magenta', 'red']
-        labels = ['Exact Match', 'Candidate Match', 'Same Category', 'Same Level', 'Non Matches']
-        matchtypes = [xmatches, cmatches, scatmatches, slmatches, nonmatches]
+        cols = ['violet', 'blue', 'cyan', 'red']
+        labels = ['Exact Match', 'Candidate Match', 'Shared Category Match', 'Non Matches']
+        matchtypes = [xmatches, cmatches, scatmatches, nonmatches]
 
         plt.figure(figsize=(10, 7))
 
@@ -725,14 +719,14 @@ class DataController:
                 plt.scatter(m['RA(deg)'], m['DEC(deg)'], color=c, label=l, s=150)
             elif l == "Candidate Match":
                 plt.scatter(m['RA(deg)'], m['DEC(deg)'], color=c, label=l, s=100)
-            elif l == "Same Category":
+            elif l == "Shared Category Match":
                 plt.scatter(m['RA(deg)'], m['DEC(deg)'], color=c, label=l, s=50)
             else:
                 plt.scatter(m['RA(deg)'], m['DEC(deg)'], color=c, label=l, s=20)
 
         plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=5, mode='expand')
-        plt.xlabel("RA(deg)")
-        plt.ylabel("DEC(deg)")
+        plt.xlabel("RA (degrees)")
+        plt.ylabel("DEC (degrees)")
         plt.tight_layout()  # make room for plot labels
         plt.show()
 

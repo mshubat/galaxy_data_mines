@@ -1,10 +1,14 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+*******************************************************************
 Query Statistics
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*******************************************************************
 - For definitions of terms see the glossary
 
+OBJECT QUERIED: $query_name
+
+---------------------------------------------
 High Level Overview
----------------------------------
+---------------------------------------------
 # Total Objects retrieved:    $tot_obj_count
 
 # NED objects retrieved:      $ned_count
@@ -15,41 +19,39 @@ High Level Overview
 # SIMBAD matches:             $sim_match_count
 % of SIMBAD matched:          $sim_match_perc
 
-
+---------------------------------------------
 Object Comparison Results
----------------------------------
+---------------------------------------------
+Overview
+---------------------------
 # Total Objects compared:     $comp_count
+# Total Matches Found         $combined_count
+% Match Rate                  $combined_perc
 
-
-Binned Matches
-------------------
 # Strong Matches:             $strong_count
 # Weak Matches:               $weak_count
+# Combined Matches:           $combined_count
 # Non Matches:                $non_count
 
 % Strong Matches:             $strong_perc
 % Weak Matches:               $weak_perc
+% Combined Matches:           $combined_perc
 % Non Matches:                $non_perc
 
-Detailed
-------------------
+Details
+---------------------------
+# Number Matched              $combined_count
+
 # Exact Matches:              $exact_count
 # Candidate Matches:          $cand_count
-# isOfType Matches:           $oftype_count
+# OfType Matches:             $oftype_count
 # Same Category Matches:      $samecat_count
 # Generalization Matches:     $general_count
-# Non Matches:                $non_count
+
+% Percentage Matched          $combined_perc
 
 % Exact Matches:              $exact_perc
 % Candidate Matches:          $cand_perc
-% isOfType Matches:           $oftype_perc
+% OfType Matches:             $oftype_perc
 % Same Category Matches:      $samecat_perc
 % Generalization Matches:     $general_perc
-% Non Matches:                $non_perc
-
-
-Pandas Table Statistics
----------------------------------
-$table_describe
-
-$table_col_counts

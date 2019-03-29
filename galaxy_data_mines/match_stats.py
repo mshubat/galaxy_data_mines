@@ -22,11 +22,12 @@ class MatchStats:
         self.processed_template = None
 
         # ---- Stats variables ----- #
+        self.query_name = None        # Set in data_controller
         self.tot_obj_count = None     # Derived
-        self.ned_count = None
-        self.sim_count = None
-        self.ned_match_count = None
-        self.sim_match_count = None
+        self.ned_count = None         # Set in data_controller
+        self.sim_count = None         # Set in data_controller
+        self.ned_match_count = None   # Set in data_controller
+        self.sim_match_count = None   # Set in data_controller
         self.ned_match_perc = None    # Derived
         self.sim_match_perc = None    # Derived
         # Object Comparison Stats
@@ -34,22 +35,23 @@ class MatchStats:
         # High Level
         self.strong_count = None      # Derived
         self.weak_count = None        # Derived
-        self.non_count = None         # Derived
+        self.combined_count = None    # Derived
+        self.non_count = None         # Fetched
         self.strong_perc = None       # Derived
         self.weak_perc = None         # Derived
+        self.combined_perc = None     # Derived
         self.non_perc = None          # Derived
         # Detailed
-        self.exact_count = None       # Derived
-        self.cand_count = None        # Derived
-        self.oftype_count = None      # Derived
-        self.samecat_count = None     # Derived
-        self.general_count = None     # Derived
+        self.exact_count = None       # Fetched
+        self.cand_count = None        # Fetched
+        self.oftype_count = None      # Fetched
+        self.samecat_count = None     # Fetched
+        self.general_count = None     # Fetched
         self.exact_perc = None        # Derived
         self.cand_perc = None         # Derived
         self.oftype_perc = None       # Derived
         self.samecat_perc = None      # Derived
         self.general_perc = None      # Derived
-        self.table_describe = None    # Derived
 
     def template_test():
         s = "The cat stopped on the $word1. It then bathed in the $word2."
@@ -59,33 +61,37 @@ class MatchStats:
 
     def generateStatTemplate(self):
         self.processed_template = self.template.substitute(
+            query_name=self.query_name,
             # General Statistics
             tot_obj_count=self.tot_obj_count,
             ned_count=self.ned_count,
             sim_count=self.sim_count,
-            ned_match_perc=self.ned_match_perc,
-            sim_match_perc=self.sim_match_perc,
+            ned_match_count=self.ned_match_count,
+            sim_match_count=self.sim_match_count,
+            ned_match_perc="{:5.2f}%".format(self.ned_match_perc),
+            sim_match_perc="{:5.2f}%".format(self.sim_match_perc),
             # Object Comparison Stats
             comp_count=self.comp_count,
             # High Level
             strong_count=self.strong_count,
             weak_count=self.weak_count,
+            combined_count=self.combined_count,
             non_count=self.non_count,
-            strong_perc=self.strong_perc,
-            weak_perc=self.weak_perc,
-            non_perc=self.non_perc,
+            strong_perc="{:5.2f}%".format(self.strong_perc),
+            weak_perc="{:5.2f}%".format(self.weak_perc),
+            combined_perc="{:5.2f}%".format(self.combined_perc),
+            non_perc="{:5.2f}%".format(self.non_perc),
             # Detailed
             exact_count=self.exact_count,
             cand_count=self.cand_count,
             oftype_count=self.oftype_count,
             samecat_count=self.samecat_count,
             general_count=self.general_count,
-            exact_perc=self.exact_perc,
-            cand_perc=self.cand_perc,
-            oftype_perc=self.oftype_perc,
-            samecat_perc=self.samecat_perc,
-            general_perc=self.general_perc,
-            table_describe=self.table_describe
+            exact_perc="{:5.2f}%".format(self.exact_perc),
+            cand_perc="{:5.2f}%".format(self.cand_perc),
+            oftype_perc="{:5.2f}%".format(self.oftype_perc),
+            samecat_perc="{:5.2f}%".format(self.samecat_perc),
+            general_perc=self.general_perc  # "{:.2f}%".format(self.general_perc)
         )
         print(self.processed_template)
 
@@ -94,21 +100,45 @@ class MatchStats:
         Use the Pandas package to get some stats about the generated
         match table and derive others.
         '''
-        # Calculate known stats.
+        # High Level Overview - Derived Values:
         self.tot_obj_count = self.sim_count + self.ned_count
+        self.ned_match_perc = (self.ned_match_count/self.ned_count)*100
+        self.sim_match_perc = (self.sim_match_count/self.sim_count)*100
+        self.comp_count = self.sim_match_count
 
+        # Object Comparison Results - Fetched Values:
         df = table.to_pandas()
-        matchcols = df.columns[10:]
 
-        print(df["Exact Match"].describe(include="all"))
-        exact_col_counts = df["Exact Match"].value_counts(
-            sort=False)  # Ensures False is always index 0
+        # Count number of each match (sort=False, so index 1 is counts True)
+        exact_col_count = df["Exact Match"].value_counts(sort=False)
+        cand_col_count = df["Candidate Match"].value_counts(sort=False)
+        oftype_col_count = df["ofType Match"].value_counts(sort=False)
+        samecat_col_count = df["Shared Category Match"].value_counts(sort=False)
+        general_col_count = "ab"  # df["Generalization"].value_counts(sort=False)
+        non_col_count = df["Non Match"].value_counts(sort=False)
 
-        print(exact_col_counts)
-        print("False count: ".format(exact_col_counts[0]))
-        print("True count: ".format(exact_col_counts[1]))
+        self.exact_count = exact_col_count[1]  # False:index 0, True:index 1
+        self.cand_count = cand_col_count[1]
+        self.oftype_count = self.comp_count-oftype_col_count[0]
+        self.samecat_count = self.comp_count-samecat_col_count[0]
+        self.general_count = general_col_count[1]
+        self.non_count = non_col_count[1]
 
-        self.table_describe = df.describe(include="all")
+        # Object Comparison Results - Derived Values:
+        self.exact_perc = (self.exact_count/self.comp_count)*100
+        self.cand_perc = (self.cand_count/self.comp_count)*100
+        self.oftype_perc = (self.oftype_count/self.comp_count)*100
+        self.samecat_perc = (self.samecat_count/self.comp_count)*100
+        self.general_perc = "dummy"  # (self.general_count/self.comp_count)*100
+        self.non_perc = (self.non_count/self.comp_count)*100
+
+        self.strong_count = self.exact_count + self.cand_count + self.oftype_count
+        self.weak_count = self.samecat_count  # + self.general_count
+        self.combined_count = self.strong_count+self.weak_count
+
+        self.strong_perc = self.exact_perc + self.cand_perc + self.oftype_perc
+        self.weak_perc = self.samecat_perc  # + self.general_perc
+        self.combined_perc = self.strong_perc + self.weak_perc
 
     def saveStats(self):
         stats_output = open(this_dir + "data/stats_output.txt", 'r')

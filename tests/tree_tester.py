@@ -32,15 +32,35 @@ def parentMethodTest(ct):
     print()
 
 
-def isOfTypeMethodTest(ct):
-    print("isOfType Method Tests")
+def ofTypeMatchTest(ct):
+    print("ofType Match between d and b: {}".format(ct.ofTypeMatch("d", "b")))
+    print("ofType Match between c and a: {}".format(ct.ofTypeMatch("c", "a")))
+    print("ofType Match between d and a: {}".format(ct.ofTypeMatch("d", "a")))
+    print("ofType Match between a and a: {}".format(ct.ofTypeMatch("a", "a")))
+    print("ofType Match between b and c: {}".format(ct.ofTypeMatch("b", "c")))
+    print("ofType Match between d and c: {}".format(ct.ofTypeMatch("d", "c")))
+    print("ofType Match between d and d: {}".format(ct.ofTypeMatch("d", "d")))
+    print("ofType Match between c and x: {}".format(ct.ofTypeMatch("c", "x")))
+    print("ofType Match between d and h: {}".format(ct.ofTypeMatch("d", "h")))
+    print("ofType Match between h and d: {}".format(ct.ofTypeMatch("h", "d")))
+    print("ofType Match between a and b: {}".format(ct.ofTypeMatch("a", "b")))
+    print("ofType Match between b and a: {}".format(ct.ofTypeMatch("b", "a")))
+    print("ofType Match between a and h: {}".format(ct.ofTypeMatch("a", "h")))
+    print("ofType Match between a and d: {}".format(ct.ofTypeMatch("a", "d")))
+    print("ofType Match between a and x: {}".format(ct.ofTypeMatch("a", "x")))
+    print("ofType Match between b and h: {}".format(ct.ofTypeMatch("b", "h")))
+    print("ofType Match between b and f: {}".format(ct.ofTypeMatch("b", "f")))
+
+
+def isDescendantOfMethodTest(ct):
+    print("isDescendantOf Method Tests")
     print("---------------------")
-    print("d is of type b: {}".format(ct.isOfType("d", "b")))
-    print("c is of type a: {}".format(ct.isOfType("c", "a")))
-    print("d is of type a: {}".format(ct.isOfType("d", "a")))
-    print("a is of type a: {}".format(ct.isOfType("a", "a")))
-    print("b is of type c: {}".format(ct.isOfType("b", "c")))
-    print("d is of type c: {}".format(ct.isOfType("d", "c")))
+    print("d is descendant of b: {}".format(ct.isDescendantOf("d", "b")))
+    print("c is descendant of a: {}".format(ct.isDescendantOf("c", "a")))
+    print("d is descendant of a: {}".format(ct.isDescendantOf("d", "a")))
+    print("a is descendant of a: {}".format(ct.isDescendantOf("a", "a")))
+    print("b is descendant of c: {}".format(ct.isDescendantOf("b", "c")))
+    print("d is descendant of c: {}".format(ct.isDescendantOf("d", "c")))
     print()
 
 
@@ -79,7 +99,7 @@ if __name__ == "__main__":
 
     # Create and Show the ComparisonTree.
     ct = ComparisonTree(run_mode=False)
-    ct.showTree()
+    ct.showtree()
 
     # ct.tree.save2file("savedTree")
     # ct.tree.save2file("savedTree", nid="10.00.00.00")
@@ -91,13 +111,12 @@ if __name__ == "__main__":
     # print(dic_test["ROOT"])
     # print(dic_test["ROOT"]["children"])
 
-'''
    # Run tests
     try:
-        siblingMethodTest(ct)
-        parentMethodTest(ct)
-        isOfTypeMethodTest(ct)
-        shareCommonAncestorMethodTest(ct)
+        ofTypeMatchTest(ct)
+        # siblingMethodTest(ct)
+        # parentMethodTest(ct)
+        # isDescendantOfMethodTest(ct)
+        # shareCommonAncestorMethodTest(ct)
     except exceptions.NodeIDAbsentError:
         print(print("Oh no. It looks like that node is not in the tree."))
-'''

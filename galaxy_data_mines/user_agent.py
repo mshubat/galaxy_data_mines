@@ -9,7 +9,7 @@ import datetime
 import pandas as pd
 
 this_dir, this_filename = os.path.split(__file__)
-test_dir = os.path.dirname(__file__)
+package_dir = os.path.dirname(__file__)
 
 
 @click.group()
@@ -25,6 +25,9 @@ test_dir = os.path.dirname(__file__)
 @click.option('--showplot',
               is_flag=True,
               help="Shows graphical plot of comparison results.")
+@click.option('--showtable',
+              is_flag=True,
+              help="Shows the table of object comparisons.")
 @click.option('--saveplot',
               is_flag=True,
               help="Shows graphical plot of comparison results.")
@@ -37,7 +40,7 @@ test_dir = os.path.dirname(__file__)
               help="Saves statistics of comparison results.")
 @click.pass_context
 def main(ctx, log, glossary,
-         showtree, showplot,
+         showtree, showplot, showtable,
          saveplot, savetable, savestats):
     '''
     Compares object classifications between NED and SIMBAD.
@@ -96,6 +99,7 @@ def main(ctx, log, glossary,
     # Store option values in context.
     ctx.obj['glossary'] = glossary
     ctx.obj['showplot'] = showplot
+    ctx.obj['showtable'] = showtable
     ctx.obj['savetable'] = savetable
     ctx.obj['saveplot'] = saveplot
     ctx.obj['savestats'] = savestats
@@ -158,7 +162,7 @@ def byname(ctx, name, match_tol, obj_radius):
         if dc.combined_table is not None:
             # Pass table to comparison tree to compare each object
             ct.compare_objects(dc.combined_table)
-            common_option_handler(ctx)
+            common_option_handler(ctx, dc)
 
 
 @main.command()
@@ -182,7 +186,6 @@ def local(ctx, ned_name, simbad_name):
 
     dc = ctx.obj['dc']
     ct = ctx.obj['ct']
-    # ctx test
 
     dc.load_data(combined_table)
 
@@ -209,21 +212,23 @@ def safelyopenfile(filepath):
     '''open file on any platform'''
 
     if (sys.platform == "darwin"):  # MacOS
-        os.system("open " + test_dir + filepath)
+        os.system("open " + package_dir + filepath)
     elif (sys.platform == "cygwin" or sys.platform == "win32"):  # Windows
-        os.system("start " + test_dir + filepath)
+        os.system("start " + package_dir + filepath)
     elif (sys.platform == "linux"):
-        os.system("xdg-open " + test_dir + filepath)
+        os.system("xdg-open " + package_dir + filepath)
 
 
-def common_option_handler(ctx):
+def common_option_handler(ctx, dc):
     '''
-    Handle options/operations relavant to all query types.
+    Handle options/operations relevant to all query types.
     '''
-    dc = ctx.obj['dc']
+    # Stats are always shown.
+    dc.stats.derive_table_stats(dc.combined_table)
+    dc.stats.generateStatTemplate()
 
-    dc.combined_table.show_in_browser(jsviewer=True)
-    # dc.stats.derive_table_stats(dc.combined_table)
+    if ctx.obj["showtable"]:
+        dc.combined_table.show_in_browser(jsviewer=True)
 
     # If show plot option present.
     if ctx.obj['showplot']:
