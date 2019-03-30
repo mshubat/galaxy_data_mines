@@ -19,19 +19,19 @@ Though there are portions of the project which do not yet conform perfectly to t
 A few screenshots of the gdmines tool:
 
 **Help Screen** - provides overview of commands and options  
-[help-screen](./docs/screenshots/help-screen.png)
+![help-screen](/docs/screenshots/help-screen.png)
 
 **Match Stats** - provides a summary of the match likeness of given query  
 example: m83 galaxy  
-[m83-stats](./docs/screenshots/help-screen.png)
+![m83-stats](/docs/screenshots/help-screen.png)
 
 **Plot Results 1** - Graphical display of the objects in the sky, coloured by match status.  
 *example: m83 galaxy, radius = 1 arcmin*  
-[m83-plot-smallr](/docs/screenshots/m83-plot-basic.png)
+![m83-plot-smallr](/docs/screenshots/m83-plot-smallr.png)
 
 **Plot Results 2** - Graphical display of the objects in the sky, coloured by match status.  
 *example: m83 galaxy, radius = 9 arcmin*  
-[m83-plot-bigr](/docs/screenshots/m83-plot-basic.png)
+![m83-plot-bigr](/docs/screenshots/m83-plot-bigr.png)
 
 ## Tech/framework used
 <b>Built with</b>
