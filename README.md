@@ -23,7 +23,7 @@ A few screenshots of the gdmines tool:
 
 **Match Stats** - provides a summary of the match likeness of given query  
 example: m83 galaxy  
-![m83-stats](/docs/screenshots/help-screen.png)
+![m83-stats](/docs/screenshots/m83-stats.png)
 
 **Plot Results 1** - Graphical display of the objects in the sky, coloured by match status.  
 *example: m83 galaxy, radius = 1 arcmin*  
