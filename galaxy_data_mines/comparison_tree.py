@@ -104,11 +104,13 @@ class ComparisonTree:
         This method will return True if the first node is a descendent of the
         second. It will return False otherwise.
         '''
-        # if self.run_mode:
-        #    firstNodeId = self.dict[firstNodeId]
-        #    secNodeId = self.dict[secNodeId]
+        if firstNodeId == "" or secNodeId == "":
+            return False
 
         subtree = self.tree.subtree(secNodeId)
+
+        logging.debug("subtree of secNodeId:")
+        logging.debug("{}".format(subtree))
 
         return subtree.contains(firstNodeId)
 
@@ -149,8 +151,38 @@ class ComparisonTree:
                 p = self.tree.parent(p.identifier)
         return False
 
-    def generalization_match():
-        pass
+    def generalization_match(self, firstNodeId, secNodeId):
+        '''
+        Catch cases were NED is much more general, and SIMBAD specific.
+        Typically NED will list a type of EM source which is not incompatible
+        will many entries in SIMBAD. Thus it is a "Weak" Match type.
+        '''
+
+        # Really general classes (typically from NED)
+        # Note: empty string "" is VisS since there is no SIMBAD Analogue
+        generalizations = ["", "Rad", "IR", "UV", "X", "gam"]
+        # Objects in any of these classes agree with all general classes
+        agreements = ["*", "G", "ISM", "mul"]
+
+        if firstNodeId in generalizations:
+            for a in agreements:
+                if self.is_descendant_of(self.dict[secNodeId], self.dict[a]):
+                    # reg (region) in multiple object category which
+                    # does not match the generalizations.
+                    if self.is_descendant_of(self.dict[secNodeId], self.dict["reg"]):
+                        return False
+                    else:
+                        return True
+
+        elif secNodeId in generalizations:
+            for a in agreements:
+                if self.is_descendant_of(self.dict[firstNodeId], self.dict[a]):
+                    if self.is_descendant_of(self.dict[firstNodeId], self.dict["reg"]):
+                        return False
+                    else:
+                        return True
+
+        return False
 
     def compare_objects(self, t):
         '''
@@ -166,6 +198,7 @@ class ComparisonTree:
         cols.append(Column(name='Candidate Match', length=tsize, dtype=bool))
         cols.append(Column(name='ofType Match', length=tsize, dtype=bool))
         cols.append(Column(name='Shared Category Match', length=tsize, dtype=bool))
+        cols.append(Column(name='Generalization Match', length=tsize, dtype=bool))
         cols.append(Column(name='Non Match', length=tsize, dtype=bool))
 
         # Insert NED Analogues right after the Name_N column.
@@ -202,6 +235,11 @@ class ComparisonTree:
                 logging.info("Shared Category Match i={} - N: {} S: {}".format(i,
                                                                                ned_analogue,
                                                                                t["Type_S"][i]))
+            elif self.generalization_match(t["Type_N_Analogue"][i], t["Type_S_cond"][i]):
+                t["Generalization Match"][i] = True
+                logging.info("Generalization Match i={} - N: {} S: {}".format(i,
+                                                                              ned_analogue,
+                                                                              t["Type_S"][i]))
             else:
                 t["Non Match"][i] = True
                 logging.info("non-match i={} - N: {} S: {}".format(i,

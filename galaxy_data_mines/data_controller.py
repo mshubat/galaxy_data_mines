@@ -493,8 +493,7 @@ class DataController:
         logging.debug(simbad_table[matched_sim])
         logging.debug("")
 
-        self.stats.ned_match_count = len(matched_ned)
-        self.stats.sim_match_count = len(matched_sim)
+        self.stats.overlap_count = len(matched_ned)
 
         # Explore results
         logging.debug("Matched NED:")
@@ -687,44 +686,44 @@ class DataController:
             simbad_in = Table.read(sec_file)
 
     @staticmethod
-    def plot_match_table(combtab):
+    def plot_match_table(combtab, col_option=3):
         '''
         The more blue the closer the match.
         '''
 
         xmask = combtab['Exact Match'] == True
         cmask = combtab['Candidate Match'] == True
+        otmask = combtab['ofType Match'] == True
         scatmask = combtab['Shared Category Match'] == True
+        gmask = combtab['Generalization Match'] == True
         nomatchmask = combtab['Non Match'] == True
 
         xmatches = combtab[xmask]
         cmatches = combtab[cmask]
+        otmatches = combtab[otmask]
         scatmatches = combtab[scatmask]
+        gmatches = combtab[gmask]
         nonmatches = combtab[nomatchmask]
 
-        cols = ['violet', 'blue', 'cyan', 'red']
-        labels = ['Exact Match', 'Candidate Match', 'Shared Category Match', 'Non Matches']
-        matchtypes = [xmatches, cmatches, scatmatches, nonmatches]
+        if col_option == 1:
+            cols = ['violet', 'blueviolet', 'blue', 'yellow', 'orange', 'red']
+        elif col_option == 2:
+            cols = ['blueviolet', 'royalblue', 'cyan', 'mediumseagreen', 'orange', 'red']
+        elif col_option == 3:
+            cols = ['blueviolet', 'dodgerblue', 'mediumseagreen', 'gold', 'orange', 'red']
 
-        plt.figure(figsize=(10, 7))
+        labels = ['Exact Match', 'Candidate Match', 'ofType Match',
+                  'Shared Category Match', 'Generalization Match', 'Non Matches']
+        matchtypes = [xmatches, cmatches, otmatches, scatmatches, gmatches, nonmatches]
+
+        plt.figure(figsize=(11, 9))
 
         for i, m in enumerate(matchtypes):
             c = cols[i]
             l = labels[i]
+            plt.scatter(m['RA(deg)'], m['DEC(deg)'], color=c, label=l, s=25)
 
-            # Different sizes used since some match categories overlap.
-            # This will be either be changed soon or an additional plot
-            # function will be added.
-            if l == "Exact Match":
-                plt.scatter(m['RA(deg)'], m['DEC(deg)'], color=c, label=l, s=150)
-            elif l == "Candidate Match":
-                plt.scatter(m['RA(deg)'], m['DEC(deg)'], color=c, label=l, s=100)
-            elif l == "Shared Category Match":
-                plt.scatter(m['RA(deg)'], m['DEC(deg)'], color=c, label=l, s=50)
-            else:
-                plt.scatter(m['RA(deg)'], m['DEC(deg)'], color=c, label=l, s=20)
-
-        plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=5, mode='expand')
+        plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=6, mode='expand')
         plt.xlabel("RA (degrees)")
         plt.ylabel("DEC (degrees)")
         plt.tight_layout()  # make room for plot labels

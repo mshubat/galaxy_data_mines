@@ -26,8 +26,7 @@ class MatchStats:
         self.tot_obj_count = None     # Derived
         self.ned_count = None         # Set in data_controller
         self.sim_count = None         # Set in data_controller
-        self.ned_match_count = None   # Set in data_controller
-        self.sim_match_count = None   # Set in data_controller
+        self.overlap_count = None   # Set in data_controller
         self.ned_match_perc = None    # Derived
         self.sim_match_perc = None    # Derived
         # Object Comparison Stats
@@ -64,10 +63,10 @@ class MatchStats:
             query_name=self.query_name,
             # General Statistics
             tot_obj_count=self.tot_obj_count,
+            overlap_perc="{:5.2f}%".format((self.overlap_count/self.tot_obj_count)*100),
             ned_count=self.ned_count,
             sim_count=self.sim_count,
-            ned_match_count=self.ned_match_count,
-            sim_match_count=self.sim_match_count,
+            overlap_count=self.overlap_count,
             ned_match_perc="{:5.2f}%".format(self.ned_match_perc),
             sim_match_perc="{:5.2f}%".format(self.sim_match_perc),
             # Object Comparison Stats
@@ -91,7 +90,7 @@ class MatchStats:
             cand_perc="{:5.2f}%".format(self.cand_perc),
             oftype_perc="{:5.2f}%".format(self.oftype_perc),
             samecat_perc="{:5.2f}%".format(self.samecat_perc),
-            general_perc=self.general_perc  # "{:.2f}%".format(self.general_perc)
+            general_perc="{:5.2f}%".format(self.general_perc)
         )
         print(self.processed_template)
 
@@ -102,9 +101,9 @@ class MatchStats:
         '''
         # High Level Overview - Derived Values:
         self.tot_obj_count = self.sim_count + self.ned_count
-        self.ned_match_perc = (self.ned_match_count/self.ned_count)*100
-        self.sim_match_perc = (self.sim_match_count/self.sim_count)*100
-        self.comp_count = self.sim_match_count
+        self.ned_match_perc = (self.overlap_count/self.ned_count)*100
+        self.sim_match_perc = (self.overlap_count/self.sim_count)*100
+        self.comp_count = self.overlap_count
 
         # Object Comparison Results - Fetched Values:
         df = table.to_pandas()
@@ -114,30 +113,30 @@ class MatchStats:
         cand_col_count = df["Candidate Match"].value_counts(sort=False)
         oftype_col_count = df["ofType Match"].value_counts(sort=False)
         samecat_col_count = df["Shared Category Match"].value_counts(sort=False)
-        general_col_count = "ab"  # df["Generalization"].value_counts(sort=False)
+        general_col_count = df["Generalization Match"].value_counts(sort=False)
         non_col_count = df["Non Match"].value_counts(sort=False)
 
-        self.exact_count = exact_col_count[1]  # False:index 0, True:index 1
-        self.cand_count = cand_col_count[1]
+        self.exact_count = self.comp_count-exact_col_count[0]  # False:index 0, True:index 1
+        self.cand_count = self.comp_count-cand_col_count[0]
         self.oftype_count = self.comp_count-oftype_col_count[0]
         self.samecat_count = self.comp_count-samecat_col_count[0]
-        self.general_count = general_col_count[1]
-        self.non_count = non_col_count[1]
+        self.general_count = self.comp_count-general_col_count[0]
+        self.non_count = self.comp_count-non_col_count[0]
 
         # Object Comparison Results - Derived Values:
         self.exact_perc = (self.exact_count/self.comp_count)*100
         self.cand_perc = (self.cand_count/self.comp_count)*100
         self.oftype_perc = (self.oftype_count/self.comp_count)*100
         self.samecat_perc = (self.samecat_count/self.comp_count)*100
-        self.general_perc = "dummy"  # (self.general_count/self.comp_count)*100
+        self.general_perc = (self.general_count/self.comp_count)*100
         self.non_perc = (self.non_count/self.comp_count)*100
 
         self.strong_count = self.exact_count + self.cand_count + self.oftype_count
-        self.weak_count = self.samecat_count  # + self.general_count
+        self.weak_count = self.samecat_count + self.general_count
         self.combined_count = self.strong_count+self.weak_count
 
         self.strong_perc = self.exact_perc + self.cand_perc + self.oftype_perc
-        self.weak_perc = self.samecat_perc  # + self.general_perc
+        self.weak_perc = self.samecat_perc + self.general_perc
         self.combined_perc = self.strong_perc + self.weak_perc
 
     def saveStats(self):

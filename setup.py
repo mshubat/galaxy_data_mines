@@ -22,7 +22,7 @@ setuptools.setup(
     ],
     entry_points={
         'console_scripts': [
-            'galaxydatamine=galaxy_data_mines.user_agent:main',
+            'gdmines=galaxy_data_mines.user_agent:main',
         ],
     },
 )
