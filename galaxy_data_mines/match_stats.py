@@ -109,19 +109,19 @@ class MatchStats:
         df = table.to_pandas()
 
         # Count number of each match (sort=False, so index 1 is counts True)
-        exact_col_count = df["Exact Match"].value_counts(sort=False)
-        cand_col_count = df["Candidate Match"].value_counts(sort=False)
-        oftype_col_count = df["ofType Match"].value_counts(sort=False)
-        samecat_col_count = df["Shared Category Match"].value_counts(sort=False)
-        general_col_count = df["Generalization Match"].value_counts(sort=False)
-        non_col_count = df["Non Match"].value_counts(sort=False)
+        exact_dict = df["Exact Match"].value_counts(sort=False)
+        cand_dict = df["Candidate Match"].value_counts(sort=False)
+        oftype_dict = df["ofType Match"].value_counts(sort=False)
+        samecat_dict = df["Shared Category Match"].value_counts(sort=False)
+        gen_dict = df["Generalization Match"].value_counts().to_dict()
+        non_dict = df["Non Match"].value_counts(sort=False)
 
-        self.exact_count = self.comp_count-exact_col_count[0]  # False:index 0, True:index 1
-        self.cand_count = self.comp_count-cand_col_count[0]
-        self.oftype_count = self.comp_count-oftype_col_count[0]
-        self.samecat_count = self.comp_count-samecat_col_count[0]
-        self.general_count = self.comp_count-general_col_count[0]
-        self.non_count = self.comp_count-non_col_count[0]
+        self.exact_count = 0 if True not in exact_dict else exact_dict[True]
+        self.cand_count = 0 if True not in cand_dict else cand_dict[True]
+        self.oftype_count = 0 if True not in oftype_dict else oftype_dict[True]
+        self.samecat_count = 0 if True not in samecat_dict else samecat_dict[True]
+        self.general_count = 0 if True not in gen_dict else gen_dict[True]
+        self.non_count = 0 if True not in non_dict else non_dict[True]
 
         # Object Comparison Results - Derived Values:
         self.exact_perc = (self.exact_count/self.comp_count)*100

@@ -213,10 +213,12 @@ class ComparisonTree:
             t["Type_S_cond"][i] = DataController.simbad_long_to_small(
                 t["Type_S"][i])
 
-            if (self.are_direct_match(t["Type_N_Analogue"][i], t["Type_S_cond"][i])):
+            if t["Type_S_cond"][i] == "":  # no simbad class was returned for object.
+                t["Non Match"][i] = True
+                matchtype = "Non Match"
+            elif (self.are_direct_match(t["Type_N_Analogue"][i], t["Type_S_cond"][i])):
                 t["Exact Match"][i] = True
                 matchtype = "Exact Match"
-
             elif (self.are_candidate_match(Type_N=t["Type_N_Analogue"][i], Type_S=t["Type_S_cond"][i])):
                 t["Candidate Match"][i] = True
                 matchtype = "Candidate Match"

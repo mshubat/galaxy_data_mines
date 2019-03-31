@@ -397,7 +397,7 @@ class DataController:
             ned_entry = ned_entry.decode("utf-8")
 
         if ned_entry == "":
-            logging.warning("Empty string was passed as ned_entry object type.")
+            logging.info("Empty string was passed as NED object type.")
             return ""
 
         return DataController.ned_to_simbad_cond_dict[ned_entry]
@@ -408,7 +408,8 @@ class DataController:
             simbad_std = simbad_std.decode("utf-8")
 
         if simbad_std == "":
-            logging.warning("Empty string was passed as simbad_std object type.")
+            logging.info("Empty string was passed as SIMBAD object type.\
+            SIMBAD must not have given this object a classification.")
             return ""
 
         return DataController.simbad_std_to_cond[simbad_std]
@@ -686,7 +687,7 @@ class DataController:
             simbad_in = Table.read(sec_file)
 
     @staticmethod
-    def plot_match_table(combtab, col_option=3):
+    def plot_match_table(combtab, name, col_option=3):
         '''
         The more blue the closer the match.
         '''
@@ -716,18 +717,21 @@ class DataController:
                   'Shared Category Match', 'Generalization Match', 'Non Matches']
         matchtypes = [xmatches, cmatches, otmatches, scatmatches, gmatches, nonmatches]
 
-        plt.figure(figsize=(11, 9))
+        plt.figure(figsize=(12, 9))
 
         for i, m in enumerate(matchtypes):
             c = cols[i]
             l = labels[i]
             plt.scatter(m['RA(deg)'], m['DEC(deg)'], color=c, label=l, s=25)
 
-        plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=6, mode='expand')
+        plt.legend(bbox_to_anchor=(0., 1.0, 1., .102), loc=3, ncol=6, mode='expand')
         plt.xlabel("RA (degrees)")
         plt.ylabel("DEC (degrees)")
+        plt.title("{} Object Overlap Coloured by Match Type".format(
+            name.upper()), loc='center', pad=30.0)
         plt.tight_layout()  # make room for plot labels
-        plt.show()
+        # plt.show()
+        return plt
 
     def saveTable(self, *, fileName, file_format):
         if file_format == "csv":

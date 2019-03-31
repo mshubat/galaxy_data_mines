@@ -54,6 +54,10 @@ def main(ctx, log, glossary,
     # "Save" options create a directory.
     dir_exists = False
     if savelog or savetable or saveplot or savestats:
+        currentDT = datetime.datetime.now()
+        filename = (currentDT.strftime("-%Y-%m-%d|%Hhr-%Mm-%Ss")) + "-gdm"
+        ctx.obj['filename'] = filename
+
         try:
             # Succeeds even if directory exists.
             os.makedirs(working_dir+"/gdm_output", exist_ok=True)
@@ -81,9 +85,6 @@ def main(ctx, log, glossary,
     # OPTION: Save Log
     if savelog:
         numeric_level = getattr(logging, savelog.upper(), None)
-
-        currentDT = datetime.datetime.now()
-        filename = (currentDT.strftime("%Y-%m-%d|%Hhr-%Mm-%Ss")) + "-gdm"
 
         if dir_exists:
             logPath = working_dir+"/gdm_output"
@@ -133,6 +134,8 @@ def byname(ctx, name, match_tol, obj_radius):
     Arguments:
         NAME - the name of the object to be searched around
     '''
+    ctx.obj['name'] = name
+
     dc = ctx.obj['dc']
     ct = ctx.obj['ct']
 
@@ -246,8 +249,14 @@ def common_option_handler(ctx, dc):
         dc.combined_table.show_in_browser(jsviewer=True)
 
     # If show plot option present.
-    if ctx.obj['showplot']:
-        DataController.plot_match_table(dc.combined_table)
+    if ctx.obj['showplot'] or ctx.obj['saveplot']:
+        objname = ctx.obj['name']
+        plot = DataController.plot_match_table(dc.combined_table, name=objname)
+        if ctx.obj['saveplot']:
+            filename = ctx.obj['filename']
+            plot.savefig(working_dir+'/gdm_output'+'/'+objname+filename+'.png')
+        if ctx.obj['showplot']:
+            plot.show()
 
     # If glossary option present.
     if ctx.obj['glossary']:
