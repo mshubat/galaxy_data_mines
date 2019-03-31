@@ -1,5 +1,10 @@
 ## Galaxy Data Mines
 
+<p align="center">
+  ![Banner](/docs/screenshots/gdm-banner.png)
+</p>
+<a href="http://www.freepik.com">Designed by Harryarts / Freepik</a>
+
 A command line tool to compare object classifications given by [NED](https://ned.ipac.caltech.edu) and [SIMBAD](http://simbad.u-strasbg.fr/simbad/) in common regions. Objects are found in user provided searches: "cone search" or via region names ("M83").
 
 ## Motivation
@@ -49,7 +54,7 @@ A few screenshots of the gdmines tool.
 ## Features
 * Query a region by name, M31 for example and get comparison results between NED and SIMBAD.
 * Adjust parameters such as match-tolerance and obj-radius to fine tune your query.
-* Do a cone seach of a particular location for those who know exactly what they're looking for.
+* Do a cone search of a particular location for those who know exactly what they're looking for.
 * View match statistics to get a better idea of the match breakdown.
 * Show the match table for detailed match results for each object pair and their relationship.
 * Display a 2D plot of overlapping objects in the sky, coloured by their computed match type.
@@ -64,13 +69,18 @@ pip install galaxy_data_mines
 ```
 
 ## Tests
-There is a small test file tree_tester.py which tests the comparison_tree.py operations used to detemine the relationships between NED and SIMBAD objects. This can be run by in the following way:
+There is a small test file tree_tester.py which tests the comparison_tree.py operations used to determine the relationships between NED and SIMBAD objects. This can be run by in the following way:
 ```
 python3 tree_tester.py
 ```
 
 ## How to use?
-Brief intructions comming soon...
+Brief instructions coming soon...
+
+For now try this:
+```bash
+gdmines --help
+```
 
 ## Contribute
 

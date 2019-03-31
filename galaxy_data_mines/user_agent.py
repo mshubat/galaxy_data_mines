@@ -8,8 +8,8 @@ import logging
 import datetime
 import pandas as pd
 
-this_dir, this_filename = os.path.split(__file__)
 package_dir = os.path.dirname(__file__)
+working_dir = os.getcwd()
 
 
 @click.group()
@@ -28,9 +28,12 @@ package_dir = os.path.dirname(__file__)
 @click.option('--showtable',
               is_flag=True,
               help="Shows the table of object comparisons.")
+@click.option('--savelog',
+              type=click.Choice(['debug', 'info', 'warning', 'error', 'critical']),
+              help="Use this option to save logs at the level of choice.")
 @click.option('--saveplot',
               is_flag=True,
-              help="Shows graphical plot of comparison results.")
+              help="Saves graphical plot of comparison results.")
 @click.option('--savetable',
               type=click.Choice(['csv', 'fits']),
               help="Use this option to save the comparison table to the output\
@@ -41,48 +44,56 @@ package_dir = os.path.dirname(__file__)
 @click.pass_context
 def main(ctx, log, glossary,
          showtree, showplot, showtable,
-         saveplot, savetable, savestats):
+         savelog, saveplot, savetable, savestats):
     '''
     Compares object classifications between NED and SIMBAD.
     '''
 
-    # Environment setup and checks.
     ctx.ensure_object(dict)  # Click convention.
 
-    # Attempt to create directory if a relevant option is provided.
+    # "Save" options create a directory.
     dir_exists = False
-    if log or savetable or saveplot or savestats:
+    if savelog or savetable or saveplot or savestats:
         try:
-            os.makedirs("gdm_output", exist_ok=True)  # Succeeds even if directory exists.
+            # Succeeds even if directory exists.
+            os.makedirs(working_dir+"/gdm_output", exist_ok=True)
         except OSError:
-            logging.error("Creation of the directory /gdm_output failed")
+            logging.error("Creation of the directory 'gdm_output' failed")
         else:
             dir_exists = True
             logging.info("Successfully created 'gdm_output' directory.")
 
-    # Deal with option(s) which don't need any additional information.
+    if log or savelog:
+        logFormatter = logging.Formatter(
+            "%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s")
+        rootLogger = logging.getLogger()
+        rootLogger.setLevel(logging.DEBUG)
+
+    # OPTION: log
     if log:
-
-        currentDT = datetime.datetime.now()
-
-        filename = (currentDT.strftime("%Y-%m-%d|%Hhr-%Mm-%Ss")) + "-gdm.log"
         numeric_level = getattr(logging, log.upper(), None)
 
+        consoleHandler = logging.StreamHandler()
+        consoleHandler.setFormatter(logFormatter)
+        consoleHandler.setLevel(numeric_level)
+        rootLogger.addHandler(consoleHandler)
+
+    # OPTION: Save Log
+    if savelog:
+        numeric_level = getattr(logging, savelog.upper(), None)
+
+        currentDT = datetime.datetime.now()
+        filename = (currentDT.strftime("%Y-%m-%d|%Hhr-%Mm-%Ss")) + "-gdm"
+
         if dir_exists:
-            logging.basicConfig(filename='gdm_output/'+filename,
-                                level=numeric_level)
+            logPath = working_dir+"/gdm_output"
         else:
-            logging.basicConfig(filename=filename,
-                                level=numeric_level)
+            logPath = working_dir
 
-        root = logging.getLogger()
-        root.setLevel(numeric_level)
-
-        handler = logging.StreamHandler(sys.stdout)
-        handler.setLevel(logging.DEBUG)
-        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-        handler.setFormatter(formatter)
-        root.addHandler(handler)
+        fileHandler = logging.FileHandler("{0}/{1}.log".format(logPath, filename))
+        fileHandler.setFormatter(logFormatter)
+        fileHandler.setLevel(numeric_level)
+        rootLogger.addHandler(fileHandler)
 
     if showtree:
         treefile = "/data/savedTree.txt"
@@ -171,7 +182,12 @@ def bycoord(ctx):
     '''
     Downloads objects, via NED and SIMBAD, from region described by coordinates
     '''
+    # Coming soon...
     pass
+
+
+'''
+Not yet implemented. Local data less of a priority. Perhaps future versions.
 
 
 @main.command()
@@ -179,10 +195,8 @@ def bycoord(ctx):
 @click.argument('simbad-name', type=str)
 @click.pass_context
 def local(ctx, ned_name, simbad_name):
-    '''
-    Uses local data provided to compare objects in NED and SIMBAD
-    '''
-    combined_table = os.path.join(this_dir, "data", "M83_NScomb_mar1.fits")
+    # Uses local data provided to compare objects in NED and SIMBAD
+    combined_table = os.path.join(package_dir, "data", "M83_NScomb_mar1.fits")
 
     dc = ctx.obj['dc']
     ct = ctx.obj['ct']
@@ -194,9 +208,10 @@ def local(ctx, ned_name, simbad_name):
 
     if dc.combined_table is not None:
         dc.combined_table.show_in_browser(jsviewer=True)
-
+'''
 
 # ----------- Helper Functions ----------- #
+
 
 def withinbounds(val, lower, upper):
     '''
@@ -237,6 +252,8 @@ def common_option_handler(ctx, dc):
     # If glossary option present.
     if ctx.obj['glossary']:
         safelyopenfile('/data/glossary.txt')
+
+# ----------- main entry point | script run directly ----------- #
 
 
 if __name__ == "__main__":

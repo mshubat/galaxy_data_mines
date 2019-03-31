@@ -109,9 +109,6 @@ class ComparisonTree:
 
         subtree = self.tree.subtree(secNodeId)
 
-        logging.debug("subtree of secNodeId:")
-        logging.debug("{}".format(subtree))
-
         return subtree.contains(firstNodeId)
 
     def share_common_ancestor(self, firstNodeId, secNodeId):
@@ -137,7 +134,6 @@ class ComparisonTree:
         # ancestor. ie. Star and Galaxy. and their parent is root.
         if (self.tree.parent(firstNodeId).is_root() or
                 self.tree.parent(secNodeId).is_root()):
-            logging.info("parent is root")
             return False
 
         # Otherwise traverse up to look for common ancestor.
@@ -146,6 +142,8 @@ class ComparisonTree:
         while (p and not p.identifier == "root"):
             logging.info("Current p is : {}".format(p))
             if (self.is_descendant_of(secNodeId, p.identifier)):
+                logging.info("Common ancestor found:")
+                logging.info(self.tree.subtree(p.identifier))
                 return True
             else:
                 p = self.tree.parent(p.identifier)
@@ -217,32 +215,26 @@ class ComparisonTree:
 
             if (self.are_direct_match(t["Type_N_Analogue"][i], t["Type_S_cond"][i])):
                 t["Exact Match"][i] = True
-                logging.info("match i={} - N: {} S: {}".format(i,
-                                                               ned_analogue,
-                                                               t["Type_S"][i]))
+                matchtype = "Exact Match"
+
             elif (self.are_candidate_match(Type_N=t["Type_N_Analogue"][i], Type_S=t["Type_S_cond"][i])):
                 t["Candidate Match"][i] = True
-                logging.info("candidateMatch i={} - N: {} S: {}".format(i,
-                                                                        ned_analogue,
-                                                                        t["Type_S"][i]))
+                matchtype = "Candidate Match"
             elif (self.of_type_match(t["Type_N_Analogue"][i], t["Type_S_cond"][i])):
                 t["ofType Match"][i] = True
-                logging.info("ofType Match i={} - N: {} S: {}".format(i,
-                                                                      ned_analogue,
-                                                                      t["Type_S"][i]))
+                matchtype = "ofType Match"
             elif self.share_common_ancestor(t["Type_N_Analogue"][i], t["Type_S_cond"][i]):
                 t["Shared Category Match"][i] = True
-                logging.info("Shared Category Match i={} - N: {} S: {}".format(i,
-                                                                               ned_analogue,
-                                                                               t["Type_S"][i]))
+                matchtype = "Shared Category Match"
             elif self.generalization_match(t["Type_N_Analogue"][i], t["Type_S_cond"][i]):
                 t["Generalization Match"][i] = True
-                logging.info("Generalization Match i={} - N: {} S: {}".format(i,
-                                                                              ned_analogue,
-                                                                              t["Type_S"][i]))
+                matchtype = "Generalization Match"
             else:
                 t["Non Match"][i] = True
-                logging.info("non-match i={} - N: {} S: {}".format(i,
-                                                                   ned_analogue,
-                                                                   t["Type_S"][i]))
+                matchtype = "Non Match"
+
+            logging.info("{} i={} - N: {} S: {}".format(matchtype,
+                                                        i,
+                                                        ned_analogue,
+                                                        t["Type_S"][i]))
         self.combined_table = t
