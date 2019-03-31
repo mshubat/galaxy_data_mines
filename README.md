@@ -63,6 +63,12 @@ Will be coming to [PyPI](https://pypi.org) soon...
 pip install galaxy_data_mines
 ```
 
+For now, if you clone or download the repo, you can run the following command:
+
+```
+pip install /path/to/folder/galaxy_data_mines
+```
+
 ## Tests
 There is a small test file tree_tester.py which tests the comparison_tree.py operations used to determine the relationships between NED and SIMBAD objects. This can be run by in the following way:
 ```
