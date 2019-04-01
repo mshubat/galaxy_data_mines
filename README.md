@@ -9,7 +9,7 @@ As can be imagined, this situation produces some confusion, and causes a researc
 
 The goal of this project is 2 fold:
 1. Create a command line tool to automate some of this inter-database object comparison process.
-2. Attempt to to quantify and infer overall similarity between the two systems: done through selective queries to the [Messier object set](https://en.wikipedia.org/wiki/Messier_object).
+2. Attempt to quantify and infer overall similarity between the two systems: done through selective queries to the [Messier object set](https://en.wikipedia.org/wiki/Messier_object).
 
 ## Code style
 [![PEP8](https://img.shields.io/badge/code%20style-pep8-orange.svg)](https://www.python.org/dev/peps/pep-0008/)  
