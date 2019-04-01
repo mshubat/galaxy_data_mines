@@ -94,8 +94,12 @@ class ComparisonTree:
             firstNodeId = self.dict[firstNodeId]
             secNodeId = self.dict[secNodeId]
 
-        if self.is_descendant_of(firstNodeId, secNodeId) or self.is_descendant_of(secNodeId, firstNodeId):
+        if self.is_descendant_of(firstNodeId, secNodeId):
+            logging.info(self.tree.subtree(secNodeId))
             return True  # Genuine ofType Match
+        elif self.is_descendant_of(secNodeId, firstNodeId):
+            logging.info(self.tree.subtree(secNodeId))
+            return True
         else:
             return False
 
@@ -208,32 +212,52 @@ class ComparisonTree:
 
         for i in range(0, tsize):
             ned_analogue = DataController.ned_to_simbad(t["Type_N"][i])
-            t["Type_N_Analogue"][i] = ned_analogue
-            logging.debug("This is the value of Type_S being passed: {}".format(t["Type_S"][i]))
-            t["Type_S_cond"][i] = DataController.simbad_long_to_small(
-                t["Type_S"][i])
 
-            if t["Type_S_cond"][i] == "":  # no simbad class was returned for object.
-                t["Non Match"][i] = True
-                matchtype = "Non Match"
-            elif (self.are_direct_match(t["Type_N_Analogue"][i], t["Type_S_cond"][i])):
-                t["Exact Match"][i] = True
-                matchtype = "Exact Match"
-            elif (self.are_candidate_match(Type_N=t["Type_N_Analogue"][i], Type_S=t["Type_S_cond"][i])):
-                t["Candidate Match"][i] = True
-                matchtype = "Candidate Match"
-            elif (self.of_type_match(t["Type_N_Analogue"][i], t["Type_S_cond"][i])):
-                t["ofType Match"][i] = True
-                matchtype = "ofType Match"
-            elif self.share_common_ancestor(t["Type_N_Analogue"][i], t["Type_S_cond"][i]):
-                t["Shared Category Match"][i] = True
-                matchtype = "Shared Category Match"
-            elif self.generalization_match(t["Type_N_Analogue"][i], t["Type_S_cond"][i]):
-                t["Generalization Match"][i] = True
-                matchtype = "Generalization Match"
+            if isinstance(ned_analogue, tuple):
+                ned_tuple = True
+                end = len(ned_analogue)
             else:
-                t["Non Match"][i] = True
-                matchtype = "Non Match"
+                ned_tuple = False
+                end = 1
+
+            for j in range(0, end):
+                if ned_tuple:
+                    t["Type_N_Analogue"][i] = ned_analogue[j]
+                else:
+                    t["Type_N_Analogue"][i] = ned_analogue
+
+                logging.debug("This is the value of Type_S being passed: {}".format(t["Type_S"][i]))
+                t["Type_S_cond"][i] = DataController.simbad_long_to_small(
+                    t["Type_S"][i])
+
+                if t["Type_S_cond"][i] == "":  # no simbad class was returned for object.
+                    t["Non Match"][i] = True
+                    matchtype = "Non Match"
+                    # Break for NED tuple cases. If no match will be found OR First match found is good enough.
+                    break
+                elif (self.are_direct_match(t["Type_N_Analogue"][i], t["Type_S_cond"][i])):
+                    t["Exact Match"][i] = True
+                    matchtype = "Exact Match"
+                    break
+                elif (self.are_candidate_match(Type_N=t["Type_N_Analogue"][i], Type_S=t["Type_S_cond"][i])):
+                    t["Candidate Match"][i] = True
+                    matchtype = "Candidate Match"
+                    break
+                elif (self.of_type_match(t["Type_N_Analogue"][i], t["Type_S_cond"][i])):
+                    t["ofType Match"][i] = True
+                    matchtype = "ofType Match"
+                    break
+                elif self.share_common_ancestor(t["Type_N_Analogue"][i], t["Type_S_cond"][i]):
+                    t["Shared Category Match"][i] = True
+                    matchtype = "Shared Category Match"
+                    break
+                elif self.generalization_match(t["Type_N_Analogue"][i], t["Type_S_cond"][i]):
+                    t["Generalization Match"][i] = True
+                    matchtype = "Generalization Match"
+                    break
+                else:
+                    t["Non Match"][i] = True
+                    matchtype = "Non Match"
 
             logging.info("{} i={} - N: {} S: {}".format(matchtype,
                                                         i,

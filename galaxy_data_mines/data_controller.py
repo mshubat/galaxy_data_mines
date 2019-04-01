@@ -14,6 +14,8 @@ from astroquery.simbad import Simbad
 from astroquery.ned import Ned
 from astropy import units as u
 from astropy.coordinates import SkyCoord, match_coordinates_sky
+from astropy.io import fits
+
 import matplotlib.pyplot as plt
 import logging
 # from astropy.table import Table, Column, hstack, vstack
@@ -727,7 +729,7 @@ class DataController:
         plt.legend(bbox_to_anchor=(0., 1.0, 1., .102), loc=3, ncol=6, mode='expand')
         plt.xlabel("RA (degrees)")
         plt.ylabel("DEC (degrees)")
-        plt.title("{} Object Overlap Coloured by Match Type".format(
+        plt.title("{} Object Overlap coloured by Match Type".format(
             name.upper()), loc='center', pad=30.0)
         plt.tight_layout()  # make room for plot labels
         # plt.show()
@@ -735,8 +737,8 @@ class DataController:
 
     def saveTable(self, *, fileName, file_format):
         if file_format == "csv":
-            self.combined_table.write(fileName,
+            self.combined_table.write(fileName+".csv",
                                       format='ascii.csv',
                                       fast_writer=False)
         elif file_format == "fits":
-            self.combined_table.write(fileName)
+            logging.warning("Sorry, saving as fits is not currently implemented.")

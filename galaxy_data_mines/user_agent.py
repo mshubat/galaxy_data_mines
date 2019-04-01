@@ -55,7 +55,7 @@ def main(ctx, log, glossary,
     dir_exists = False
     if savelog or savetable or saveplot or savestats:
         currentDT = datetime.datetime.now()
-        filename = (currentDT.strftime("-%Y-%m-%d|%Hhr-%Mm-%Ss")) + "-gdm"
+        filename = (currentDT.strftime("%Y-%m-%d|%Hhr-%Mm-%Ss")) + "-gdm"
         ctx.obj['filename'] = filename
 
         try:
@@ -244,17 +244,22 @@ def common_option_handler(ctx, dc):
     # Stats are always shown.
     dc.stats.derive_table_stats(dc.combined_table)
     dc.stats.generateStatTemplate()
+    # Save file variables.
+    objname = ctx.obj['name']
+    filename = ctx.obj['filename']
 
+    # If table option(s) present.
     if ctx.obj["showtable"]:
         dc.combined_table.show_in_browser(jsviewer=True)
+    if ctx.obj["savetable"]:
+        dc.saveTable(fileName=working_dir+'/gdm_output'+'/'+objname+'-'+filename,
+                     file_format=ctx.obj['savetable'])
 
-    # If show plot option present.
+    # If plot option(s) present.
     if ctx.obj['showplot'] or ctx.obj['saveplot']:
-        objname = ctx.obj['name']
         plot = DataController.plot_match_table(dc.combined_table, name=objname)
         if ctx.obj['saveplot']:
-            filename = ctx.obj['filename']
-            plot.savefig(working_dir+'/gdm_output'+'/'+objname+filename+'.png')
+            plot.savefig(working_dir+'/gdm_output'+'/'+objname+'-'+filename+'.png')
         if ctx.obj['showplot']:
             plot.show()
 
