@@ -8,6 +8,7 @@
 import os
 from string import Template
 import pandas as pd
+import logging
 
 this_dir = os.path.dirname(__file__)
 
@@ -93,6 +94,7 @@ class MatchStats:
             general_perc="{:5.2f}%".format(self.general_perc)
         )
         print(self.processed_template)
+        return self.processed_template
 
     def derive_table_stats(self, table):
         '''

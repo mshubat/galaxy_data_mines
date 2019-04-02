@@ -14,7 +14,7 @@ class ComparisonTree:
 
         if run_mode:
             logging.info("Run Mode: Enabled. Converting numeric\
-             id's to SIMBAD entries.")
+            id's to SIMBAD entries.")
             dictandtree = self.builder.buildTree("data/simbad_raw.csv")
             self.tree = dictandtree[0]
             self.dict = dictandtree[1]
@@ -27,7 +27,7 @@ class ComparisonTree:
         '''
         self.tree.show()
 
-    def are_direct_match(self, Type_N, Type_S):
+    def are_exact_match(self, Type_N, Type_S):
         return Type_N == Type_S
 
     def are_candidate_match(self, *, Type_N, Type_S):
@@ -95,10 +95,12 @@ class ComparisonTree:
             secNodeId = self.dict[secNodeId]
 
         if self.is_descendant_of(firstNodeId, secNodeId):
-            logging.info(self.tree.subtree(secNodeId))
+            logging.info("Of-Type Match found:")
+            logging.info("\n"+self.tree.subtree(secNodeId))
             return True  # Genuine ofType Match
         elif self.is_descendant_of(secNodeId, firstNodeId):
-            logging.info(self.tree.subtree(secNodeId))
+            logging.info("Of-Type Match found:")
+            logging.info("\n"+self.tree.subtree(secNodeId))
             return True
         else:
             return False
@@ -147,7 +149,7 @@ class ComparisonTree:
             logging.info("Current p is : {}".format(p))
             if (self.is_descendant_of(secNodeId, p.identifier)):
                 logging.info("Common ancestor found:")
-                logging.info(self.tree.subtree(p.identifier))
+                logging.info("\n"+self.tree.subtree(p.identifier))
                 return True
             else:
                 p = self.tree.parent(p.identifier)
@@ -235,7 +237,7 @@ class ComparisonTree:
                     matchtype = "Non Match"
                     # Break for NED tuple cases. If no match will be found OR First match found is good enough.
                     break
-                elif (self.are_direct_match(t["Type_N_Analogue"][i], t["Type_S_cond"][i])):
+                elif (self.are_exact_match(t["Type_N_Analogue"][i], t["Type_S_cond"][i])):
                     t["Exact Match"][i] = True
                     matchtype = "Exact Match"
                     break
@@ -262,5 +264,5 @@ class ComparisonTree:
             logging.info("{} i={} - N: {} S: {}".format(matchtype,
                                                         i,
                                                         ned_analogue,
-                                                        t["Type_S"][i]))
+                                                        t["Type_S_cond"][i]))
         self.combined_table = t

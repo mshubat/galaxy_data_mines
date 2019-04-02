@@ -719,7 +719,7 @@ class DataController:
                   'Shared Category Match', 'Generalization Match', 'Non Matches']
         matchtypes = [xmatches, cmatches, otmatches, scatmatches, gmatches, nonmatches]
 
-        plt.figure(figsize=(12, 9))
+        plt.figure(figsize=(11, 8))
 
         for i, m in enumerate(matchtypes):
             c = cols[i]

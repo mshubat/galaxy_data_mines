@@ -71,6 +71,7 @@ def main(ctx, log, glossary,
         logFormatter = logging.Formatter(
             "%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s")
         rootLogger = logging.getLogger()
+        rootLogger.handlers = []
         rootLogger.setLevel(logging.DEBUG)
 
     # OPTION: log
@@ -243,10 +244,13 @@ def common_option_handler(ctx, dc):
     '''
     # Stats are always shown.
     dc.stats.derive_table_stats(dc.combined_table)
-    dc.stats.generateStatTemplate()
-    # Save file variables.
+    stats_output = dc.stats.generateStatTemplate()
+
     objname = ctx.obj['name']
-    filename = ctx.obj['filename']
+
+    # Save file variables.
+    if ctx.obj["savetable"] or ctx.obj['saveplot'] or ctx.obj['savestats']:
+        filename = ctx.obj['filename']
 
     # If table option(s) present.
     if ctx.obj["showtable"]:
@@ -262,6 +266,10 @@ def common_option_handler(ctx, dc):
             plot.savefig(working_dir+'/gdm_output'+'/'+objname+'-'+filename+'.png')
         if ctx.obj['showplot']:
             plot.show()
+
+    if ctx.obj['savestats']:
+        with open(working_dir+'/gdm_output'+'/'+objname+"-stats-"+filename+".txt", "w") as text_file:
+            text_file.write("{}".format(stats_output))
 
     # If glossary option present.
     if ctx.obj['glossary']:
