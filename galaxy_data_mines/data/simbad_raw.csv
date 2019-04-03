@@ -66,6 +66,7 @@ id,long_name,tag
 "10.12.14.03",Candiate_sr*,sv?
 "10.12.15.00",Candidate_post-AGB*,pA?
 "10.12.16.00",Candidate_BSS,BS?
+"10.12.17.00",Candidate_Hsd,HS?
 "10.12.18.00",Candidate_WD*,WD?
 "10.12.20.00",Candidate_NS,N*?
 "10.12.22.00",Candidate_BH,BH?
@@ -153,6 +154,7 @@ id,long_name,tag
 "14.06.13.03",RedSG*,s*r
 "14.06.13.04",YellowSG*,s*y
 "14.06.13.05",BlueSG*,s*b
+"14.06.14.00",HotSubdwarf,HS*
 "14.06.15.00",post-AGB*,pA*
 "14.06.16.00",WD*,WD*
 "14.06.16.01",pulsWD*,ZZ*
