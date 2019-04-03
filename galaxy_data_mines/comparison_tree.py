@@ -96,11 +96,11 @@ class ComparisonTree:
 
         if self.is_descendant_of(firstNodeId, secNodeId):
             logging.info("Of-Type Match found:")
-            logging.info("\n"+self.tree.subtree(secNodeId))
+            logging.info(self.tree.subtree(secNodeId))
             return True  # Genuine ofType Match
         elif self.is_descendant_of(secNodeId, firstNodeId):
             logging.info("Of-Type Match found:")
-            logging.info("\n"+self.tree.subtree(secNodeId))
+            logging.info(self.tree.subtree(secNodeId))
             return True
         else:
             return False
@@ -149,7 +149,7 @@ class ComparisonTree:
             logging.info("Current p is : {}".format(p))
             if (self.is_descendant_of(secNodeId, p.identifier)):
                 logging.info("Common ancestor found:")
-                logging.info("\n"+self.tree.subtree(p.identifier))
+                logging.info(self.tree.subtree(p.identifier))
                 return True
             else:
                 p = self.tree.parent(p.identifier)
