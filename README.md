@@ -3,7 +3,7 @@
 A command line tool to compare object classifications given by [NED](https://ned.ipac.caltech.edu) and [SIMBAD](http://simbad.u-strasbg.fr/simbad/) in common regions. Objects are found in user provided searches: "cone search" or via region names ("M83").
 
 ![help-screen](/docs/screenshots/gdm-banner.png)  
-*<a href="http://www.freepik.com" style="color:DarkCyan; font-size:12px""">Designed by Harryarts / Freepik</a>*
+*<a href="http://www.freepik.com" style="color:DarkCyan;">Designed by Harryarts / Freepik</a>*
 
 ## Motivation
 When astronomers work between NED *(NASA extragalactic Database)* and SIMBAD *(Set of Identifications, Measurements, and Bibliography for Astronomical Data)* it becomes noticeable that both systems use different classification schemes for objects. Although many of these objects are identical, they may be given different names or symbols between the two systems.
