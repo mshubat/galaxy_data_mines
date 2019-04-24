@@ -126,12 +126,12 @@ class MatchStats:
         self.non_count = 0 if True not in non_dict else non_dict[True]
 
         # Object Comparison Results - Derived Values:
-        self.exact_perc = (self.exact_count/self.comp_count)*100
-        self.cand_perc = (self.cand_count/self.comp_count)*100
-        self.oftype_perc = (self.oftype_count/self.comp_count)*100
-        self.samecat_perc = (self.samecat_count/self.comp_count)*100
-        self.general_perc = (self.general_count/self.comp_count)*100
-        self.non_perc = (self.non_count/self.comp_count)*100
+        self.exact_perc = 0 if self.comp_count == 0 else (self.exact_count/self.comp_count)*100
+        self.cand_perc = 0 if self.comp_count == 0 else (self.cand_count/self.comp_count)*100
+        self.oftype_perc = 0 if self.comp_count == 0 else (self.oftype_count/self.comp_count)*100
+        self.samecat_perc = 0 if self.comp_count == 0 else (self.samecat_count/self.comp_count)*100
+        self.general_perc = 0 if self.comp_count == 0 else (self.general_count/self.comp_count)*100
+        self.non_perc = 0 if self.comp_count == 0 else (self.non_count/self.comp_count)*100
 
         self.strong_count = self.exact_count + self.cand_count + self.oftype_count
         self.weak_count = self.samecat_count + self.general_count

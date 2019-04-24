@@ -15,6 +15,15 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     package_dir={'galaxy_data_mines': 'galaxy_data_mines'},
     package_data={'galaxy_data_mines': ['data/*']},
+    install_requires=[
+        'astropy',
+        'astroquery',
+        'click',
+        'matplotlib',
+        'numpy',
+        'pandas',
+        'treelib'
+    ],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
