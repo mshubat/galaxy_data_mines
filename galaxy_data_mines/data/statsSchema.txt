@@ -1,1 +1,1 @@
-$query_name,$ned_count,$simbad_count,$overlap_count,$comp_count,$combined_count,$non_count,$strong_count,$exact_count,$cand_count,$pftype_count,$weak_count,$samecat_count,$general_count
+$query_name,$ned_count,$sim_count,$overlap_count,$comp_count,$combined_count,$non_count,$strong_count,$exact_count,$cand_count,$pftype_count,$weak_count,$samecat_count,$general_count
