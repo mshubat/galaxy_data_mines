@@ -27,7 +27,8 @@ class MatchStats:
         self.tot_obj_count = None     # Derived
         self.ned_count = None         # Set in data_controller
         self.sim_count = None         # Set in data_controller
-        self.overlap_count = None   # Set in data_controller
+        self.overlap_count = None     # Set in data_controller
+        self.overlap_perc = None      # Derived
         self.ned_match_perc = None    # Derived
         self.sim_match_perc = None    # Derived
         # Object Comparison Stats
@@ -64,7 +65,7 @@ class MatchStats:
             query_name=self.query_name,
             # General Statistics
             tot_obj_count=self.tot_obj_count,
-            overlap_perc="{:5.2f}%".format((self.overlap_count/self.tot_obj_count)*100),
+            overlap_perc="{:5.2f}%".format(self.overlap_perc),
             ned_count=self.ned_count,
             sim_count=self.sim_count,
             overlap_count=self.overlap_count,
@@ -103,9 +104,11 @@ class MatchStats:
         '''
         # High Level Overview - Derived Values:
         self.tot_obj_count = self.sim_count + self.ned_count
-        self.ned_match_perc = (self.overlap_count/self.ned_count)*100
-        self.sim_match_perc = (self.overlap_count/self.sim_count)*100
+        self.ned_match_perc = 0 if self.ned_count == 0 else (self.overlap_count/self.ned_count)*100
+        self.sim_match_perc = 0 if self.sim_count == 0 else (self.overlap_count/self.sim_count)*100
         self.comp_count = self.overlap_count
+        self.overlap_perc = 0 if self.tot_obj_count == 0 else (self.overlap_count/self.tot_obj_count)*100
+        
 
         # Object Comparison Results - Fetched Values:
         df = table.to_pandas()
@@ -126,16 +129,16 @@ class MatchStats:
         self.non_count = 0 if True not in non_dict else non_dict[True]
 
         # Object Comparison Results - Derived Values:
-        self.exact_perc = (self.exact_count/self.comp_count)*100
-        self.cand_perc = (self.cand_count/self.comp_count)*100
-        self.oftype_perc = (self.oftype_count/self.comp_count)*100
-        self.samecat_perc = (self.samecat_count/self.comp_count)*100
-        self.general_perc = (self.general_count/self.comp_count)*100
-        self.non_perc = (self.non_count/self.comp_count)*100
+        self.exact_perc = 0 if self.comp_count == 0 else (self.exact_count/self.comp_count)*100
+        self.cand_perc = 0 if self.comp_count == 0 else (self.cand_count/self.comp_count)*100
+        self.oftype_perc = 0 if self.comp_count == 0 else (self.oftype_count/self.comp_count)*100
+        self.samecat_perc = 0 if self.comp_count == 0 else (self.samecat_count/self.comp_count)*100
+        self.general_perc = 0 if self.comp_count == 0 else (self.general_count/self.comp_count)*100
+        self.non_perc = 0 if self.comp_count == 0 else (self.non_count/self.comp_count)*100
 
         self.strong_count = self.exact_count + self.cand_count + self.oftype_count
         self.weak_count = self.samecat_count + self.general_count
-        self.combined_count = self.strong_count+self.weak_count
+        self.combined_count = self.strong_count + self.weak_count
 
         self.strong_perc = self.exact_perc + self.cand_perc + self.oftype_perc
         self.weak_perc = self.samecat_perc + self.general_perc
