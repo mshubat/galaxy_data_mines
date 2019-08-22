@@ -13,7 +13,8 @@ from astropy.table import Table, Column, hstack, vstack
 from astroquery.simbad import Simbad
 from astroquery.ned import Ned
 from astropy import units as u
-from astropy.coordinates import SkyCoord, match_coordinates_sky
+from astropy.coordinates import SkyCoord, match_coordinates_sky, get_icrs_coordinates
+from astropy.coordinates.name_resolve import sesame_database, NameResolveError
 from astropy.io import fits
 
 import matplotlib.pyplot as plt
@@ -445,17 +446,28 @@ class DataController:
         # customSimbad.add_votable_fields("otype(3)", "ra(d)", "dec(d)")
         customSimbad.add_votable_fields("otype", "ra(d)", "dec(d)")
 
-        # Downlaod object data from both SIMBAD and NED.
+        # Download object data from both SIMBAD and NED.
         logging.info("Querying SIMBAD and NED for region {}".format(objectname))
+
+ 	# Resolve the object name into sky coordinate using NED
+        # ensures that NED and SIMBAD searches are using the same position 
+        sesame_database.set('ned')
+        try: 
+            objectcoords = get_icrs_coordinates(objectname) 
+        except NameResolveError: 
+             logging.info("Name resolution failed.")
+             return
+
+        logging.info("Name resolved to coordinates {}".format(objectcoords))
 
         # SIMBAD
         logging.info("SIMBAD is currently being queried...")
-        simbad_table = customSimbad.query_region(objectname, radius=obj_radius*u.arcmin)
+        simbad_table = customSimbad.query_region(objectcoords, radius=obj_radius*u.arcmin)
         logging.info("SUCCESS: SIMBAD Data retrieved.")
 
         # NED
         logging.info("NED is currently being queried...")
-        ned_table = Ned.query_region(objectname, radius=obj_radius*u.arcmin)
+        ned_table = Ned.query_region(objectcoords, radius=obj_radius*u.arcmin)
         logging.info("SUCCESS: NED Data retrieved.")
 
         # Save some query stats.
