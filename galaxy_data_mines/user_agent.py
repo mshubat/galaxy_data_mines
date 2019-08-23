@@ -41,10 +41,13 @@ working_dir = os.getcwd()
 @click.option('--savestats',
               is_flag=True,
               help="Saves statistics of comparison results.")
+@click.option('--shortstats',
+              is_flag=True,
+              help="Show statistics of comparison results in short format.")
 @click.pass_context
 def main(ctx, log, glossary,
          showtree, showplot, showtable,
-         savelog, saveplot, savetable, savestats):
+         savelog, saveplot, savetable, savestats, shortstats):
     '''
     Compares object classifications between NED and SIMBAD.
     '''
@@ -116,6 +119,7 @@ def main(ctx, log, glossary,
     ctx.obj['savetable'] = savetable
     ctx.obj['saveplot'] = saveplot
     ctx.obj['savestats'] = savestats
+    ctx.obj['shortstats'] = shortstats
 
     # Store additional variables in context.
     ctx.obj['dir_exists'] = dir_exists
