@@ -392,9 +392,9 @@ class DataController:
         "BLL": "BL?",
     }
 
-    def __init__(self):
+    def __init__(self, st):
         self.combined_table = None
-        self.stats = MatchStats(template_file="statsSchema_long.txt")
+        self.stats = MatchStats(template_file=st)
 
     @staticmethod
     def ned_to_simbad(ned_entry):

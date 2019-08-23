@@ -104,13 +104,20 @@ def main(ctx, log, glossary,
         treefile = "/data/savedTree.txt"
         safelyopenfile(treefile)
 
+    # OPTION: shortstats
+    if shortstats:
+      stats_template = "statsSchema_short.txt"
+    else:
+      stats_template = "statsSchema_long.txt"
+
     # Create important objects
     ct = ComparisonTree(run_mode=True)
-    dc = DataController()
+    dc = DataController(st=stats_template)
 
     # Store reused objects in context.
     ctx.obj['ct'] = ct
     ctx.obj['dc'] = dc
+    ctx.obj['stats_template'] = stats_template
 
     # Store option values in context.
     ctx.obj['glossary'] = glossary
