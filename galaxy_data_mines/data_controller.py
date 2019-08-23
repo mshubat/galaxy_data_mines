@@ -450,8 +450,11 @@ class DataController:
         logging.info("Querying SIMBAD and NED for region {}".format(objectname))
 
         if bycoord:
-        #  TODO: check that coord is valid
-            objectcoords = objectname
+            try:
+                objectcoords = SkyCoord(objectname)
+            except (ValueError, u.UnitsError):
+                 logging.info("Invalid coordinates.")
+                 return
         else:
         # Resolve the object name into sky coordinate using NED
         # ensures that NED and SIMBAD searches are using the same position
