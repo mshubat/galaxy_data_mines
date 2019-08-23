@@ -14,9 +14,9 @@ this_dir = os.path.dirname(__file__)
 
 
 class MatchStats:
-    def __init__(self):
+    def __init__(self, template_file):
         # Open statistics template file.
-        stats_template = open(this_dir + "/data/statsSchema.txt", 'r')
+        stats_template = open(this_dir + "/data/" + template_file, 'r')
 
         # Set attributes
         self.template = Template(stats_template.read())
@@ -108,7 +108,7 @@ class MatchStats:
         self.sim_match_perc = 0 if self.sim_count == 0 else (self.overlap_count/self.sim_count)*100
         self.comp_count = self.overlap_count
         self.overlap_perc = 0 if self.tot_obj_count == 0 else (self.overlap_count/self.tot_obj_count)*100
-        
+
 
         # Object Comparison Results - Fetched Values:
         df = table.to_pandas()

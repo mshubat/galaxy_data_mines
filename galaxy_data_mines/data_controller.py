@@ -394,7 +394,7 @@ class DataController:
 
     def __init__(self):
         self.combined_table = None
-        self.stats = MatchStats()
+        self.stats = MatchStats(template_file="statsSchema_long.txt")
 
     @staticmethod
     def ned_to_simbad(ned_entry):
@@ -449,14 +449,14 @@ class DataController:
         # Download object data from both SIMBAD and NED.
         logging.info("Querying SIMBAD and NED for region {}".format(objectname))
 
- 	# Resolve the object name into sky coordinate using NED
-        # ensures that NED and SIMBAD searches are using the same position 
+        # Resolve the object name into sky coordinate using NED
+        # ensures that NED and SIMBAD searches are using the same position
         sesame_database.set('ned')
-        try: 
-            objectcoords = get_icrs_coordinates(objectname) 
-        except NameResolveError: 
-             logging.info("Name resolution failed.")
-             return
+        try:
+            objectcoords = get_icrs_coordinates(objectname)
+        except NameResolveError:
+            logging.info("Name resolution failed.")
+            return
 
         logging.info("Name resolved to coordinates {}".format(objectcoords))
 
