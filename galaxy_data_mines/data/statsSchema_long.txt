@@ -1,0 +1,58 @@
+*******************************************************************
+Query Statistics
+*******************************************************************
+- For definitions of terms see the glossary
+
+OBJECT QUERIED: $query_name
+
+--------------------------------------------------
+High Level Overview
+--------------------------------------------------
+# Total Objects retrieved:    $tot_obj_count
+# Overlapping Objects:        $overlap_count
+% Percent Overlap:            $overlap_perc
+
+# NED objects retrieved:      $ned_count
+# NED matches:                $overlap_count
+% of NED matched:             $ned_match_perc
+
+# SIMBAD objects retrieved:   $sim_count
+# SIMBAD matches:             $overlap_count
+% of SIMBAD matched:          $sim_match_perc
+
+--------------------------------------------------
+Object Comparison Results
+--------------------------------------------------
+Overview | Quick Look
+------------------------------------------
+# Total Objects compared:     $comp_count
+# Total Matches Found         $combined_count
+% Match Rate                  $combined_perc
+
+% Strong Matches:             $strong_perc
+% Weak Matches:               $weak_perc
+% Combined Matches:           $combined_perc
+% Non Matches:                $non_perc
+
+------------------------------------------
+Match Results | Details
+------------------------------------------
+# Strong Matches:                 $strong_count
+    # Exact Matches:              $exact_count
+    # Candidate Matches:          $cand_count
+    # OfType Matches:             $oftype_count
+# Weak Matches:                   $weak_count
+    # Same Category Matches:      $samecat_count
+    # Generalization Matches:     $general_count
+# Combined Matches:               $combined_count
+# Non Matches:                    $non_count
+
+% Strong Matches:                 $strong_perc
+    % Exact Matches:              $exact_perc
+    % Candidate Matches:          $cand_perc
+    % OfType Matches:             $oftype_perc
+% Weak Matches:                   $weak_perc
+    % Same Category Matches:      $samecat_perc
+    % Generalization Matches:     $general_perc
+% Combined Matches:               $combined_perc
+% Non Matches:                    $non_perc
