@@ -163,16 +163,16 @@ def byname(ctx, name, match_tol, obj_radius):
     else:
         if match_tol and obj_radius:
             logging.info("Confirm: match-tol & obj-radius passed.")
-            dc.query_region_by_name(name, match_tol=match_tol, obj_radius=obj_radius)
+            dc.query_region(name, match_tol=match_tol, obj_radius=obj_radius)
         elif match_tol:
             logging.info("Confirm: match-tol passed.")
-            dc.query_region_by_name(name, match_tol=match_tol)
+            dc.query_region(name, match_tol=match_tol)
         elif obj_radius:
             logging.info("Confirm: obj-radius passed.")
-            dc.query_region_by_name(name, obj_radius=obj_radius)
+            dc.query_region(name, obj_radius=obj_radius)
         else:
             logging.info("Default settings used for byname query.")
-            dc.query_region_by_name(name)
+            dc.query_region(name)
 
         if dc.combined_table is not None:
             # Pass table to comparison tree to compare each object
@@ -222,16 +222,16 @@ def bycoord(ctx, coord, match_tol, obj_radius):
     else:
         if match_tol and obj_radius:
             logging.info("Confirm: match-tol & obj-radius passed.")
-            dc.query_region_by_name(coord, match_tol=match_tol, obj_radius=obj_radius)
+            dc.query_region(coord, match_tol=match_tol, obj_radius=obj_radius)
         elif match_tol:
             logging.info("Confirm: match-tol passed.")
-            dc.query_region_by_name(coord, match_tol=match_tol)
+            dc.query_region(coord, match_tol=match_tol)
         elif obj_radius:
             logging.info("Confirm: obj-radius passed.")
-            dc.query_region_by_name(coord, obj_radius=obj_radius)
+            dc.query_region(coord, obj_radius=obj_radius)
         else:
             logging.info("Default settings used for byname query.")
-            dc.query_region_by_name(coord)
+            dc.query_region(coord)
 
         if dc.combined_table is not None:
             # Pass table to comparison tree to compare each object
