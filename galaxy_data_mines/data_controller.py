@@ -392,6 +392,9 @@ class DataController:
         "BLL": "BL?",
     }
 
+    simbad_table_cols = ["MAIN_ID", "OTYPE", "RA_d", "DEC_d"]
+    simbad_table_dtypes = ["object","object","float64","float64"]
+
     def __init__(self):
         self.combined_table = None
         self.stats = MatchStats()
@@ -450,11 +453,11 @@ class DataController:
         logging.info("Querying SIMBAD and NED for region {}".format(objectname))
 
  	# Resolve the object name into sky coordinate using NED
-        # ensures that NED and SIMBAD searches are using the same position 
+        # ensures that NED and SIMBAD searches are using the same position
         sesame_database.set('ned')
-        try: 
-            objectcoords = get_icrs_coordinates(objectname) 
-        except NameResolveError: 
+        try:
+            objectcoords = get_icrs_coordinates(objectname)
+        except NameResolveError:
              logging.info("Name resolution failed.")
              return
 
@@ -463,6 +466,12 @@ class DataController:
         # SIMBAD
         logging.info("SIMBAD is currently being queried...")
         simbad_table = customSimbad.query_region(objectcoords, radius=obj_radius*u.arcmin)
+        # workaround. If SIMBAD query finds nothing, returns None but we want a zero-length table
+        if type(simbad_table) is not Table:
+            simbad_table = Table(data=None,
+                                   names=DataController.simbad_table_cols,
+                                   dtype=DataController.simbad_table_dtypes,
+                                   masked=True)
         logging.info("SUCCESS: SIMBAD Data retrieved.")
 
         # NED
@@ -487,7 +496,7 @@ class DataController:
                                         old_name='Object Name', new_name='Name_N',
                                         old_type='Type', new_type='Type_N')
 
-        logging.info("Reformating tables.")
+        logging.info("Reformatting tables.")
         simbad_table = self.reformat_table(simbad_table,
                                            keepcolsifpresent=["MAIN_ID", "RA_d", "DEC_d", "OTYPE"],
                                            old_name='MAIN_ID', new_name='Name_S',
@@ -500,9 +509,14 @@ class DataController:
 
         logging.info("Finding object matches.")
         # Find object matches
-        matched_ned, matched_sim, ned_only, sim_only = self.symmetric_match_sky_coords_v2(
-            ned_coo, sim_coo, match_tol*u.arcsec)
-
+        if len(ned_coo)> 0 and len(sim_coo) > 0:
+            matched_ned, matched_sim, ned_only, sim_only = self.symmetric_match_sky_coords_v2(
+                ned_coo, sim_coo, match_tol*u.arcsec)
+        else:
+             matched_ned = []
+             matched_sim = []
+             ned_only = []
+             sim_only = []
         logging.debug("")
         logging.debug("Matched NED rows:")
         logging.debug(ned_table[matched_ned])
