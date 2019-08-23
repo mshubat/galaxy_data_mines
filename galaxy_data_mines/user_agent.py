@@ -192,7 +192,7 @@ def bycoord(ctx, coord, match_tol, obj_radius):
     Downloads objects, via NED and SIMBAD, from region described by coordinates
 
     Arguments:
-        NAME - the name of the object to be searched around
+        COORD - the location of coordinates to be searched around
     '''
     ctx.obj['name'] =  coord
 
@@ -215,23 +215,23 @@ def bycoord(ctx, coord, match_tol, obj_radius):
     # Proceed based on validity of any options passed.
     if match_tol_valid == False:
         logging.error("Invalid match_tol entered.")
-        logging.error("mmatch_tol must be between 0 and 60 arcsecs")
+        logging.error("mmatch_tol must be between 0 and 60 arcsec")
     elif obj_radius_valid == False:
         logging.error("Invalid obj_radius entered.")
-        logging.error("obj_radius must be between 0 and 60 arcmins")
+        logging.error("obj_radius must be between 0 and 60 arcmin")
     else:
         if match_tol and obj_radius:
             logging.info("Confirm: match-tol & obj-radius passed.")
-            dc.query_region(coord, match_tol=match_tol, obj_radius=obj_radius)
+            dc.query_region(coord, match_tol=match_tol, obj_radius=obj_radius, bycoord=True)
         elif match_tol:
             logging.info("Confirm: match-tol passed.")
-            dc.query_region(coord, match_tol=match_tol)
+            dc.query_region(coord, match_tol=match_tol, bycoord=True)
         elif obj_radius:
             logging.info("Confirm: obj-radius passed.")
-            dc.query_region(coord, obj_radius=obj_radius)
+            dc.query_region(coord, obj_radius=obj_radius, bycoord=True)
         else:
-            logging.info("Default settings used for byname query.")
-            dc.query_region(coord)
+            logging.info("Default settings used for bycoord query.")
+            dc.query_region(coord, bycoord=True)
 
         if dc.combined_table is not None:
             # Pass table to comparison tree to compare each object
