@@ -181,25 +181,25 @@ def byname(ctx, name, match_tol, obj_radius):
 
 
 @main.command()
-@click.argument('name', type=str)
+@click.argument('coord', type=str)
 @click.option('-match-tol', type=float,
               help='Optional 2D match tolerance (in arc seconds). Default value is 1.0 arcsec.')
 @click.option('-obj-radius', type=float,
               help='Optional radius to search around object (in arc minutes). Default value is 1.0 arcmin.')
 @click.pass_context
-def bycoord(ctx, name, match_tol, obj_radius):
+def bycoord(ctx, coord, match_tol, obj_radius):
     '''
     Downloads objects, via NED and SIMBAD, from region described by coordinates
 
     Arguments:
         NAME - the name of the object to be searched around
     '''
-    ctx.obj['name'] = name
+    ctx.obj['name'] =  coord
 
     dc = ctx.obj['dc']
     ct = ctx.obj['ct']
 
-    logging.info("Query requested: {}".format(name))
+    logging.info("Query requested: {}".format(coord))
 
     # Option values are assumed to be valid by default.
     match_tol_valid = True
@@ -222,16 +222,16 @@ def bycoord(ctx, name, match_tol, obj_radius):
     else:
         if match_tol and obj_radius:
             logging.info("Confirm: match-tol & obj-radius passed.")
-            dc.query_region_by_name(name, match_tol=match_tol, obj_radius=obj_radius)
+            dc.query_region_by_name(coord, match_tol=match_tol, obj_radius=obj_radius)
         elif match_tol:
             logging.info("Confirm: match-tol passed.")
-            dc.query_region_by_name(name, match_tol=match_tol)
+            dc.query_region_by_name(coord, match_tol=match_tol)
         elif obj_radius:
             logging.info("Confirm: obj-radius passed.")
-            dc.query_region_by_name(name, obj_radius=obj_radius)
+            dc.query_region_by_name(coord, obj_radius=obj_radius)
         else:
             logging.info("Default settings used for byname query.")
-            dc.query_region_by_name(name)
+            dc.query_region_by_name(coord)
 
         if dc.combined_table is not None:
             # Pass table to comparison tree to compare each object
