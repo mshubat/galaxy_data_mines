@@ -181,13 +181,62 @@ def byname(ctx, name, match_tol, obj_radius):
 
 
 @main.command()
+@click.argument('name', type=str)
+@click.option('-match-tol', type=float,
+              help='Optional 2D match tolerance (in arc seconds). Default value is 1.0 arcsec.')
+@click.option('-obj-radius', type=float,
+              help='Optional radius to search around object (in arc minutes). Default value is 1.0 arcmin.')
 @click.pass_context
-def bycoord(ctx):
+def bycoord(ctx, name, match_tol, obj_radius):
     '''
     Downloads objects, via NED and SIMBAD, from region described by coordinates
+
+    Arguments:
+        NAME - the name of the object to be searched around
     '''
-    # Coming soon...
-    pass
+    ctx.obj['name'] = name
+
+    dc = ctx.obj['dc']
+    ct = ctx.obj['ct']
+
+    logging.info("Query requested: {}".format(name))
+
+    # Option values are assumed to be valid by default.
+    match_tol_valid = True
+    obj_radius_valid = True
+
+    # If supplied, confirm match_tol and obj_radius are valid values.
+    if match_tol:
+        match_tol_valid = withinbounds(match_tol, lower=0, upper=60)
+
+    if obj_radius:
+        obj_radius_valid = withinbounds(obj_radius, lower=0, upper=60)
+
+    # Proceed based on validity of any options passed.
+    if match_tol_valid == False:
+        logging.error("Invalid match_tol entered.")
+        logging.error("mmatch_tol must be between 0 and 60 arcsecs")
+    elif obj_radius_valid == False:
+        logging.error("Invalid obj_radius entered.")
+        logging.error("obj_radius must be between 0 and 60 arcmins")
+    else:
+        if match_tol and obj_radius:
+            logging.info("Confirm: match-tol & obj-radius passed.")
+            dc.query_region_by_name(name, match_tol=match_tol, obj_radius=obj_radius)
+        elif match_tol:
+            logging.info("Confirm: match-tol passed.")
+            dc.query_region_by_name(name, match_tol=match_tol)
+        elif obj_radius:
+            logging.info("Confirm: obj-radius passed.")
+            dc.query_region_by_name(name, obj_radius=obj_radius)
+        else:
+            logging.info("Default settings used for byname query.")
+            dc.query_region_by_name(name)
+
+        if dc.combined_table is not None:
+            # Pass table to comparison tree to compare each object
+            ct.compare_objects(dc.combined_table)
+            common_option_handler(ctx, dc)
 
 
 '''
