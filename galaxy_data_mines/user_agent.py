@@ -41,10 +41,13 @@ working_dir = os.getcwd()
 @click.option('--savestats',
               is_flag=True,
               help="Saves statistics of comparison results.")
+@click.option('--shortstats',
+              is_flag=True,
+              help="Show statistics of comparison results in short format.")
 @click.pass_context
 def main(ctx, log, glossary,
          showtree, showplot, showtable,
-         savelog, saveplot, savetable, savestats):
+         savelog, saveplot, savetable, savestats, shortstats):
     '''
     Compares object classifications between NED and SIMBAD.
     '''
@@ -101,13 +104,20 @@ def main(ctx, log, glossary,
         treefile = "/data/savedTree.txt"
         safelyopenfile(treefile)
 
+    # OPTION: shortstats
+    if shortstats:
+      stats_template = "statsSchema_short.txt"
+    else:
+      stats_template = "statsSchema_long.txt"
+
     # Create important objects
     ct = ComparisonTree(run_mode=True)
-    dc = DataController()
+    dc = DataController(st=stats_template)
 
     # Store reused objects in context.
     ctx.obj['ct'] = ct
     ctx.obj['dc'] = dc
+    ctx.obj['stats_template'] = stats_template
 
     # Store option values in context.
     ctx.obj['glossary'] = glossary
@@ -116,6 +126,7 @@ def main(ctx, log, glossary,
     ctx.obj['savetable'] = savetable
     ctx.obj['saveplot'] = saveplot
     ctx.obj['savestats'] = savestats
+    ctx.obj['shortstats'] = shortstats
 
     # Store additional variables in context.
     ctx.obj['dir_exists'] = dir_exists
