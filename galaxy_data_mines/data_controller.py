@@ -434,7 +434,7 @@ class DataController:
 
         return DataController.candidate_dict[non_candidate]
 
-    def query_region_by_name(self, objectname, match_tol=1.0, obj_radius=1.0):  # match_tol in arcsec
+    def query_region(self, objectname, match_tol=1.0, obj_radius=1.0, bycoord=False):
         '''
         Fetch remote data from NED and SIMBAD matching coordinates and build table.
         '''
@@ -453,14 +453,21 @@ class DataController:
         # Download object data from both SIMBAD and NED.
         logging.info("Querying SIMBAD and NED for region {}".format(objectname))
 
+        if bycoord:
+            try:
+                objectcoords = SkyCoord(objectname)
+            except (ValueError, u.UnitsError):
+                 logging.info("Invalid coordinates.")
+                 return
+        else:
         # Resolve the object name into sky coordinate using NED
         # ensures that NED and SIMBAD searches are using the same position
-        sesame_database.set('ned')
-        try:
-            objectcoords = get_icrs_coordinates(objectname)
-        except NameResolveError:
-            logging.info("Name resolution failed.")
-            return
+            sesame_database.set('ned')
+            try:
+                objectcoords = get_icrs_coordinates(objectname)
+            except NameResolveError:
+                 logging.info("Name resolution failed.")
+                 return
 
         logging.info("Name resolved to coordinates {}".format(objectcoords))
 
