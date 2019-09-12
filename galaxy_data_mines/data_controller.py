@@ -16,7 +16,7 @@ from astropy import units as u
 from astropy.coordinates import SkyCoord, match_coordinates_sky, get_icrs_coordinates
 from astropy.coordinates.name_resolve import sesame_database, NameResolveError
 from astropy.io import fits
-from requests.exceptions import Timeout
+from requests.exceptions import Timeout, RequestException
 
 import matplotlib.pyplot as plt
 import logging
@@ -396,6 +396,7 @@ class DataController:
 
     simbad_table_cols = ["MAIN_ID", "OTYPE", "RA_d", "DEC_d"]
     simbad_table_dtypes = ["object","object","float64","float64"]
+    ned_timeout_default = Ned.TIMEOUT
 
     def __init__(self, st):
         self.combined_table = None
@@ -492,11 +493,17 @@ class DataController:
 
        # NED
         logging.info("NED is currently being queried...")
-        try:
-            ned_table = Ned.query_region(objectcoords, radius=obj_radius*u.arcmin)
-            logging.info("SUCCESS: NED Data retrieved.")
-        except Timeout:
-            logging.debug("NED timeout error")
+        for attempt in range(3): # sometimes NED times out, so try a couple of times
+           Ned.TIMEOUT = (attempt+1) * DataController.ned_timeout_default
+           try:
+               ned_table = Ned.query_region(objectcoords, radius=obj_radius*u.arcmin)
+               logging.info("SUCCESS: NED Data retrieved.")
+           except RequestException:
+               logging.debug("NED problem, retrying")
+           else: # if attempt successful break out of loop, no need to try again
+               break
+        else:  # closes for loop: executes only if all attempts fail
+            logging.debug("NED query failed")
             return
 
 # Save some query stats.
