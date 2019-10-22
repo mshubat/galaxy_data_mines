@@ -1,6 +1,8 @@
 ## Galaxy Data Mines
 
-A command line tool to compare object classifications given by [NED](https://ned.ipac.caltech.edu) and [SIMBAD](http://simbad.u-strasbg.fr/simbad/) in common regions. Objects are found in user provided searches: "cone search" or via region names ("M83").
+A command line tool to compare object classifications given by [NED](https://ned.ipac.caltech.edu) and [SIMBAD](http://simbad.u-strasbg.fr/simbad/) in common regions. Objects are found in user provided searches: "cone search" or via region names ("M83"). 
+
+[Watch Demo Video](https://youtu.be/TKEWB9uFiNY)
 
 ![help-screen](/docs/screenshots/gdm-banner.png)  
 *<a href="http://www.freepik.com" style="color:DarkCyan;">Designed by Harryarts / Freepik</a>*
