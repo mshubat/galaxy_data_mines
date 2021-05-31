@@ -22,7 +22,8 @@ setuptools.setup(
         'matplotlib',
         'numpy',
         'pandas',
-        'treelib'
+        'treelib',
+        'scipy'
     ],
     classifiers=[
         "Programming Language :: Python :: 3",

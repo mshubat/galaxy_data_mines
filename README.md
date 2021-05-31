@@ -62,17 +62,24 @@ A few screenshots of the gdmines tool.
 * Get a glossary of terms to define what each match type really means.
 
 ## Installation
-Will be coming to [PyPI](https://pypi.org) soon...
 
+Updated: `2021/05/30`
+
+Prerequisites: update and install the latest version of python and pip.
+
+1. Clone the repo
+2. Setup a virtualenv
+  i. run `pip install --upgrade pip virtualenv`
+  ii. run `virtualenv env`
+  iii. run `source ./env/bin/activate` on mac or `source ./env/Scripts/activate` on windows
+  You should now see (env) above your prompt, you are now running python and pip in a virtualenv.
+3. Go to the directory which contains the `galaxy_data_mines` project folder and run:
 ```
 pip install galaxy_data_mines
 ```
+- alternatively `cd` into galaxy_data_mines and run `pip install .`
 
-For now, if you clone or download the repo, you can run the following command:
-
-```
-pip install /path/to/folder/galaxy_data_mines
-```
+You should now be able to use the `gdmines` command.
 
 ## Tests
 There is a small test file tree_tester.py which tests the comparison_tree.py operations used to determine the relationships between NED and SIMBAD objects. This can be run by in the following way:
