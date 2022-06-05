@@ -71,7 +71,7 @@ Prerequisites: update and install the latest version of python and pip.
 2. Setup a virtualenv
    1. run `pip install --upgrade pip virtualenv`
    2. run `virtualenv env`
-   3. run `source ./env/bin/activate` on mac or `source ./env/Scripts/activate` on windows. *You should now see (env) above your prompt, you are now running python and pip in a virtualenv.*
+   3. run `source ./env/bin/activate` on mac or `source ./env/Scripts/activate` on windows (assumes using gitbash). *You should now see (env) above your prompt, you are now running python and pip in a virtualenv.*
 3. Go to the directory which contains the `galaxy_data_mines` project folder and run:
 ```
 pip install galaxy_data_mines
