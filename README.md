@@ -63,8 +63,6 @@ A few screenshots of the gdmines tool.
 
 ## Installation
 
-Updated: `2021/05/30`
-
 Prerequisites: update and install the latest version of python and pip.
 
 1. Clone the repo
