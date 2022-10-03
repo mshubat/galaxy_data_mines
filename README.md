@@ -85,8 +85,6 @@ python3 tree_tester.py
 ```
 
 ## How to use?
-Brief instructions coming soon...
-
 For now try this:
 ```bash
 gdmines --help
